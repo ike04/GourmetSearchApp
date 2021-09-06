@@ -7,7 +7,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class FavoriteStoresViewModel @Inject constructor(): ViewModel() {
+class FavoriteStoresViewModel @Inject constructor(): BaseViewModel() {
 
     private val _text = MutableLiveData<String>().apply {
         value = "This is dashboard Fragment"
