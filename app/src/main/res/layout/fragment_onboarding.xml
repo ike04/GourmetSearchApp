@@ -12,7 +12,7 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".view.onboarding.onboardingFragment">
+        tools:context=".view.onboarding.OnboardingFragment">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -25,7 +25,6 @@
                 android:id="@+id/animationView"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:layout_marginBottom="@dimen/m_spacing"
                 app:layout_constraintBottom_toTopOf="@+id/title_text"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -36,10 +35,11 @@
                 android:id="@+id/title_text"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="88dp"
                 android:gravity="center"
                 android:text="@{onboarding.title}"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                app:layout_constraintBottom_toTopOf="@id/description_text"
+                app:layout_constraintTop_toBottomOf="@id/animationView"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 tools:text="近くのお店が見つかる" />
@@ -48,10 +48,11 @@
                 android:id="@+id/description_text"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/xs_spacing"
-                android:layout_marginTop="@dimen/s_spacing"
+                android:layout_marginTop="@dimen/m_spacing"
+                android:layout_marginBottom="@dimen/xxl_spacing"
                 android:gravity="center"
                 android:text="@{onboarding.message}"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

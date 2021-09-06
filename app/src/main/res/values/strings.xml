@@ -4,7 +4,16 @@
     <string name="title_favorite_stores">Favorite</string>
     <string name="title_map">Map</string>
 
-    <!--    error message-->
+    <!--    onboarding       -->
+    <string name="text_app_onboarding_title01">レストランが見つかる</string>
+    <string name="text_app_onboarding_title02">近くのレストランが見れる</string>
+    <string name="text_app_onboarding_title03">お気に入りのレストランを登録</string>
+    <string name="text_onboarding_instruction01">周辺のたくさんのレストランの情報を確認しよう。</string>
+    <string name="text_onboarding_instruction02">地図を利用して現在地周辺のレストランを確認しよう。</string>
+    <string name="text_onboarding_instruction03">お気に入りのレストランをアプリに登録しよう。</string>
+    <string name="text_onboarding_button">今すぐ始める</string>
+
+    <!--    error message    -->
     <string name="error_message_default"></string>
     <string name="error_message_404"></string>
     <string name="error_message_500"></string>
