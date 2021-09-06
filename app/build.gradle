@@ -38,6 +38,9 @@ android {
     kapt {
         correctErrorTypes = true
     }
+    dataBinding{
+        enabled = true
+    }
 }
 
 dependencies {
@@ -53,6 +56,9 @@ dependencies {
     // bottomNavigationBar
     implementation 'androidx.navigation:navigation-fragment-ktx:2.3.5'
     implementation 'androidx.navigation:navigation-ui-ktx:2.3.5'
+
+    // Lottie
+    implementation 'com.airbnb.android:lottie:3.4.0'
 
     // Dagger
     implementation "com.google.dagger:hilt-android:$rootProject.hilt_version"

@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import com.google.codelab.gourmetsearchapp.R
 
 class onboardingFragment : Fragment() {
-    
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
