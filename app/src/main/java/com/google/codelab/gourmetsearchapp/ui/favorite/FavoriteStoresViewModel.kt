@@ -1,10 +1,10 @@
-package com.google.codelab.gourmetsearchapp.ui.dashboard
+package com.google.codelab.gourmetsearchapp.ui.favorite
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class DashboardViewModel : ViewModel() {
+class FavoriteStoresViewModel : ViewModel() {
 
     private val _text = MutableLiveData<String>().apply {
         value = "This is dashboard Fragment"
