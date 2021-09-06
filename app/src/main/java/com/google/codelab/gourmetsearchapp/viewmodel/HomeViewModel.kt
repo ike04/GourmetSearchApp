@@ -7,7 +7,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeViewModel @Inject constructor() : ViewModel() {
+class HomeViewModel @Inject constructor() : BaseViewModel() {
 
     private val _text = MutableLiveData<String>().apply {
         value = "This is home Fragment"

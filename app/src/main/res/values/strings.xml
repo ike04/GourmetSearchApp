@@ -3,4 +3,9 @@
     <string name="title_home">Home</string>
     <string name="title_favorite_stores">Favorite</string>
     <string name="title_map">Map</string>
+
+<!--    error message-->
+    <string name="error_message_default"></string>
+    <string name="error_message_404"></string>
+    <string name="error_message_500"></string>
 </resources>
