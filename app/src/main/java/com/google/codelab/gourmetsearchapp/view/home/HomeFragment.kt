@@ -1,4 +1,4 @@
-package com.google.codelab.gourmetsearchapp.ui.home
+package com.google.codelab.gourmetsearchapp.view.home
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,8 +8,8 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import com.google.codelab.gourmetsearchapp.databinding.FragmentHomeBinding
+import com.google.codelab.gourmetsearchapp.viewmodel.HomeViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

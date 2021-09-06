@@ -1,4 +1,4 @@
-package com.google.codelab.gourmetsearchapp.ui.map
+package com.google.codelab.gourmetsearchapp.view.map
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,8 +8,8 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import com.google.codelab.gourmetsearchapp.databinding.FragmentMapBinding
+import com.google.codelab.gourmetsearchapp.viewmodel.MapViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

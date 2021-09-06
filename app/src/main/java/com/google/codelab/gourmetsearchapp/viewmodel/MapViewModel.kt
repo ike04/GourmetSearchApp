@@ -1,4 +1,4 @@
-package com.google.codelab.gourmetsearchapp.ui.map
+package com.google.codelab.gourmetsearchapp.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
