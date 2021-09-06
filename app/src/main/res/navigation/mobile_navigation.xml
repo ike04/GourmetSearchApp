@@ -13,13 +13,13 @@
 
     <fragment
         android:id="@+id/navigation_map"
-        android:name="com.google.codelab.gourmetsearchapp.ui.favorite.FavoriteStoresFragment"
-        android:label="@string/title_favorite_stores"
-        tools:layout="@layout/fragment_favorite_stores" />
-
-    <fragment
-        android:id="@+id/navigation_favorite_stores"
         android:name="com.google.codelab.gourmetsearchapp.ui.map.MapFragment"
         android:label="@string/title_map"
         tools:layout="@layout/fragment_map" />
+
+    <fragment
+        android:id="@+id/navigation_favorite_stores"
+        android:name="com.google.codelab.gourmetsearchapp.ui.favorite.FavoriteStoresFragment"
+        android:label="@string/title_favorite_stores"
+        tools:layout="@layout/fragment_favorite_stores" />
 </navigation>

@@ -6,13 +6,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.google.codelab.gourmetsearchapp.databinding.FragmentMapBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MapFragment : Fragment() {
 
-    private lateinit var mapViewModel: MapViewModel
+    private val viewModel: MapViewModel by viewModels()
     private lateinit var binding: FragmentMapBinding
 
     override fun onCreateView(
@@ -20,13 +23,10 @@ class MapFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        mapViewModel =
-            ViewModelProvider(this).get(MapViewModel::class.java)
-
         binding = FragmentMapBinding.inflate(inflater, container, false)
 
         val textView: TextView = binding.textNotifications
-        mapViewModel.text.observe(viewLifecycleOwner, Observer {
+        viewModel.text.observe(viewLifecycleOwner, Observer {
             textView.text = it
         })
         return binding.root
