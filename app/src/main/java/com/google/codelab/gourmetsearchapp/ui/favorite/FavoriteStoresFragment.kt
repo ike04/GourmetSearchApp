@@ -14,11 +14,7 @@ import com.google.codelab.gourmetsearchapp.databinding.FragmentFavoriteStoresBin
 class FavoriteStoresFragment : Fragment() {
 
     private lateinit var favoriteStoresViewModel: FavoriteStoresViewModel
-    private var _binding: FragmentFavoriteStoresBinding? = null
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
-    private val binding get() = _binding!!
+    private lateinit var binding: FragmentFavoriteStoresBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -28,18 +24,12 @@ class FavoriteStoresFragment : Fragment() {
         favoriteStoresViewModel =
             ViewModelProvider(this).get(FavoriteStoresViewModel::class.java)
 
-        _binding = FragmentFavoriteStoresBinding.inflate(inflater, container, false)
-        val root: View = binding.root
+        binding = FragmentFavoriteStoresBinding.inflate(inflater, container, false)
 
         val textView: TextView = binding.textDashboard
         favoriteStoresViewModel.text.observe(viewLifecycleOwner, Observer {
             textView.text = it
         })
-        return root
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+        return binding.root
     }
 }

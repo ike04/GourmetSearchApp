@@ -13,11 +13,7 @@ import com.google.codelab.gourmetsearchapp.databinding.FragmentMapBinding
 class MapFragment : Fragment() {
 
     private lateinit var mapViewModel: MapViewModel
-    private var _binding: FragmentMapBinding? = null
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
-    private val binding get() = _binding!!
+    private lateinit var binding: FragmentMapBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -27,18 +23,12 @@ class MapFragment : Fragment() {
         mapViewModel =
             ViewModelProvider(this).get(MapViewModel::class.java)
 
-        _binding = FragmentMapBinding.inflate(inflater, container, false)
-        val root: View = binding.root
+        binding = FragmentMapBinding.inflate(inflater, container, false)
 
         val textView: TextView = binding.textNotifications
         mapViewModel.text.observe(viewLifecycleOwner, Observer {
             textView.text = it
         })
-        return root
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+        return binding.root
     }
 }
