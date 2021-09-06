@@ -4,8 +4,10 @@
     <string name="title_favorite_stores">Favorite</string>
     <string name="title_map">Map</string>
 
-<!--    error message-->
+    <!--    error message-->
     <string name="error_message_default"></string>
     <string name="error_message_404"></string>
     <string name="error_message_500"></string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
