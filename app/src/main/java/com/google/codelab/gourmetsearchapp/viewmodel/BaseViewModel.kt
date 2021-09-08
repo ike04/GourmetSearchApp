@@ -14,7 +14,7 @@ import io.reactivex.rxjava3.subjects.PublishSubject
 import retrofit2.HttpException
 import javax.inject.Inject
 
-abstract class BaseViewModel @Inject constructor(private val usecase: Usecase): ViewModel() {
+abstract class BaseViewModel constructor(private val usecase: Usecase): ViewModel() {
     protected val disposables = CompositeDisposable()
     val error: PublishSubject<Failure> = PublishSubject.create()
 

@@ -2,12 +2,14 @@ package com.google.codelab.gourmetsearchapp.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import com.google.codelab.gourmetsearchapp.usecase.FavoriteStoresUsecase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class FavoriteStoresViewModel @Inject constructor(): BaseViewModel() {
+class FavoriteStoresViewModel @Inject constructor(
+    private val usecase: FavoriteStoresUsecase
+) : BaseViewModel(usecase) {
 
     private val _text = MutableLiveData<String>().apply {
         value = "This is dashboard Fragment"

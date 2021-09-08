@@ -2,12 +2,14 @@ package com.google.codelab.gourmetsearchapp.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import com.google.codelab.gourmetsearchapp.usecase.HomeUsecase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeViewModel @Inject constructor() : BaseViewModel() {
+class HomeViewModel @Inject constructor(
+    private val usecase: HomeUsecase
+) : BaseViewModel(usecase) {
 
     private val _text = MutableLiveData<String>().apply {
         value = "This is home Fragment"

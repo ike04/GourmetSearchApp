@@ -1,12 +1,10 @@
 package com.google.codelab.gourmetsearchapp.viewmodel
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import com.google.codelab.gourmetsearchapp.usecase.MapsUsecase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class MapsViewModel @Inject constructor(): BaseViewModel() {
+class MapsViewModel @Inject constructor(private val usecase: MapsUsecase) : BaseViewModel(usecase) {
 
 }
