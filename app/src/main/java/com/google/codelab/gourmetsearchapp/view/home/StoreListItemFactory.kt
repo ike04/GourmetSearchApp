@@ -20,6 +20,5 @@ class StoreItem(private val store: Store, val context: Context) :
         return CellStoreBinding.bind(view)
     }
 
-    override fun isSameAs(other: Item<*>): Boolean =
-        (other as? StoreItem)?.store?.id == store.id
+    override fun isSameAs(other: Item<*>): Boolean = (other as? StoreItem)?.store?.id == store.id
 }
