@@ -13,6 +13,8 @@
     <string name="text_onboarding_instruction03">お気に入りのレストランをアプリに登録しよう。</string>
     <string name="text_onboarding_button">今すぐ始める</string>
 
+    <!--    map              -->
+    <string name="no_location_authorization">現在地は表示できません</string>
     <!--    error message    -->
     <string name="error_message_default"></string>
     <string name="error_message_404"></string>

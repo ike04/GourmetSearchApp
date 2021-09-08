@@ -1,8 +1,6 @@
 package com.google.codelab.gourmetsearchapp.view.map
 
 import android.Manifest
-import android.app.Activity
-import android.content.Context
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
@@ -20,6 +18,7 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.codelab.gourmetsearchapp.R
 import com.google.codelab.gourmetsearchapp.databinding.FragmentMapsBinding
+import com.google.codelab.gourmetsearchapp.util.MapUtils
 
 class MapsFragment : Fragment(), OnMapReadyCallback {
     private val MY_PERMISSION_REQUEST_ACCESS_FINE_LOCATION = 1
@@ -27,7 +26,6 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
 
     private lateinit var binding: FragmentMapsBinding
     private lateinit var map: GoogleMap
-
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     private lateinit var lastLocation: Location
 
@@ -52,7 +50,11 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
 
     override fun onMapReady(googleMap: GoogleMap) {
         map = googleMap
-        checkPermission()
+        if (MapUtils.hasLocationPermission(requireContext())) {
+            enableLocation()
+        } else {
+            MapUtils.requestLocationPermission(requireContext(), requireActivity())
+        }
     }
 
     override fun onRequestPermissionsResult(
@@ -65,52 +67,15 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
             MY_PERMISSION_REQUEST_ACCESS_FINE_LOCATION -> {
                 if (permissions.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     // 許可された
-                    myLocationEnable()
+                    enableLocation()
                 } else {
-                    Toast.makeText(context, "現在地は表示できません", Toast.LENGTH_LONG).show()
+                    Toast.makeText(requireContext(), R.string.no_location_authorization, Toast.LENGTH_LONG).show()
                 }
             }
         }
     }
 
-    private fun checkPermission() {
-        if (ActivityCompat.checkSelfPermission(
-                requireContext(),
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) == PackageManager.PERMISSION_GRANTED
-
-        ) {
-            myLocationEnable()
-        } else {
-            requestLocationPermission(requireContext(), requireActivity())
-        }
-    }
-
-    private fun requestLocationPermission(context: Context, activity: Activity) {
-        if (ActivityCompat.checkSelfPermission(
-                context,
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) == PackageManager.PERMISSION_GRANTED
-        ) {
-            // 許可を求め、拒否されていた場合
-            ActivityCompat.requestPermissions(
-                activity,
-                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
-                MY_PERMISSION_REQUEST_ACCESS_FINE_LOCATION
-            )
-        } else {
-
-            // まだ許可を求めていない
-            ActivityCompat.requestPermissions(
-                activity,
-                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
-                MY_PERMISSION_REQUEST_ACCESS_FINE_LOCATION
-            )
-        }
-    }
-
-    private fun myLocationEnable() {
-
+    private fun enableLocation() {
         if (ActivityCompat.checkSelfPermission(
                 requireContext(),
                 Manifest.permission.ACCESS_FINE_LOCATION
@@ -118,14 +83,12 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
         ) {
             map.isMyLocationEnabled = true
             val locationRequest = LocationRequest().apply {
-                interval = 10000
-                fastestInterval = 5000
                 priority = LocationRequest.PRIORITY_HIGH_ACCURACY
             }
             locationCallback = object : LocationCallback() {
                 override fun onLocationResult(locationResult: LocationResult?) {
                     super.onLocationResult(locationResult)
-                    if (locationResult?.lastLocation != null) {
+                    locationResult?.lastLocation?.let {
                         lastLocation = locationResult.lastLocation
 
                         val currentLatLng = LatLng(lastLocation.latitude, lastLocation.longitude)
