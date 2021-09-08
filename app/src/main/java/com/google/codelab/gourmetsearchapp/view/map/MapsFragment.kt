@@ -4,9 +4,7 @@ import android.Manifest
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
@@ -21,7 +19,6 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.material.snackbar.Snackbar
 import com.google.codelab.gourmetsearchapp.R
 import com.google.codelab.gourmetsearchapp.databinding.FragmentMapsBinding
-import com.google.codelab.gourmetsearchapp.ext.BindingAdapters.scrollView
 import com.google.codelab.gourmetsearchapp.model.businessmodel.Store
 import com.google.codelab.gourmetsearchapp.util.MapUtils
 import com.google.codelab.gourmetsearchapp.viewmodel.MapsViewModel
@@ -53,6 +50,8 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
     ): View {
         binding = FragmentMapsBinding.inflate(layoutInflater)
         binding.viewModel = viewModel
+
+        setHasOptionsMenu(true)
 
         return binding.root
     }
@@ -163,6 +162,20 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
                 locationCallback,
                 null
             )
+        }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.map_menu, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.filter -> {
+                // Todo
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
         }
     }
 
