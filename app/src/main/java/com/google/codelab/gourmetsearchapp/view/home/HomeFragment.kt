@@ -8,7 +8,9 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.codelab.gourmetsearchapp.databinding.FragmentHomeBinding
 import com.google.codelab.gourmetsearchapp.model.businessmodel.Store
@@ -49,6 +51,10 @@ class HomeFragment : Fragment() {
             adapter = groupAdapter
             layoutManager =
                 GridLayoutManager(requireContext(), 2, GridLayoutManager.VERTICAL, false)
+            val itemHorizontalDecoration = DividerItemDecoration(requireContext(), DividerItemDecoration.HORIZONTAL)
+            val itemVerticalDecoration = DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL)
+            addItemDecoration(itemHorizontalDecoration)
+            addItemDecoration(itemVerticalDecoration)
         }
 
         viewModel.fetchStores()
