@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import com.google.android.gms.location.*
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -19,16 +20,17 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.codelab.gourmetsearchapp.R
 import com.google.codelab.gourmetsearchapp.databinding.FragmentMapsBinding
 import com.google.codelab.gourmetsearchapp.util.MapUtils
+import com.google.codelab.gourmetsearchapp.viewmodel.MapsViewModel
 
 class MapsFragment : Fragment(), OnMapReadyCallback {
-    private val MY_PERMISSION_REQUEST_ACCESS_FINE_LOCATION = 1
-    private var locationCallback: LocationCallback? = null
-
     private lateinit var binding: FragmentMapsBinding
     private lateinit var map: GoogleMap
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     private lateinit var lastLocation: Location
 
+    private val viewModel: MapsViewModel by viewModels()
+    private val MY_PERMISSION_REQUEST_ACCESS_FINE_LOCATION = 1
+    private var locationCallback: LocationCallback? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -36,6 +38,7 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentMapsBinding.inflate(layoutInflater)
+        binding.viewModel = viewModel
 
         return binding.root
     }
