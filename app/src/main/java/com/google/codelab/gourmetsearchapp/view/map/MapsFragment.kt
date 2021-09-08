@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.viewpager2.widget.ViewPager2
 import com.google.android.gms.location.*
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -20,6 +21,8 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.material.snackbar.Snackbar
 import com.google.codelab.gourmetsearchapp.R
 import com.google.codelab.gourmetsearchapp.databinding.FragmentMapsBinding
+import com.google.codelab.gourmetsearchapp.ext.BindingAdapters.scrollView
+import com.google.codelab.gourmetsearchapp.model.businessmodel.Store
 import com.google.codelab.gourmetsearchapp.util.MapUtils
 import com.google.codelab.gourmetsearchapp.viewmodel.MapsViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -39,6 +42,8 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
     private val viewModel: MapsViewModel by viewModels()
     private val MY_PERMISSION_REQUEST_ACCESS_FINE_LOCATION = 1
     private var locationCallback: LocationCallback? = null
+    private var mapMarkerPosition = 0
+    private val storeList: MutableList<Store> = ArrayList()
     private val disposable = CompositeDisposable()
 
     override fun onCreateView(
@@ -61,13 +66,18 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
         fusedLocationProviderClient =
             LocationServices.getFusedLocationProviderClient(requireContext())
 
+        binding.storePager.adapter =
+            PagerStoreAdapter(storeList) {}
+
         viewModel.storeList
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeBy {
                 it.store.map { store ->
-                    MapUtils.addMarker(map, store, 0)
+                    mapMarkerPosition = MapUtils.addMarker(map, store, mapMarkerPosition)
+                    storeList.add(store)
                 }
+                binding.storePager.adapter?.notifyDataSetChanged()
             }.addTo(disposable)
 
         viewModel.error
@@ -76,6 +86,8 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
                     .setAction(R.string.retry) { failure.retry }
                     .show()
             }.addTo(disposable)
+
+        binding.storePager.orientation = ViewPager2.ORIENTATION_HORIZONTAL
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
@@ -85,6 +97,19 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
         } else {
             MapUtils.requestLocationPermission(requireContext(), requireActivity())
         }
+
+        map.setOnMarkerClickListener {
+            binding.storePager.setCurrentItem(it.tag as Int, true)
+            true
+        }
+
+        binding.storePager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+                val selectedStoreLatLng = LatLng(storeList[position].lat, storeList[position].lng)
+                map.moveCamera(CameraUpdateFactory.newLatLngZoom(selectedStoreLatLng, 18.0f))
+            }
+        })
     }
 
     override fun onRequestPermissionsResult(
