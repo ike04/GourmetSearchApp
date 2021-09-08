@@ -128,7 +128,8 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
                         val currentLatLng = LatLng(lastLocation.latitude, lastLocation.longitude)
                         map.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 14.0f))
 
-                        viewModel.fetchNearStores(lastLocation.latitude, lastLocation.longitude)
+                        viewModel.saveLocation(currentLatLng)
+                        viewModel.fetchNearStores()
                     }
                 }
             }

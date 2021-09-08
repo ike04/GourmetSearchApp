@@ -1,5 +1,6 @@
 package com.google.codelab.gourmetsearchapp.usecase
 
+import com.google.android.gms.maps.model.LatLng
 import com.google.codelab.gourmetsearchapp.model.businessmodel.StoresBusinessModel
 import com.google.codelab.gourmetsearchapp.repository.SearchDataManager
 import io.reactivex.rxjava3.core.Single
@@ -10,10 +11,12 @@ class MapsUsecaseImpl @Inject constructor(
 ) : BaseUsecase(), MapsUsecase {
 
     override fun fetchNearStores(
-        lat: Double,
-        lng: Double,
         startPage: Int
     ): Single<StoresBusinessModel> {
-        return repository.fetchNearStores(lat, lng, startPage)
+        return repository.fetchNearStores(startPage)
+    }
+
+    override fun saveLocation(latLng: LatLng) {
+        repository.saveLocation(latLng)
     }
 }

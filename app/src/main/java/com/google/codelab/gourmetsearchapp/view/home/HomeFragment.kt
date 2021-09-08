@@ -24,10 +24,6 @@ class HomeFragment : Fragment() {
     ): View? {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
 
-        val textView: TextView = binding.textHome
-        viewModel.text.observe(viewLifecycleOwner, Observer {
-            textView.text = it
-        })
         return binding.root
     }
 }

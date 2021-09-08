@@ -1,5 +1,6 @@
 package com.google.codelab.gourmetsearchapp.viewmodel
 
+import com.google.android.gms.maps.model.LatLng
 import com.google.codelab.gourmetsearchapp.model.businessmodel.StoresBusinessModel
 import com.google.codelab.gourmetsearchapp.usecase.MapsUsecase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -12,12 +13,16 @@ class MapsViewModel @Inject constructor(
 ) : BaseViewModel(usecase) {
     val storeList: PublishSubject<StoresBusinessModel> = PublishSubject.create()
 
-    fun fetchNearStores(lat: Double, lng: Double) {
-        usecase.fetchNearStores(lat, lng)
+    fun fetchNearStores() {
+        usecase.fetchNearStores()
             .execute(
                 onSuccess = { storeList.onNext(it) },
-                retry = { fetchNearStores(lat, lng) }
+                retry = { fetchNearStores() }
             )
+    }
+
+    fun saveLocation(latLng: LatLng) {
+        usecase.saveLocation(latLng)
     }
 
 }
