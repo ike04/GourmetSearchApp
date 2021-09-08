@@ -5,6 +5,12 @@ import android.app.Activity
 import android.content.Context
 import android.content.pm.PackageManager
 import androidx.core.app.ActivityCompat
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.Marker
+import com.google.android.gms.maps.model.MarkerOptions
+import com.google.codelab.gourmetsearchapp.model.businessmodel.Store
 
 object MapUtils {
     private const val MY_PERMISSION_REQUEST_ACCESS_FINE_LOCATION = 1
@@ -35,5 +41,15 @@ object MapUtils {
                 MY_PERMISSION_REQUEST_ACCESS_FINE_LOCATION
             )
         }
+    }
+
+    fun addMarker(map: GoogleMap, store: Store, position: Int): Int {
+        val pin: Marker = map.addMarker(
+            MarkerOptions()
+                .position(LatLng(store.lat, store.lng))
+                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN))
+        )
+        pin.tag = position
+        return position + 1
     }
 }
