@@ -17,11 +17,19 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.material.snackbar.Snackbar
 import com.google.codelab.gourmetsearchapp.R
 import com.google.codelab.gourmetsearchapp.databinding.FragmentMapsBinding
 import com.google.codelab.gourmetsearchapp.util.MapUtils
 import com.google.codelab.gourmetsearchapp.viewmodel.MapsViewModel
+import dagger.hilt.android.AndroidEntryPoint
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.disposables.CompositeDisposable
+import io.reactivex.rxjava3.kotlin.addTo
+import io.reactivex.rxjava3.kotlin.subscribeBy
+import io.reactivex.rxjava3.schedulers.Schedulers
 
+@AndroidEntryPoint
 class MapsFragment : Fragment(), OnMapReadyCallback {
     private lateinit var binding: FragmentMapsBinding
     private lateinit var map: GoogleMap
@@ -31,6 +39,7 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
     private val viewModel: MapsViewModel by viewModels()
     private val MY_PERMISSION_REQUEST_ACCESS_FINE_LOCATION = 1
     private var locationCallback: LocationCallback? = null
+    private val disposable = CompositeDisposable()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -45,10 +54,28 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val mapFragment = childFragmentManager.findFragmentById(R.id.fragment_map) as SupportMapFragment?
+        val mapFragment =
+            childFragmentManager.findFragmentById(R.id.fragment_map) as SupportMapFragment?
 
         mapFragment?.getMapAsync(this)
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireContext())
+        fusedLocationProviderClient =
+            LocationServices.getFusedLocationProviderClient(requireContext())
+
+        viewModel.storeList
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeBy {
+                it.store.map { store ->
+                    MapUtils.addMarker(map, store, 0)
+                }
+            }.addTo(disposable)
+
+        viewModel.error
+            .subscribeBy { failure ->
+                Snackbar.make(view, failure.message, Snackbar.LENGTH_INDEFINITE)
+                    .setAction(R.string.retry) { failure.retry }
+                    .show()
+            }.addTo(disposable)
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
@@ -72,7 +99,11 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
                     // 許可された
                     enableLocation()
                 } else {
-                    Toast.makeText(requireContext(), R.string.no_location_authorization, Toast.LENGTH_LONG).show()
+                    Toast.makeText(
+                        requireContext(),
+                        R.string.no_location_authorization,
+                        Toast.LENGTH_LONG
+                    ).show()
                 }
             }
         }
@@ -96,6 +127,8 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
 
                         val currentLatLng = LatLng(lastLocation.latitude, lastLocation.longitude)
                         map.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 14.0f))
+
+                        viewModel.fetchNearStores(lastLocation.latitude, lastLocation.longitude)
                     }
                 }
             }
@@ -105,5 +138,10 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
                 null
             )
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        disposable.clear()
     }
 }
