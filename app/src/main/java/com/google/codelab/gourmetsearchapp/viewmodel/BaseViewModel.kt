@@ -3,6 +3,7 @@ package com.google.codelab.gourmetsearchapp.viewmodel
 import androidx.lifecycle.ViewModel
 import com.google.codelab.gourmetsearchapp.R
 import com.google.codelab.gourmetsearchapp.model.Failure
+import com.google.codelab.gourmetsearchapp.usecase.Usecase
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.disposables.CompositeDisposable
@@ -11,8 +12,9 @@ import io.reactivex.rxjava3.kotlin.subscribeBy
 import io.reactivex.rxjava3.schedulers.Schedulers
 import io.reactivex.rxjava3.subjects.PublishSubject
 import retrofit2.HttpException
+import javax.inject.Inject
 
-abstract class BaseViewModel: ViewModel() {
+abstract class BaseViewModel @Inject constructor(private val usecase: Usecase): ViewModel() {
     protected val disposables = CompositeDisposable()
     val error: PublishSubject<Failure> = PublishSubject.create()
 
@@ -44,7 +46,8 @@ abstract class BaseViewModel: ViewModel() {
     }
 
     override fun onCleared() {
-        disposables.clear()
         super.onCleared()
+        disposables.clear()
+        usecase.dispose()
     }
 }
