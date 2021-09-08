@@ -9,4 +9,6 @@
     <dimen name="m_spacing">12dp</dimen>
     <dimen name="s_spacing">8dp</dimen>
     <dimen name="xs_spacing">4dp</dimen>
+
+    <dimen name="image_default_size">160dp</dimen>
 </resources>
