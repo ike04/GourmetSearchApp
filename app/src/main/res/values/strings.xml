@@ -15,10 +15,13 @@
 
     <!--    map              -->
     <string name="no_location_authorization">現在地は表示できません</string>
+
     <!--    error message    -->
     <string name="error_message_default"></string>
     <string name="error_message_404"></string>
     <string name="error_message_500"></string>
+    <string name="error_offline">ネットワークに接続できません。</string>
+    <string name="retry">retry</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

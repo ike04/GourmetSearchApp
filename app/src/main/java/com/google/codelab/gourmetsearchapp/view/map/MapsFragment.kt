@@ -17,6 +17,7 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.material.snackbar.Snackbar
 import com.google.codelab.gourmetsearchapp.R
 import com.google.codelab.gourmetsearchapp.databinding.FragmentMapsBinding
 import com.google.codelab.gourmetsearchapp.util.MapUtils
@@ -53,10 +54,12 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val mapFragment = childFragmentManager.findFragmentById(R.id.fragment_map) as SupportMapFragment?
+        val mapFragment =
+            childFragmentManager.findFragmentById(R.id.fragment_map) as SupportMapFragment?
 
         mapFragment?.getMapAsync(this)
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireContext())
+        fusedLocationProviderClient =
+            LocationServices.getFusedLocationProviderClient(requireContext())
 
         viewModel.storeList
             .subscribeOn(Schedulers.io())
@@ -65,6 +68,13 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
                 it.store.map { store ->
                     MapUtils.addMarker(map, store, 0)
                 }
+            }.addTo(disposable)
+
+        viewModel.error
+            .subscribeBy { failure ->
+                Snackbar.make(view, failure.message, Snackbar.LENGTH_INDEFINITE)
+                    .setAction(R.string.retry) { failure.retry }
+                    .show()
             }.addTo(disposable)
     }
 
@@ -89,7 +99,11 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
                     // 許可された
                     enableLocation()
                 } else {
-                    Toast.makeText(requireContext(), R.string.no_location_authorization, Toast.LENGTH_LONG).show()
+                    Toast.makeText(
+                        requireContext(),
+                        R.string.no_location_authorization,
+                        Toast.LENGTH_LONG
+                    ).show()
                 }
             }
         }

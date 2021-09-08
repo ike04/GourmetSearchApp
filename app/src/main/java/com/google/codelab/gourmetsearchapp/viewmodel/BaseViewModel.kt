@@ -12,6 +12,7 @@ import io.reactivex.rxjava3.kotlin.subscribeBy
 import io.reactivex.rxjava3.schedulers.Schedulers
 import io.reactivex.rxjava3.subjects.PublishSubject
 import retrofit2.HttpException
+import java.net.UnknownHostException
 import javax.inject.Inject
 
 abstract class BaseViewModel constructor(private val usecase: Usecase): ViewModel() {
@@ -33,6 +34,7 @@ abstract class BaseViewModel constructor(private val usecase: Usecase): ViewMode
     private fun Throwable.toMessage(): Int {
         return when (this) {
             is HttpException -> toMessage()
+            is UnknownHostException -> R.string.error_offline
             else -> R.string.error_message_default
         }
     }
