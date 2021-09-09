@@ -39,4 +39,8 @@ class SearchFilterDialogFragment : BottomSheetDialogFragment() {
             .subscribeBy { dismiss() }
             .addTo(disposable)
     }
+
+    private fun createSearchCondition() {
+
+    }
 }

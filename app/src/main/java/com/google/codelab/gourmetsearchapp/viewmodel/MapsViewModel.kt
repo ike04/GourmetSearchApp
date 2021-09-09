@@ -13,8 +13,8 @@ class MapsViewModel @Inject constructor(
 ) : BaseViewModel(usecase) {
     val storeList: PublishSubject<StoresBusinessModel> = PublishSubject.create()
 
-    fun fetchNearStores() {
-        usecase.fetchNearStores()
+    fun fetchNearStores(range: Int = 3, coupon: Int = 0, drink: Int = 0, wifi: Int= 0, lunch: Int = 0) {
+        usecase.fetchNearStores(range, coupon, drink, wifi, lunch)
             .execute(
                 onSuccess = { storeList.onNext(it) },
                 retry = { fetchNearStores() }

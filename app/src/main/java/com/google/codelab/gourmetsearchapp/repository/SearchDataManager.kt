@@ -6,7 +6,14 @@ import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
 
 interface SearchDataManager {
-    fun fetchNearStores(startPage: Int): Single<StoresBusinessModel>
+    fun fetchNearStores(
+        range: Int,
+        coupon: Int,
+        drink: Int,
+        wifi: Int,
+        lunch: Int,
+        startPage: Int
+    ): Single<StoresBusinessModel>
 
     fun saveLocation(latLng: LatLng)
 

@@ -12,13 +12,26 @@ import javax.inject.Inject
 class SearchDataManagerImpl @Inject constructor(
     private val remote: RemoteData
 ) : SearchDataManager {
-    val latLng: BehaviorSubject<LatLng> = BehaviorSubject.create()
+    private val latLng: BehaviorSubject<LatLng> = BehaviorSubject.create()
 
     override fun fetchNearStores(
-       startPage: Int
+        range: Int,
+        coupon: Int,
+        drink: Int,
+        wifi: Int,
+        lunch: Int,
+        startPage: Int
     ): Single<StoresBusinessModel> {
-        return remote.fetchStores(latLng.value.latitude, latLng.value.longitude, startPage)
-            .map { StoresMapper.transform(it) }
+        return remote.fetchStores(
+            latLng.value.latitude,
+            latLng.value.longitude,
+            startPage,
+            range,
+            coupon,
+            drink,
+            wifi,
+            lunch
+        ).map { StoresMapper.transform(it) }
     }
 
     override fun saveLocation(latLng: LatLng) {
