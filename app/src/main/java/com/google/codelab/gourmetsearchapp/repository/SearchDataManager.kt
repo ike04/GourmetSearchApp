@@ -1,6 +1,7 @@
 package com.google.codelab.gourmetsearchapp.repository
 
 import com.google.android.gms.maps.model.LatLng
+import com.google.codelab.gourmetsearchapp.model.FilterDataModel
 import com.google.codelab.gourmetsearchapp.model.businessmodel.StoresBusinessModel
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
@@ -19,4 +20,10 @@ interface SearchDataManager {
     fun saveLocation(latLng: LatLng)
 
     fun getLocationStream(): Observable<LatLng>
+
+    fun saveFilterData(filterData: FilterDataModel)
+
+    fun fetchFilterData()
+
+    fun getFilterDataStream(): Observable<FilterDataModel>
 }

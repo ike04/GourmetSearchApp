@@ -1,7 +1,9 @@
 package com.google.codelab.gourmetsearchapp.repository
 
 import com.google.android.gms.maps.model.LatLng
+import com.google.codelab.gourmetsearchapp.data.LocalData
 import com.google.codelab.gourmetsearchapp.data.RemoteData
+import com.google.codelab.gourmetsearchapp.model.FilterDataModel
 import com.google.codelab.gourmetsearchapp.model.businessmodel.StoresBusinessModel
 import com.google.codelab.gourmetsearchapp.model.businessmodel.StoresMapper
 import io.reactivex.rxjava3.core.Observable
@@ -10,7 +12,8 @@ import io.reactivex.rxjava3.subjects.BehaviorSubject
 import javax.inject.Inject
 
 class SearchDataManagerImpl @Inject constructor(
-    private val remote: RemoteData
+    private val remote: RemoteData,
+    private val local: LocalData
 ) : SearchDataManager {
     private val latLng: BehaviorSubject<LatLng> = BehaviorSubject.create()
 
@@ -41,4 +44,16 @@ class SearchDataManagerImpl @Inject constructor(
     }
 
     override fun getLocationStream(): Observable<LatLng> = latLng.hide()
+
+    override fun saveFilterData(filterData: FilterDataModel) {
+        local.saveFilterData(filterData)
+    }
+
+    override fun fetchFilterData() {
+        return local.fetchFilterData()
+    }
+
+    override fun getFilterDataStream(): Observable<FilterDataModel> {
+        return local.getFilterDataStream()
+    }
 }
