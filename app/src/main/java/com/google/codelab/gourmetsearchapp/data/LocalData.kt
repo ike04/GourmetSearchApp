@@ -50,5 +50,13 @@ class LocalData @Inject constructor() {
             }
     }
 
+    fun resetFilter() {
+        Single.fromCallable {
+            dao.deleteFilterData()
+        }
+            .subscribeOn(Schedulers.io())
+            .subscribe()
+    }
+
     fun getFilterDataStream(): Observable<FilterDataModel> = filterData.hide()
 }

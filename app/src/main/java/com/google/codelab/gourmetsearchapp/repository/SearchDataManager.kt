@@ -25,5 +25,7 @@ interface SearchDataManager {
 
     fun fetchFilterData()
 
+    fun resetFilterData()
+
     fun getFilterDataStream(): Observable<FilterDataModel>
 }

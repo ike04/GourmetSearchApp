@@ -53,6 +53,10 @@ class SearchDataManagerImpl @Inject constructor(
         return local.fetchFilterData()
     }
 
+    override fun resetFilterData() {
+        local.resetFilter()
+    }
+
     override fun getFilterDataStream(): Observable<FilterDataModel> {
         return local.getFilterDataStream()
     }

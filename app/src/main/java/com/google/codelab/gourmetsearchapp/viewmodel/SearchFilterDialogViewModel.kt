@@ -14,6 +14,7 @@ class SearchFilterDialogViewModel @Inject constructor(
     private val usecase: SearchFilterDialogUsecase
 ) : BaseViewModel(usecase) {
     val onSearchClicked: PublishSubject<Signal> = PublishSubject.create()
+    val onResetClicked: PublishSubject<Signal> = PublishSubject.create()
     val onCancelClicked: PublishSubject<Signal> = PublishSubject.create()
     val filterData: PublishSubject<FilterDataModel> = PublishSubject.create()
 
@@ -29,8 +30,16 @@ class SearchFilterDialogViewModel @Inject constructor(
             .addTo(disposables)
     }
 
+    fun resetFilter() {
+        usecase.resetFilterData()
+    }
+
     fun onSearchClick() {
         onSearchClicked.onNext(Signal)
+    }
+
+    fun onResetClick() {
+        onResetClicked.onNext(Signal)
     }
 
     fun onCancelClick() {

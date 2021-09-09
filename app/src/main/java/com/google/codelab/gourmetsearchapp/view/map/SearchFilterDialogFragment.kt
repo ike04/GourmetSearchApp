@@ -55,6 +55,12 @@ class SearchFilterDialogFragment : BottomSheetDialogFragment() {
                 fetchFilterConditionStores()
             }.addTo(disposable)
 
+        viewModel.onResetClicked
+            .subscribeBy {
+                viewModel.resetFilter()
+                resetFilterSetting()
+            }.addTo(disposable)
+
         viewModel.onCancelClicked
             .subscribeBy { dismiss() }
             .addTo(disposable)
@@ -119,6 +125,17 @@ class SearchFilterDialogFragment : BottomSheetDialogFragment() {
             1
         } else {
             0
+        }
+    }
+
+    private fun resetFilterSetting() {
+        binding.apply {
+            radioGroup.check(R.id.range_1000)
+            checkBoxCoupon.isChecked = false
+            checkBoxDrink.isChecked = false
+            checkBoxPrivateRoom.isChecked = false
+            checkBoxWifi.isChecked = false
+            checkBoxLunch.isChecked = false
         }
     }
 }

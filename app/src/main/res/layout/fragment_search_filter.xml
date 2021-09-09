@@ -134,18 +134,37 @@
                 android:text="@string/text_filter_lunch" />
         </LinearLayout>
 
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.7" />
+
         <Button
             android:id="@+id/filter_search_button"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/m_spacing"
             android:layout_marginBottom="@dimen/s_spacing"
+            android:layout_marginStart="@dimen/xxl_spacing"
+            android:layout_marginEnd="@dimen/xxl_spacing"
             android:onClick="@{v -> viewModel.onSearchClick()}"
             android:text="@string/text_filter_search_button"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/guideline"
             app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+
+        <Button
+            android:id="@+id/reset_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{v -> viewModel.onResetClick()}"
+            android:text="@string/text_filter_reset"
+            app:layout_constraintBottom_toBottomOf="@+id/filter_search_button"
+            app:layout_constraintStart_toStartOf="@id/guideline"
+            app:layout_constraintTop_toTopOf="@+id/filter_search_button" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

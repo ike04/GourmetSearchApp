@@ -9,5 +9,7 @@ interface SearchFilterDialogUsecase: Usecase {
 
     fun fetchFilterData()
 
+    fun resetFilterData()
+
     fun getFilterDataStream(): Observable<FilterDataModel>
 }

@@ -1,9 +1,6 @@
 package com.google.codelab.gourmetsearchapp.data
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import com.google.codelab.gourmetsearchapp.model.local.FilterEntity
 
 @Dao
@@ -14,4 +11,7 @@ interface FilterDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun saveFilterData(filterEntity: FilterEntity)
+
+    @Query("DELETE FROM filter_data")
+    fun deleteFilterData()
 }

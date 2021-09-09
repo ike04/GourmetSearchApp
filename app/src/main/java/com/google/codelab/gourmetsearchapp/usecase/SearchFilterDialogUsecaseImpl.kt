@@ -19,5 +19,9 @@ class SearchFilterDialogUsecaseImpl @Inject constructor(
         repository.fetchFilterData()
     }
 
+    override fun resetFilterData() {
+        repository.resetFilterData()
+    }
+
     override fun getFilterDataStream(): Observable<FilterDataModel> = repository.getFilterDataStream()
 }
