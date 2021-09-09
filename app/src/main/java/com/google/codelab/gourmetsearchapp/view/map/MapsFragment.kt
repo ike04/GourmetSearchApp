@@ -172,7 +172,7 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.filter -> {
-                SearchFilterFragment.newInstance().show(childFragmentManager, "")
+                SearchFilterDialogFragment.newInstance().show(childFragmentManager, "")
                 true
             }
             else -> super.onOptionsItemSelected(item)
