@@ -23,6 +23,19 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/m_spacing"
+            android:background="@color/transparent"
+            android:clickable="true"
+            android:focusable="true"
+            android:onClick="@{v -> viewModel.onCancelClick()}"
+            android:src="@drawable/ic_baseline_clear_24"
+            app:layout_constraintBottom_toBottomOf="@id/filter_title_text_view"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/filter_title_text_view" />
+
         <TextView
             android:id="@+id/text_range"
             android:layout_width="wrap_content"
@@ -51,32 +64,32 @@
                 android:id="@+id/range_300"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="300m" />
+                android:text="@string/text_filter_range_checkbox_1" />
 
             <RadioButton
                 android:id="@+id/range_500"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="500m" />
+                android:text="@string/text_filter_range_checkbox_2" />
 
             <RadioButton
                 android:id="@+id/range_1000"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:checked="true"
-                android:text="1000m" />
+                android:text="@string/text_filter_range_checkbox_3" />
 
             <RadioButton
                 android:id="@+id/range_2000"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="2000m" />
+                android:text="@string/text_filter_range_checkbox_4" />
 
             <RadioButton
                 android:id="@+id/range_3000"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="3000m" />
+                android:text="@string/text_filter_range_checkbox_5" />
         </RadioGroup>
 
         <LinearLayout

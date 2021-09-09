@@ -9,7 +9,6 @@ import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.gms.location.*
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -78,6 +77,7 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
                     storeList.add(store)
                 }
                 binding.storePager.adapter?.notifyDataSetChanged()
+                Toast.makeText(requireContext(),"周辺のレストランが${storeList.size}件見つかりました",Toast.LENGTH_LONG).show()
             }.addTo(disposable)
 
         viewModel.reset
@@ -86,6 +86,7 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
             .subscribeBy {
                 storeList.clear()
                 map.clear()
+                mapMarkerPosition = 0
             }
             .addTo(disposable)
 
@@ -115,10 +116,10 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
         binding.storePager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
-                if(storeList.isNotEmpty()) {
+                if (storeList.isNotEmpty()) {
                     val selectedStoreLatLng =
                         LatLng(storeList[position].lat, storeList[position].lng)
-                    map.moveCamera(CameraUpdateFactory.newLatLngZoom(selectedStoreLatLng, 18.0f))
+                    map.moveCamera(CameraUpdateFactory.newLatLng(selectedStoreLatLng))
                 }
             }
         })

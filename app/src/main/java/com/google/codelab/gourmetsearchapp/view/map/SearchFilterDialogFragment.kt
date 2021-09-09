@@ -44,6 +44,10 @@ class SearchFilterDialogFragment : BottomSheetDialogFragment() {
                 parentViewModel.resetStores()
                 fetchFilterConditionStores()
             }.addTo(disposable)
+
+        viewModel.onCancelClicked
+            .subscribeBy { dismiss() }
+            .addTo(disposable)
     }
 
     private fun fetchFilterConditionStores() {

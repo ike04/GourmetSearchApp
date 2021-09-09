@@ -19,6 +19,11 @@
     <!--    search filter    -->
     <string name="text_filter_title">検索条件</string>
     <string name="text_filter_range_text">検索範囲</string>
+    <string name="text_filter_range_checkbox_1">300m</string>
+    <string name="text_filter_range_checkbox_2">500m</string>
+    <string name="text_filter_range_checkbox_3">1000m</string>
+    <string name="text_filter_range_checkbox_4">2000m</string>
+    <string name="text_filter_range_checkbox_5">3000m</string>
     <string name="text_filter_coupon">クーポンあり</string>
     <string name="text_filter_drink">飲み放題あり</string>
     <string name="text_filter_wifi">Wi-Fiあり</string>
