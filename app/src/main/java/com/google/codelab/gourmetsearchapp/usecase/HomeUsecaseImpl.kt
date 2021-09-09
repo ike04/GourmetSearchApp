@@ -13,17 +13,19 @@ class HomeUsecaseImpl @Inject constructor(
         range: Int,
         coupon: Int,
         drink: Int,
+        room: Int,
         wifi: Int,
         lunch: Int,
         startPage: Int
     ): Single<StoresBusinessModel> {
         return repository.fetchNearStores(
-            startPage,
             range,
             coupon,
             drink,
+            room,
             wifi,
-            lunch
+            lunch,
+            startPage
         )
     }
 }

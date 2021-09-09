@@ -15,8 +15,8 @@ class HomeViewModel @Inject constructor(
     val storeList: PublishSubject<StoresBusinessModel> = PublishSubject.create()
     val moreLoad = ObservableBoolean(true)
 
-    fun fetchStores(range: Int = 3, coupon: Int = 0, drink: Int = 0, wifi: Int= 0, lunch: Int = 0) {
-        usecase.fetchNearStores(range, coupon, drink, wifi, lunch, currentPage)
+    fun fetchStores(range: Int = 3, coupon: Int = 0, drink: Int = 0, room: Int = 0, wifi: Int= 0, lunch: Int = 0) {
+        usecase.fetchNearStores(range, coupon, drink, room, wifi, lunch, currentPage)
             .execute(
                 onSuccess = {
                     if (it.store.size < 20) {

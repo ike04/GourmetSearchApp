@@ -8,6 +8,7 @@ import android.view.*
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.gms.location.*
@@ -36,7 +37,7 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     private lateinit var lastLocation: Location
 
-    private val viewModel: MapsViewModel by viewModels()
+    private val viewModel: MapsViewModel by activityViewModels()
     private val MY_PERMISSION_REQUEST_ACCESS_FINE_LOCATION = 1
     private var locationCallback: LocationCallback? = null
     private var mapMarkerPosition = 0
@@ -79,6 +80,15 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
                 binding.storePager.adapter?.notifyDataSetChanged()
             }.addTo(disposable)
 
+        viewModel.reset
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeBy {
+                storeList.clear()
+                map.clear()
+            }
+            .addTo(disposable)
+
         viewModel.error
             .subscribeBy { failure ->
                 Snackbar.make(view, failure.message, Snackbar.LENGTH_INDEFINITE)
@@ -105,8 +115,11 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
         binding.storePager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
-                val selectedStoreLatLng = LatLng(storeList[position].lat, storeList[position].lng)
-                map.moveCamera(CameraUpdateFactory.newLatLngZoom(selectedStoreLatLng, 18.0f))
+                if(storeList.isNotEmpty()) {
+                    val selectedStoreLatLng =
+                        LatLng(storeList[position].lat, storeList[position].lng)
+                    map.moveCamera(CameraUpdateFactory.newLatLngZoom(selectedStoreLatLng, 18.0f))
+                }
             }
         })
     }

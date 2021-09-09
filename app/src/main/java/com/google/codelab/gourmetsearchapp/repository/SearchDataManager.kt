@@ -10,6 +10,7 @@ interface SearchDataManager {
         range: Int,
         coupon: Int,
         drink: Int,
+        room: Int,
         wifi: Int,
         lunch: Int,
         startPage: Int

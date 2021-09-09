@@ -18,6 +18,7 @@ class SearchDataManagerImpl @Inject constructor(
         range: Int,
         coupon: Int,
         drink: Int,
+        room: Int,
         wifi: Int,
         lunch: Int,
         startPage: Int
@@ -25,12 +26,13 @@ class SearchDataManagerImpl @Inject constructor(
         return remote.fetchStores(
             latLng.value.latitude,
             latLng.value.longitude,
-            startPage,
             range,
             coupon,
             drink,
+            room,
             wifi,
-            lunch
+            lunch,
+            startPage
         ).map { StoresMapper.transform(it) }
     }
 

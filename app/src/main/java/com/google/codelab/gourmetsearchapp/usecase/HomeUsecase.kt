@@ -8,6 +8,7 @@ interface HomeUsecase : Usecase {
         range: Int,
         coupon: Int,
         drink: Int,
+        room: Int,
         wifi: Int,
         lunch: Int,
         startPage: Int = 1
