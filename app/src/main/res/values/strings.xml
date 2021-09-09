@@ -16,6 +16,12 @@
     <!--    map              -->
     <string name="no_location_authorization">現在地は表示できません</string>
 
+    <!--    search filter    -->
+    <string name="text_filter_coupon">クーポンあり</string>
+    <string name="text_filter_drink">飲み放題あり</string>
+    <string name="text_filter_wifi">Wi-Fiあり</string>
+    <string name="text_filter_private_room">個室あり</string>
+
     <!--    error message    -->
     <string name="error_message_default"></string>
     <string name="error_message_404"></string>
