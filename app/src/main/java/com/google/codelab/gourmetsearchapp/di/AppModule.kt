@@ -1,5 +1,7 @@
 package com.google.codelab.gourmetsearchapp.di
 
+import com.google.codelab.gourmetsearchapp.repository.FavoriteDataManager
+import com.google.codelab.gourmetsearchapp.repository.FavoriteDataManagerImpl
 import com.google.codelab.gourmetsearchapp.repository.SearchDataManager
 import com.google.codelab.gourmetsearchapp.repository.SearchDataManagerImpl
 import com.google.codelab.gourmetsearchapp.usecase.*
@@ -18,6 +20,10 @@ abstract class RepositoryModule {
 
     @Singleton
     @Binds
+    abstract fun bindFavoriteDataManager(favoriteDataManagerImpl: FavoriteDataManagerImpl): FavoriteDataManager
+
+    @Singleton
+    @Binds
     abstract fun bindBaseUsecase(baseUsecase: BaseUsecase): Usecase
 
     @Singleton
@@ -31,6 +37,10 @@ abstract class RepositoryModule {
     @Singleton
     @Binds
     abstract fun bindFavoriteStoresUsecase(favoriteStoresUsecaseImpl: FavoriteStoresUsecaseImpl): FavoriteStoresUsecase
+
+    @Singleton
+    @Binds
+    abstract fun bindStoreWebViewUsecase(storeWebViewUsecaseImpl: StoreWebViewUsecaseImpl): StoreWebViewUsecase
 
     @Singleton
     @Binds

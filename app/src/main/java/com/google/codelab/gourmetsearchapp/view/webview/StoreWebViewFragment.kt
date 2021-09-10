@@ -9,8 +9,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.google.codelab.gourmetsearchapp.databinding.StoreWebViewFragmentBinding
 import com.google.codelab.gourmetsearchapp.viewmodel.StoreWebViewViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 
+@AndroidEntryPoint
 class StoreWebViewFragment : Fragment() {
     private lateinit var binding: StoreWebViewFragmentBinding
     private val viewModel: StoreWebViewViewModel by viewModels()
@@ -43,6 +45,10 @@ class StoreWebViewFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = StoreWebViewFragmentBinding.inflate(layoutInflater)
+        binding.viewModel = viewModel
+
+        binding.url = url
+        binding.storeId = storeId
         return binding.root
     }
 

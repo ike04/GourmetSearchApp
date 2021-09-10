@@ -19,8 +19,10 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.material.snackbar.Snackbar
 import com.google.codelab.gourmetsearchapp.R
 import com.google.codelab.gourmetsearchapp.databinding.FragmentMapsBinding
+import com.google.codelab.gourmetsearchapp.ext.showFragment
 import com.google.codelab.gourmetsearchapp.model.businessmodel.Store
 import com.google.codelab.gourmetsearchapp.util.MapUtils
+import com.google.codelab.gourmetsearchapp.view.webview.StoreWebViewFragment
 import com.google.codelab.gourmetsearchapp.viewmodel.MapsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
@@ -66,7 +68,14 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
             LocationServices.getFusedLocationProviderClient(requireContext())
 
         binding.storePager.adapter =
-            PagerStoreAdapter(storeList) {}
+            PagerStoreAdapter(storeList) {
+                val position = binding.storePager.currentItem
+
+                StoreWebViewFragment.newInstance(
+                    storeList[position].id,
+                    storeList[position].urls
+                ).showFragment(parentFragmentManager)
+            }
 
         viewModel.storeList
             .subscribeOn(Schedulers.io())
