@@ -48,6 +48,7 @@ class OnboardingActivity : AppCompatActivity() {
         val onboard = Onboarding.data
         pagerAdapter = OnboardingPagerAdapter(supportFragmentManager, onboard)
         binding.viewPager.adapter = pagerAdapter
+        binding.tabLayout.setupWithViewPager(binding.viewPager, true)
     }
 
     private fun setupViews() {
