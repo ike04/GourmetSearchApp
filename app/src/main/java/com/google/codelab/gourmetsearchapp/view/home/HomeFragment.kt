@@ -51,10 +51,6 @@ class HomeFragment : Fragment() {
             adapter = groupAdapter
             layoutManager =
                 GridLayoutManager(requireContext(), 2, GridLayoutManager.VERTICAL, false)
-            val itemHorizontalDecoration = DividerItemDecoration(requireContext(), DividerItemDecoration.HORIZONTAL)
-            val itemVerticalDecoration = DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL)
-            addItemDecoration(itemHorizontalDecoration)
-            addItemDecoration(itemVerticalDecoration)
         }
 
         viewModel.fetchStores()
