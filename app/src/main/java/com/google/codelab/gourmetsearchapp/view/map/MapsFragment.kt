@@ -8,7 +8,7 @@ import android.view.*
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.gms.location.*
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -36,7 +36,7 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     private lateinit var lastLocation: Location
 
-    private val viewModel: MapsViewModel by viewModels()
+    private val viewModel: MapsViewModel by activityViewModels()
     private val MY_PERMISSION_REQUEST_ACCESS_FINE_LOCATION = 1
     private var locationCallback: LocationCallback? = null
     private var mapMarkerPosition = 0
@@ -77,7 +77,18 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
                     storeList.add(store)
                 }
                 binding.storePager.adapter?.notifyDataSetChanged()
+                Toast.makeText(requireContext(),"周辺のレストランが${storeList.size}件見つかりました",Toast.LENGTH_LONG).show()
             }.addTo(disposable)
+
+        viewModel.reset
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeBy {
+                storeList.clear()
+                map.clear()
+                mapMarkerPosition = 0
+            }
+            .addTo(disposable)
 
         viewModel.error
             .subscribeBy { failure ->
@@ -105,8 +116,11 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
         binding.storePager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
-                val selectedStoreLatLng = LatLng(storeList[position].lat, storeList[position].lng)
-                map.moveCamera(CameraUpdateFactory.newLatLngZoom(selectedStoreLatLng, 18.0f))
+                if (storeList.isNotEmpty()) {
+                    val selectedStoreLatLng =
+                        LatLng(storeList[position].lat, storeList[position].lng)
+                    map.moveCamera(CameraUpdateFactory.newLatLng(selectedStoreLatLng))
+                }
             }
         })
     }
@@ -172,7 +186,7 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.filter -> {
-                // Todo
+                SearchFilterDialogFragment.newInstance().show(childFragmentManager, "")
                 true
             }
             else -> super.onOptionsItemSelected(item)

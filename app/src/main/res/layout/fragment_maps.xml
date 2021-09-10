@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <import type="android.view.View" />
         <variable
             name="viewModel"
             type="com.google.codelab.gourmetsearchapp.viewmodel.MapsViewModel" />
@@ -39,6 +40,7 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:paddingHorizontal="@dimen/s_spacing"
+            android:visibility="@{viewModel.showViewPager ? View.VISIBLE: View.GONE}"
             app:layout_constraintTop_toTopOf="@id/guideline_viewpager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

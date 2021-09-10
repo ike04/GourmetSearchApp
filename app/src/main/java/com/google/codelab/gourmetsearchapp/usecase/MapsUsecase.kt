@@ -5,7 +5,15 @@ import com.google.codelab.gourmetsearchapp.model.businessmodel.StoresBusinessMod
 import io.reactivex.rxjava3.core.Single
 
 interface MapsUsecase : Usecase {
-    fun fetchNearStores(startPage: Int = 1): Single<StoresBusinessModel>
+    fun fetchNearStores(
+        range: Int,
+        coupon: Int,
+        drink: Int,
+        room: Int,
+        wifi: Int,
+        lunch: Int,
+        startPage: Int = 1
+    ): Single<StoresBusinessModel>
 
     fun saveLocation(latLng: LatLng)
 }

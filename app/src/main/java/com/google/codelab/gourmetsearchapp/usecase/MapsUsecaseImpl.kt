@@ -11,9 +11,23 @@ class MapsUsecaseImpl @Inject constructor(
 ) : BaseUsecase(), MapsUsecase {
 
     override fun fetchNearStores(
+        range: Int,
+        coupon: Int,
+        drink: Int,
+        room: Int,
+        wifi: Int,
+        lunch: Int,
         startPage: Int
     ): Single<StoresBusinessModel> {
-        return repository.fetchNearStores(startPage)
+        return repository.fetchNearStores(
+            range,
+            coupon,
+            drink,
+            room,
+            wifi,
+            lunch,
+            startPage
+        )
     }
 
     override fun saveLocation(latLng: LatLng) {

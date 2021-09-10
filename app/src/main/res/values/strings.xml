@@ -16,12 +16,26 @@
     <!--    map              -->
     <string name="no_location_authorization">現在地は表示できません</string>
 
+    <!--    search filter    -->
+    <string name="text_filter_title">検索条件</string>
+    <string name="text_filter_range_text">検索範囲</string>
+    <string name="text_filter_range_checkbox_1">300m</string>
+    <string name="text_filter_range_checkbox_2">500m</string>
+    <string name="text_filter_range_checkbox_3">1000m</string>
+    <string name="text_filter_range_checkbox_4">2000m</string>
+    <string name="text_filter_range_checkbox_5">3000m</string>
+    <string name="text_filter_coupon">クーポンあり</string>
+    <string name="text_filter_drink">飲み放題あり</string>
+    <string name="text_filter_wifi">Wi-Fiあり</string>
+    <string name="text_filter_private_room">個室あり</string>
+    <string name="text_filter_lunch">ランチあり</string>
+    <string name="text_filter_search_button">検索</string>
+    <string name="text_filter_reset">リセット</string>
+
     <!--    error message    -->
     <string name="error_message_default"></string>
     <string name="error_message_404"></string>
     <string name="error_message_500"></string>
     <string name="error_offline">ネットワークに接続できません。</string>
     <string name="retry">retry</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

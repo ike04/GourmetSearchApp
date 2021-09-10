@@ -12,16 +12,32 @@ class RemoteData @Inject constructor(
     companion object {
         private const val FORMAT = "json"
         private const val COUNT = 20
-        private const val RANGE = 3
     }
 
     fun fetchStores(
         lat: Double,
         lng: Double,
+        range: Int,
+        coupon: Int,
+        drink: Int,
+        room: Int,
+        wifi: Int,
+        lunch: Int,
         start: Int = 1
     ): Single<Response<StoresResponse>> {
         return api.fetchNearStores(
-            BuildConfig.API_KEY, COUNT, lat, lng, start, RANGE, FORMAT
+            BuildConfig.API_KEY,
+            COUNT,
+            lat,
+            lng,
+            start,
+            range,
+            coupon,
+            drink,
+            room,
+            wifi,
+            lunch,
+            FORMAT
         )
     }
 }

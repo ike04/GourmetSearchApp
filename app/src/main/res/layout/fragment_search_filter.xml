@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.google.codelab.gourmetsearchapp.viewmodel.SearchFilterDialogViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/filter_title_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/m_spacing"
+            android:layout_marginTop="@dimen/s_spacing"
+            android:text="@string/text_filter_title"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/m_spacing"
+            android:background="@color/transparent"
+            android:clickable="true"
+            android:focusable="true"
+            android:onClick="@{v -> viewModel.onCancelClick()}"
+            android:src="@drawable/ic_baseline_clear_24"
+            app:layout_constraintBottom_toBottomOf="@id/filter_title_text_view"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/filter_title_text_view" />
+
+        <TextView
+            android:id="@+id/text_range"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginStart="@dimen/s_spacing"
+            android:gravity="center"
+            android:text="@string/text_filter_range_text"
+            android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+            app:layout_constraintBottom_toBottomOf="@id/radio_group"
+            app:layout_constraintEnd_toStartOf="@id/radio_group"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/radio_group" />
+
+        <RadioGroup
+            android:id="@+id/radio_group"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/s_spacing"
+            android:gravity="center"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/text_range"
+            app:layout_constraintTop_toBottomOf="@id/filter_title_text_view">
+
+            <RadioButton
+                android:id="@+id/range_300"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/text_filter_range_checkbox_1" />
+
+            <RadioButton
+                android:id="@+id/range_500"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/text_filter_range_checkbox_2" />
+
+            <RadioButton
+                android:id="@+id/range_1000"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="@string/text_filter_range_checkbox_3" />
+
+            <RadioButton
+                android:id="@+id/range_2000"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/text_filter_range_checkbox_4" />
+
+            <RadioButton
+                android:id="@+id/range_3000"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/text_filter_range_checkbox_5" />
+        </RadioGroup>
+
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/s_spacing"
+            android:layout_marginTop="@dimen/m_spacing"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/radio_group">
+
+            <CheckBox
+                android:id="@+id/checkBox_coupon"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/text_filter_coupon" />
+
+            <CheckBox
+                android:id="@+id/checkBox_drink"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/text_filter_drink" />
+
+            <CheckBox
+                android:id="@+id/checkBox_private_room"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/text_filter_private_room" />
+
+            <CheckBox
+                android:id="@+id/checkBox_wifi"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/text_filter_wifi" />
+
+            <CheckBox
+                android:id="@+id/checkBox_lunch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/text_filter_lunch" />
+        </LinearLayout>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.7" />
+
+        <Button
+            android:id="@+id/filter_search_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/m_spacing"
+            android:layout_marginBottom="@dimen/s_spacing"
+            android:layout_marginStart="@dimen/xxl_spacing"
+            android:layout_marginEnd="@dimen/xxl_spacing"
+            android:onClick="@{v -> viewModel.onSearchClick()}"
+            android:text="@string/text_filter_search_button"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/guideline"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+
+        <Button
+            android:id="@+id/reset_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{v -> viewModel.onResetClick()}"
+            android:text="@string/text_filter_reset"
+            app:layout_constraintBottom_toBottomOf="@+id/filter_search_button"
+            app:layout_constraintStart_toStartOf="@id/guideline"
+            app:layout_constraintTop_toTopOf="@+id/filter_search_button" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -15,6 +15,11 @@ interface ApiRequest {
         @Query("lng") lng: Double,
         @Query("start") start: Int,
         @Query("range") range: Int,
+        @Query("ktai_coupon") coupon: Int,
+        @Query("free_drink") drink: Int,
+        @Query("private_room") privateRoom: Int,
+        @Query("wifi") wifi: Int,
+        @Query("lunch") lunch: Int,
         @Query("format") format: String
     ): Single<Response<StoresResponse>>
 }

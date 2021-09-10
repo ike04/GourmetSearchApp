@@ -10,8 +10,22 @@ class HomeUsecaseImpl @Inject constructor(
 ) : BaseUsecase(), HomeUsecase {
 
     override fun fetchNearStores(
-       startPage: Int
+        range: Int,
+        coupon: Int,
+        drink: Int,
+        room: Int,
+        wifi: Int,
+        lunch: Int,
+        startPage: Int
     ): Single<StoresBusinessModel> {
-        return repository.fetchNearStores(startPage)
+        return repository.fetchNearStores(
+            range,
+            coupon,
+            drink,
+            room,
+            wifi,
+            lunch,
+            startPage
+        )
     }
 }
