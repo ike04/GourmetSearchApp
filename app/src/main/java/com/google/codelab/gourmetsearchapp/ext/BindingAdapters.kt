@@ -1,6 +1,7 @@
 package com.google.codelab.gourmetsearchapp.ext
 
 import android.graphics.drawable.Drawable
+import android.webkit.WebView
 import android.widget.ImageView
 import android.widget.ProgressBar
 import androidx.core.view.isVisible
@@ -22,5 +23,13 @@ object BindingAdapters {
     @BindingAdapter("showProgress")
     fun ProgressBar.showProgressBar(isShow: Boolean) {
         this.isVisible = isShow
+    }
+
+    @JvmStatic
+    @BindingAdapter("url")
+    fun WebView.loadUrlForBinding(url: String?) {
+        if (url.isNullOrEmpty()) return
+
+        loadUrl(url)
     }
 }
