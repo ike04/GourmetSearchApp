@@ -32,10 +32,15 @@
     <string name="text_filter_search_button">検索</string>
     <string name="text_filter_reset">リセット</string>
 
+    <!--    WebView          -->
+    <string name="text_add_favorite">お気に入りに追加しました</string>
+    <string name="text_delete_favorite">お気に入りから削除しました</string>
+
     <!--    error message    -->
     <string name="error_message_default"></string>
     <string name="error_message_404"></string>
     <string name="error_message_500"></string>
     <string name="error_offline">ネットワークに接続できません。</string>
+    <string name="error_unexpected">予期せぬエラーが発生しました。</string>
     <string name="retry">retry</string>
 </resources>
