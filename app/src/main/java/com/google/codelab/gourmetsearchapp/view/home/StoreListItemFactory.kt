@@ -3,6 +3,7 @@ package com.google.codelab.gourmetsearchapp.view.home
 import android.content.Context
 import android.view.View
 import com.google.codelab.gourmetsearchapp.R
+import com.google.codelab.gourmetsearchapp.databinding.CellEmptyBinding
 import com.google.codelab.gourmetsearchapp.databinding.CellStoreBinding
 import com.google.codelab.gourmetsearchapp.model.businessmodel.Store
 import com.xwray.groupie.Item
@@ -21,4 +22,14 @@ class StoreItem(private val store: Store, val context: Context) :
     }
 
     override fun isSameAs(other: Item<*>): Boolean = (other as? StoreItem)?.store?.id == store.id
+}
+
+class EmptyItem(private val message: String) : BindableItem<CellEmptyBinding>() {
+    override fun bind(viewBinding: CellEmptyBinding, position: Int) {
+        viewBinding.text = message
+    }
+
+    override fun getLayout(): Int = R.layout.cell_empty
+
+    override fun initializeViewBinding(view: View): CellEmptyBinding = CellEmptyBinding.bind(view)
 }

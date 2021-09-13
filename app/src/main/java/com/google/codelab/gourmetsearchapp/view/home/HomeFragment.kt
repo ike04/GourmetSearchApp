@@ -83,8 +83,12 @@ class HomeFragment : Fragment() {
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeBy { stores ->
-                storeList.addAll(stores.store)
-                groupAdapter.update(storeList.map { StoreItem(it, requireContext()) })
+                if(stores.store.isNotEmpty()) {
+                    storeList.addAll(stores.store)
+                    groupAdapter.update(storeList.map { StoreItem(it, requireContext()) })
+                } else{
+                    groupAdapter.update(listOf(EmptyItem("検索条件にあったレストランが見つかりませんでした。")))
+                }
             }.addTo(disposable)
 
         viewModel.error
