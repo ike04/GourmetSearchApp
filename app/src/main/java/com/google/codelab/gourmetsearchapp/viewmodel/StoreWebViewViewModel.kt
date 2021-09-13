@@ -21,14 +21,14 @@ class StoreWebViewViewModel @Inject constructor(
     // すでにお気に入りに登録済みかどうかをチェックする
     fun fetchFavoriteStore(storeId: String) {
         usecase.hasFavoriteStore(storeId)
+
+        usecase.getHasStoreIdStream()
             .subscribeBy(
-                onSuccess = { isFavorite ->
+                onNext = { isFavorite ->
                     hasFavoriteStore.set(isFavorite)
-                },
-                onError = {
-                    errorStream.onNext(Signal)
                 }
             ).addTo(disposables)
+
     }
 
     fun onClickFab(storeId: String) {
@@ -41,8 +41,10 @@ class StoreWebViewViewModel @Inject constructor(
 
     private fun addFavoriteStore(storeId: String) {
         usecase.addFavoriteStore(storeId)
+
+        usecase.getAddIdStream()
             .subscribeBy(
-                onComplete = {
+                onNext = {
                     addFavoriteStore.onNext(Signal)
                     toggleFavorite(hasFavoriteStore.get())
                 },
@@ -54,8 +56,10 @@ class StoreWebViewViewModel @Inject constructor(
 
     private fun deleteFavoriteStore(storeId: String) {
         usecase.deleteFavoriteStore(storeId)
+
+        usecase.getDeleteIdStream()
             .subscribeBy(
-                onComplete = {
+                onNext = {
                     deleteFavoriteStore.onNext(Signal)
                     toggleFavorite(hasFavoriteStore.get())
                 },

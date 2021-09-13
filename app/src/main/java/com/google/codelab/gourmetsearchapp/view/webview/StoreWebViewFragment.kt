@@ -5,12 +5,18 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.google.codelab.gourmetsearchapp.R
 import com.google.codelab.gourmetsearchapp.databinding.StoreWebViewFragmentBinding
 import com.google.codelab.gourmetsearchapp.viewmodel.StoreWebViewViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
+import io.reactivex.rxjava3.kotlin.addTo
+import io.reactivex.rxjava3.kotlin.subscribeBy
 
 @AndroidEntryPoint
 class StoreWebViewFragment : Fragment() {
@@ -46,10 +52,41 @@ class StoreWebViewFragment : Fragment() {
     ): View {
         binding = StoreWebViewFragmentBinding.inflate(layoutInflater)
         binding.viewModel = viewModel
-
         binding.url = url
         binding.storeId = storeId
+
+        (activity as? AppCompatActivity)?.supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        setHasOptionsMenu(true)
+
+        viewModel.addFavoriteStore
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeBy {
+                Toast.makeText(requireContext(), R.string.text_add_favorite, Toast.LENGTH_SHORT)
+                    .show()
+            }.addTo(disposables)
+
+        viewModel.deleteFavoriteStore
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeBy {
+                Toast.makeText(requireContext(), R.string.text_delete_favorite, Toast.LENGTH_SHORT)
+                    .show()
+            }.addTo(disposables)
+
+        viewModel.errorStream
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeBy {
+                Toast.makeText(requireContext(), R.string.error_unexpected, Toast.LENGTH_SHORT)
+                    .show()
+            }.addTo(disposables)
+
+
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        viewModel.fetchFavoriteStore(storeId)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -62,5 +99,11 @@ class StoreWebViewFragment : Fragment() {
                 true
             }
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        disposables.clear()
+        (activity as? AppCompatActivity)?.supportActionBar?.setDisplayHomeAsUpEnabled(false)
     }
 }
