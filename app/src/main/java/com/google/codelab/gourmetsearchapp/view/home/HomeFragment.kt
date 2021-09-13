@@ -13,10 +13,13 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.codelab.gourmetsearchapp.databinding.FragmentHomeBinding
+import com.google.codelab.gourmetsearchapp.ext.showFragment
 import com.google.codelab.gourmetsearchapp.model.businessmodel.Store
+import com.google.codelab.gourmetsearchapp.view.webview.StoreWebViewFragment
 import com.google.codelab.gourmetsearchapp.viewmodel.HomeViewModel
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
+import com.xwray.groupie.OnItemClickListener
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Completable
@@ -33,6 +36,15 @@ class HomeFragment : Fragment() {
     private val storeList: MutableList<Store> = ArrayList()
 
     private val disposable = CompositeDisposable()
+
+    private val onItemClickListener = OnItemClickListener { item, _ ->
+        val index = groupAdapter.getAdapterPosition(item)
+
+        StoreWebViewFragment.newInstance(
+            storeList[index].id,
+            storeList[index].urls
+        ).showFragment(parentFragmentManager)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -71,5 +83,7 @@ class HomeFragment : Fragment() {
                 }
             }
         })
+
+        groupAdapter.setOnItemClickListener(onItemClickListener)
     }
 }
