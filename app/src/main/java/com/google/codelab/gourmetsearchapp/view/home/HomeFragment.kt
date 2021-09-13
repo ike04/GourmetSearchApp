@@ -50,7 +50,7 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
 
         return binding.root
@@ -85,5 +85,10 @@ class HomeFragment : Fragment() {
         })
 
         groupAdapter.setOnItemClickListener(onItemClickListener)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        disposable.clear()
     }
 }
