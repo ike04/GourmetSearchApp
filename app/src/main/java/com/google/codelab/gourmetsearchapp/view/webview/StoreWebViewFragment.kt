@@ -7,6 +7,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.google.android.material.snackbar.Snackbar
 import com.google.codelab.gourmetsearchapp.R
 import com.google.codelab.gourmetsearchapp.databinding.StoreWebViewFragmentBinding
 import com.google.codelab.gourmetsearchapp.util.ShareUtils
@@ -79,6 +80,13 @@ class StoreWebViewFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.fetchFavoriteStore(storeId)
+
+        viewModel.error
+            .subscribeBy { failure ->
+                Snackbar.make(view, failure.message, Snackbar.LENGTH_INDEFINITE)
+                    .setAction(R.string.retry) { failure.retry }
+                    .show()
+            }.addTo(disposables)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -97,9 +105,7 @@ class StoreWebViewFragment : Fragment() {
                 startActivity(shareIntent)
                 true
             }
-            else -> {
-                true
-            }
+            else -> true
         }
     }
 

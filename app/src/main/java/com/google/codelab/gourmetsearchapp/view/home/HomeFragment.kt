@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.snackbar.Snackbar
 import com.google.codelab.gourmetsearchapp.R
 import com.google.codelab.gourmetsearchapp.databinding.FragmentHomeBinding
 import com.google.codelab.gourmetsearchapp.ext.ContextExt
@@ -64,7 +65,7 @@ class HomeFragment : Fragment() {
         }
 
         viewModel.checkLocationPermission()
-        
+
         viewModel.hasLocation
             .subscribeBy { hasLocation ->
                 if (hasLocation) {
@@ -84,6 +85,13 @@ class HomeFragment : Fragment() {
             .subscribeBy { stores ->
                 storeList.addAll(stores.store)
                 groupAdapter.update(storeList.map { StoreItem(it, requireContext()) })
+            }.addTo(disposable)
+
+        viewModel.error
+            .subscribeBy { failure ->
+                Snackbar.make(view, failure.message, Snackbar.LENGTH_INDEFINITE)
+                    .setAction(R.string.retry) { failure.retry }
+                    .show()
             }.addTo(disposable)
 
         binding.recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
