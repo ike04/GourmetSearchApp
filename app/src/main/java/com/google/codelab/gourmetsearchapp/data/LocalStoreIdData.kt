@@ -1,6 +1,5 @@
 package com.google.codelab.gourmetsearchapp.data
 
-import com.google.codelab.gourmetsearchapp.App
 import com.google.codelab.gourmetsearchapp.Signal
 import com.google.codelab.gourmetsearchapp.model.local.FavoriteStoreEntity
 import io.reactivex.rxjava3.core.Observable
@@ -10,8 +9,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers
 import io.reactivex.rxjava3.subjects.PublishSubject
 import javax.inject.Inject
 
-class LocalStoreIdData @Inject constructor() {
-    private val dao = App.database.favoriteStoreIdDao()
+class LocalStoreIdData @Inject constructor(private val dao: FavoriteStoreDao) {
     private val hasStoreId: PublishSubject<Boolean> = PublishSubject.create()
     private val addId: PublishSubject<Signal> = PublishSubject.create()
     private val deleteId: PublishSubject<Signal> = PublishSubject.create()
