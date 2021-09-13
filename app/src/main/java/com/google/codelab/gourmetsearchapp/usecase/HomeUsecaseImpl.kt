@@ -28,4 +28,8 @@ class HomeUsecaseImpl @Inject constructor(
             startPage
         )
     }
+
+    override fun hasLocationPermission(): Single<Boolean> {
+        return repository.hasLocationPermission()
+    }
 }

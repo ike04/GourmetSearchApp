@@ -43,6 +43,9 @@ class SearchDataManagerImpl @Inject constructor(
         this.latLng.onNext(latLng)
     }
 
+    override fun hasLocationPermission(): Single<Boolean> = Single.fromCallable { latLng.hasValue() }
+
+
     override fun getLocationStream(): Observable<LatLng> = latLng.hide()
 
     override fun saveFilterData(filterData: FilterDataModel) {

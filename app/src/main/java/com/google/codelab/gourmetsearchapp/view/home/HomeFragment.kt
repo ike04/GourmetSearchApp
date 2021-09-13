@@ -4,15 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.codelab.gourmetsearchapp.R
 import com.google.codelab.gourmetsearchapp.databinding.FragmentHomeBinding
+import com.google.codelab.gourmetsearchapp.ext.ContextExt
+import com.google.codelab.gourmetsearchapp.ext.ContextExt.showAlertDialog
 import com.google.codelab.gourmetsearchapp.ext.showFragment
 import com.google.codelab.gourmetsearchapp.model.businessmodel.Store
 import com.google.codelab.gourmetsearchapp.view.webview.StoreWebViewFragment
@@ -22,7 +21,6 @@ import com.xwray.groupie.GroupieViewHolder
 import com.xwray.groupie.OnItemClickListener
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.kotlin.addTo
 import io.reactivex.rxjava3.kotlin.subscribeBy
@@ -65,7 +63,20 @@ class HomeFragment : Fragment() {
                 GridLayoutManager(requireContext(), 2, GridLayoutManager.VERTICAL, false)
         }
 
-        viewModel.fetchStores()
+        viewModel.checkLocationPermission()
+        
+        viewModel.hasLocation
+            .subscribeBy { hasLocation ->
+                if (hasLocation) {
+                    viewModel.fetchStores()
+                } else {
+                    requireContext().showAlertDialog(
+                        R.string.no_locations_title,
+                        R.string.no_locations_message,
+                        parentFragmentManager
+                    )
+                }
+            }.addTo(disposable)
 
         viewModel.storeList
             .subscribeOn(Schedulers.io())

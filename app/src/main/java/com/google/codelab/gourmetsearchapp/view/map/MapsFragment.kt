@@ -45,6 +45,12 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
     private val storeList: MutableList<Store> = ArrayList()
     private val disposable = CompositeDisposable()
 
+    companion object {
+        fun newInstance(): MapsFragment {
+            return MapsFragment()
+        }
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
