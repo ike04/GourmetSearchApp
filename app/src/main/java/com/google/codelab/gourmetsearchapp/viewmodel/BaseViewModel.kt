@@ -5,6 +5,7 @@ import com.google.codelab.gourmetsearchapp.R
 import com.google.codelab.gourmetsearchapp.model.Failure
 import com.google.codelab.gourmetsearchapp.usecase.Usecase
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.kotlin.addTo
@@ -30,11 +31,23 @@ abstract class BaseViewModel constructor(private val usecase: Usecase) : ViewMod
             ).addTo(disposables)
     }
 
+    protected fun <T : Any> Observable<T>.execute(onSuccess: (T) -> Unit, retry: () -> Unit) {
+        this
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeBy(
+                onNext = onSuccess,
+                onError = {
+                    error.onNext(Failure(it, it.toMessage(), retry))
+                }
+            ).addTo(disposables)
+    }
+
     private fun Throwable.toMessage(): Int {
         return when (this) {
             is HttpException -> toMessage()
             is UnknownHostException -> R.string.error_offline
-            else -> R.string.error_message_default
+            else -> R.string.error_unexpected
         }
     }
 

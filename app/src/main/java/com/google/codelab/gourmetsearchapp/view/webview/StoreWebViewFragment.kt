@@ -72,14 +72,6 @@ class StoreWebViewFragment : Fragment() {
                     .show()
             }.addTo(disposables)
 
-        viewModel.errorStream
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribeBy {
-                Toast.makeText(requireContext(), R.string.error_unexpected, Toast.LENGTH_SHORT)
-                    .show()
-            }.addTo(disposables)
-
-
         return binding.root
     }
 
