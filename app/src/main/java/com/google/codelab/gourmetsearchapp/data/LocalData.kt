@@ -1,6 +1,5 @@
 package com.google.codelab.gourmetsearchapp.data
 
-import com.google.codelab.gourmetsearchapp.App
 import com.google.codelab.gourmetsearchapp.model.FilterDataModel
 import com.google.codelab.gourmetsearchapp.model.local.FilterEntity
 import io.reactivex.rxjava3.core.Observable
@@ -10,8 +9,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers
 import io.reactivex.rxjava3.subjects.PublishSubject
 import javax.inject.Inject
 
-class LocalData @Inject constructor() {
-    private val dao = App.database.filterDataDao()
+class LocalData @Inject constructor(private val dao: FilterDao) {
     private val filterData: PublishSubject<FilterDataModel> = PublishSubject.create()
 
     fun saveFilterData(filterData: FilterDataModel) {
