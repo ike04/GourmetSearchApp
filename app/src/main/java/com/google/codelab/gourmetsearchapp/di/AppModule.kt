@@ -44,9 +44,5 @@ abstract class RepositoryModule {
 
     @Singleton
     @Binds
-    abstract fun bindOnboardingUsecase(onboardingUsecaseImpl: OnboardingUsecaseImpl): OnboardingUsecase
-
-    @Singleton
-    @Binds
     abstract fun bindSearchFilterDialogUsecase(searchFilterDialogUsecaseImpl: SearchFilterDialogUsecaseImpl): SearchFilterDialogUsecase
 }
