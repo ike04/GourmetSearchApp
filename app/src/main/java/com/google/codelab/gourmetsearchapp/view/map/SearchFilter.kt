@@ -46,24 +46,13 @@ enum class SearchChips(@StringRes val genre: Int, val code: String) {
     CAFE(R.string.text_filter_chip_8, "G014");
 
     companion object {
-        fun getCode(id: Int): String {
-            return when (id) {
-                0 -> PUB.code
-                1 -> BAR.code
-                2 -> JAPANESE.code
-                3 -> WESTERN.code
-                4 -> ITALIAN.code
-                5 -> CHINESE.code
-                6 -> GRILLED_MEAT.code
-                7 -> CAFE.code
-                else -> ""
-            }
-        }
+        fun getCode(id: Int): String = values()[id].code
+
 
         fun getId(code: String): Int {
             var id = 8 // not exist
             values().forEachIndexed { index, searchChips ->
-                if(searchChips.code == code) {
+                if (searchChips.code == code) {
                     id = index
                 }
             }

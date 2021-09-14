@@ -3,6 +3,7 @@ package com.google.codelab.gourmetsearchapp.view.map
 import android.app.Dialog
 import android.os.Bundle
 import android.view.LayoutInflater
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -138,8 +139,8 @@ class SearchFilterDialogFragment : BottomSheetDialogFragment() {
                 setChipDrawable(drawable)
                 id = index
                 text = requireContext().resources.getText(searchChips.genre)
-                rippleColor = requireContext().resources.getColorStateList(R.color.chip_color_selector)
-                chipBackgroundColor = requireContext().resources.getColorStateList(R.color.chip_color_selector)
+                rippleColor = ContextCompat.getColorStateList(requireContext(), R.color.chip_color_selector)
+                chipBackgroundColor = ContextCompat.getColorStateList(requireContext(), R.color.chip_color_selector)
             }
             binding.chipGroup.addView(chip)
         }
