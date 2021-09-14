@@ -18,13 +18,14 @@ class HomeViewModel @Inject constructor(
 
     fun fetchStores(
         range: Int = 3,
+        genre: String = "",
         coupon: Int = 0,
         drink: Int = 0,
         room: Int = 0,
         wifi: Int = 0,
         lunch: Int = 0
     ) {
-        usecase.fetchNearStores(range, coupon, drink, room, wifi, lunch, currentPage)
+        usecase.fetchNearStores(range, genre, coupon, drink, room, wifi, lunch, currentPage)
             .execute(
                 onSuccess = {
                     if (it.store.size < 20) {

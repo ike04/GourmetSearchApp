@@ -18,6 +18,7 @@ class LocalData @Inject constructor(private val dao: FilterDao) {
                 FilterEntity(
                     id = 1,
                     searchRange = filterData.searchRange,
+                    genre = filterData.genre,
                     coupon = filterData.coupon,
                     drink = filterData.drink,
                     privateRoom = filterData.privateRoom,
@@ -38,6 +39,7 @@ class LocalData @Inject constructor(private val dao: FilterDao) {
                 filterData.onNext(
                     FilterDataModel(
                         searchRange = localData.searchRange,
+                        genre = localData.genre,
                         coupon = localData.coupon,
                         drink = localData.drink,
                         privateRoom = localData.privateRoom,

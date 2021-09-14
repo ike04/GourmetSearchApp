@@ -74,6 +74,7 @@ class SearchFilterDialogFragment : BottomSheetDialogFragment() {
     private fun setFilterCondition(filterData: FilterDataModel) {
         binding.radioGroup.check(SearchFilter.getId(filterData.searchRange).id)
         binding.apply {
+            chipGroup.check(SearchChips.getId(filterData.genre))
             checkBoxCoupon.isChecked = filterData.coupon
             checkBoxDrink.isChecked = filterData.drink
             checkBoxPrivateRoom.isChecked = filterData.privateRoom
@@ -86,6 +87,7 @@ class SearchFilterDialogFragment : BottomSheetDialogFragment() {
     private fun fetchFilterConditionStores() {
         val model = FilterDataModel(
             searchRange = SearchFilter.getRange(binding.radioGroup.checkedRadioButtonId).range,
+            genre = SearchChips.getCode(binding.chipGroup.checkedChipId),
             coupon = binding.checkBoxCoupon.isChecked,
             drink = binding.checkBoxDrink.isChecked,
             privateRoom = binding.checkBoxPrivateRoom.isChecked,
@@ -97,6 +99,7 @@ class SearchFilterDialogFragment : BottomSheetDialogFragment() {
 
         parentViewModel.fetchNearStores(
             model.searchRange,
+            model.genre,
             getCheckboxFlag(model.coupon),
             getCheckboxFlag(model.drink),
             getCheckboxFlag(model.privateRoom),
@@ -127,12 +130,13 @@ class SearchFilterDialogFragment : BottomSheetDialogFragment() {
 
     private fun createChips() {
         binding.chipGroup.isSingleSelection = true
-        SearchChips.values().forEach {
+        SearchChips.values().forEachIndexed { index, searchChips ->
             // https://stackoverflow.com/questions/53557863/change-chip-widget-style-programmatically-not-working-android
             val chip = Chip(requireContext())
             val drawable = ChipDrawable.createFromAttributes(requireContext(), null, 0, R.style.Widget_MaterialComponents_Chip_Filter)
             chip.setChipDrawable(drawable)
-            chip.text = requireContext().resources.getText(it.genre)
+            chip.id = index
+            chip.text = requireContext().resources.getText(searchChips.genre)
             binding.chipGroup.addView(chip)
         }
     }
