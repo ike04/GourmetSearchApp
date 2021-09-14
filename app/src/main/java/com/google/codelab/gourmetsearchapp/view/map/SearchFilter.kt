@@ -46,7 +46,13 @@ enum class SearchChips(@StringRes val genre: Int, val code: String) {
     CAFE(R.string.text_filter_chip_8, "G014");
 
     companion object {
-        fun getCode(id: Int): String = values()[id].code
+        fun getCode(id: Int): String {
+            return if (id != -1) {
+                values()[id].code
+            } else {
+                ""
+            }
+        }
 
 
         fun getId(code: String): Int {
