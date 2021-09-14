@@ -1,7 +1,6 @@
 package com.google.codelab.gourmetsearchapp.view.map
 
 import android.app.Dialog
-import android.graphics.Typeface
 import android.os.Bundle
 import android.view.LayoutInflater
 import androidx.fragment.app.activityViewModels
@@ -134,9 +133,14 @@ class SearchFilterDialogFragment : BottomSheetDialogFragment() {
             // https://stackoverflow.com/questions/53557863/change-chip-widget-style-programmatically-not-working-android
             val chip = Chip(requireContext())
             val drawable = ChipDrawable.createFromAttributes(requireContext(), null, 0, R.style.Widget_MaterialComponents_Chip_Filter)
-            chip.setChipDrawable(drawable)
-            chip.id = index
-            chip.text = requireContext().resources.getText(searchChips.genre)
+
+            chip.apply {
+                setChipDrawable(drawable)
+                id = index
+                text = requireContext().resources.getText(searchChips.genre)
+                rippleColor = requireContext().resources.getColorStateList(R.color.chip_color_selector)
+                chipBackgroundColor = requireContext().resources.getColorStateList(R.color.chip_color_selector)
+            }
             binding.chipGroup.addView(chip)
         }
     }
