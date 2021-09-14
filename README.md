@@ -25,6 +25,10 @@ HotpepperグルメのAPI(https://webservice.recruit.co.jp/doc/hotpepper/referenc
 | ---- | ---- |
 |  <img src="https://user-images.githubusercontent.com/48178913/133267236-a7ff233c-390d-4fc0-99ec-a3369c07d760.mp4" >  | <img src="https://user-images.githubusercontent.com/48178913/133266962-3040a686-6cfa-4181-ad64-acd4378b90c5.mp4">  |
 
+|エラーハンドリング|
+| ---- |
+|<img src="https://user-images.githubusercontent.com/48178913/133268269-8a326fcb-1a8f-444a-b025-b68055667ab8.jpg" width=50%>|
+
 # 設計
 このアプリはRx、DataBinding、Daggerを利用したClean Architectureを使用しています。
 
