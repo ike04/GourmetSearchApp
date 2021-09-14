@@ -34,3 +34,14 @@ enum class SearchFilter(val id: Int, @StringRes val title: Int, val range: Int) 
         }
     }
 }
+
+enum class SearchChips(@StringRes val genre: Int, var isChecked: Boolean) {
+    PUB(R.string.text_filter_chip_1, false),
+    BAR(R.string.text_filter_chip_2, false),
+    JAPANESE(R.string.text_filter_chip_3, false),
+    WESTERN(R.string.text_filter_chip_4, false),
+    ITALIAN(R.string.text_filter_chip_5, false),
+    CHINESE(R.string.text_filter_chip_6, false),
+    GRILLED_MEAT(R.string.text_filter_chip_7, false),
+    CAFE(R.string.text_filter_chip_8, false);
+}

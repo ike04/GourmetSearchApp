@@ -34,6 +34,14 @@
     <string name="text_filter_lunch">ランチあり</string>
     <string name="text_filter_search_button">検索</string>
     <string name="text_filter_reset">リセット</string>
+    <string name="text_filter_chip_1">居酒屋</string>
+    <string name="text_filter_chip_2">バー</string>
+    <string name="text_filter_chip_3">和食</string>
+    <string name="text_filter_chip_4">洋食</string>
+    <string name="text_filter_chip_5">イタリアン</string>
+    <string name="text_filter_chip_6">中華</string>
+    <string name="text_filter_chip_7">焼肉</string>
+    <string name="text_filter_chip_8">カフェ</string>
 
     <!--    WebView          -->
     <string name="text_add_favorite">お気に入りに追加しました</string>

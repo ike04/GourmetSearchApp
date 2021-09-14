@@ -1,11 +1,14 @@
 package com.google.codelab.gourmetsearchapp.view.map
 
 import android.app.Dialog
+import android.graphics.Typeface
 import android.os.Bundle
 import android.view.LayoutInflater
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.google.android.material.chip.Chip
+import com.google.android.material.chip.ChipDrawable
 import com.google.codelab.gourmetsearchapp.R
 import com.google.codelab.gourmetsearchapp.databinding.FragmentSearchFilterBinding
 import com.google.codelab.gourmetsearchapp.model.FilterDataModel
@@ -35,6 +38,8 @@ class SearchFilterDialogFragment : BottomSheetDialogFragment() {
         binding = FragmentSearchFilterBinding.inflate(LayoutInflater.from(context), null, false)
         binding.viewModel = viewModel
         dialog.setContentView(binding.root)
+
+        createChips()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -111,11 +116,24 @@ class SearchFilterDialogFragment : BottomSheetDialogFragment() {
     private fun resetFilterSetting() {
         binding.apply {
             radioGroup.check(R.id.range_1000)
+            chipGroup.clearCheck()
             checkBoxCoupon.isChecked = false
             checkBoxDrink.isChecked = false
             checkBoxPrivateRoom.isChecked = false
             checkBoxWifi.isChecked = false
             checkBoxLunch.isChecked = false
+        }
+    }
+
+    private fun createChips() {
+        binding.chipGroup.isSingleSelection = true
+        SearchChips.values().forEach {
+            // https://stackoverflow.com/questions/53557863/change-chip-widget-style-programmatically-not-working-android
+            val chip = Chip(requireContext())
+            val drawable = ChipDrawable.createFromAttributes(requireContext(), null, 0, R.style.Widget_MaterialComponents_Chip_Filter)
+            chip.setChipDrawable(drawable)
+            chip.text = requireContext().resources.getText(it.genre)
+            binding.chipGroup.addView(chip)
         }
     }
 }
