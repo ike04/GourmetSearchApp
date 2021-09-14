@@ -1,5 +1,6 @@
 package com.google.codelab.gourmetsearchapp.viewmodel
 
+import androidx.databinding.ObservableBoolean
 import androidx.lifecycle.ViewModel
 import com.google.codelab.gourmetsearchapp.R
 import com.google.codelab.gourmetsearchapp.model.Failure
@@ -18,11 +19,14 @@ import java.net.UnknownHostException
 abstract class BaseViewModel constructor(private val usecase: Usecase) : ViewModel() {
     protected val disposables = CompositeDisposable()
     val error: PublishSubject<Failure> = PublishSubject.create()
+    val loadingSignal = ObservableBoolean(false)
 
     protected fun <T : Any> Single<T>.execute(onSuccess: (T) -> Unit, retry: () -> Unit) {
         this
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
+            .doOnSubscribe { loadingSignal.set(true) }
+            .doFinally { loadingSignal.set(false) }
             .subscribeBy(
                 onSuccess = onSuccess,
                 onError = {
@@ -35,6 +39,8 @@ abstract class BaseViewModel constructor(private val usecase: Usecase) : ViewMod
         this
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
+            .doOnSubscribe { loadingSignal.set(true) }
+            .doFinally { loadingSignal.set(false) }
             .subscribeBy(
                 onNext = onSuccess,
                 onError = {

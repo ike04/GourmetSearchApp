@@ -7,13 +7,11 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.Navigation
 import com.google.android.material.snackbar.Snackbar
 import com.google.codelab.gourmetsearchapp.R
 import com.google.codelab.gourmetsearchapp.databinding.StoreWebViewFragmentBinding
 import com.google.codelab.gourmetsearchapp.util.ShareUtils
 import com.google.codelab.gourmetsearchapp.view.OnBackPressHandler
-import com.google.codelab.gourmetsearchapp.view.map.SearchFilterDialogFragment
 import com.google.codelab.gourmetsearchapp.viewmodel.StoreWebViewViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
@@ -22,7 +20,7 @@ import io.reactivex.rxjava3.kotlin.addTo
 import io.reactivex.rxjava3.kotlin.subscribeBy
 
 @AndroidEntryPoint
-class StoreWebViewFragment : Fragment(),OnBackPressHandler {
+class StoreWebViewFragment : Fragment(), OnBackPressHandler {
     private lateinit var binding: StoreWebViewFragmentBinding
     private val viewModel: StoreWebViewViewModel by viewModels()
     private val storeId: String

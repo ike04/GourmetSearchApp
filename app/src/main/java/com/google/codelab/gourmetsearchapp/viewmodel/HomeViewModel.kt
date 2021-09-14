@@ -37,6 +37,10 @@ class HomeViewModel @Inject constructor(
             )
     }
 
+    fun resetPages() {
+        currentPage = 0
+    }
+
     fun checkLocationPermission() {
         usecase.hasLocationPermission()
             .execute(

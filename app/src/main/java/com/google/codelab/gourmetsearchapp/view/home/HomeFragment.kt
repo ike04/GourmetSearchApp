@@ -6,13 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.Navigation
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.google.codelab.gourmetsearchapp.R
 import com.google.codelab.gourmetsearchapp.databinding.FragmentHomeBinding
-import com.google.codelab.gourmetsearchapp.ext.ContextExt
 import com.google.codelab.gourmetsearchapp.ext.ContextExt.showAlertDialog
 import com.google.codelab.gourmetsearchapp.ext.showFragment
 import com.google.codelab.gourmetsearchapp.model.businessmodel.Store
@@ -52,6 +50,7 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
+        binding.viewModel = viewModel
 
         return binding.root
     }
@@ -59,6 +58,12 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.swipedLayout.setOnRefreshListener {
+            storeList.clear()
+            viewModel.resetPages()
+            viewModel.fetchStores()
+            binding.swipedLayout.isRefreshing = false
+        }
         binding.recyclerView.apply {
             adapter = groupAdapter
             layoutManager =
@@ -87,8 +92,10 @@ class HomeFragment : Fragment() {
                 if(stores.store.isNotEmpty()) {
                     storeList.addAll(stores.store)
                     groupAdapter.update(storeList.map { StoreItem(it, requireContext()) })
-                } else{
-                    groupAdapter.update(listOf(EmptyItem("検索条件にあったレストランが見つかりませんでした。")))
+                } else {
+                    binding.recyclerView.layoutManager =
+                        GridLayoutManager(requireContext(), 1, GridLayoutManager.VERTICAL, false)
+                    groupAdapter.update(listOf(EmptyItem(R.string.no_result_near_restaurant, requireContext())))
                 }
             }.addTo(disposable)
 

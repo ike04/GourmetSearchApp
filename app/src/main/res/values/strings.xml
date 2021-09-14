@@ -14,6 +14,7 @@
     <string name="text_onboarding_button">今すぐ始める</string>
 
     <!--    map              -->
+    <string name="no_result_near_restaurant">検索条件にあったレストランが見つかりませんでした。</string>
     <string name="no_location_authorization">現在地は表示できません</string>
     <string name="no_locations_title">位置情報がオフになっています。</string>
     <string name="no_locations_message">位置情報がオフになっているため、現在地を取得できません。</string>
