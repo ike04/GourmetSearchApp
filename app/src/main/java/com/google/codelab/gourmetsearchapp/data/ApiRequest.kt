@@ -15,6 +15,7 @@ interface ApiRequest {
         @Query("lng") lng: Double,
         @Query("start") start: Int,
         @Query("range") range: Int,
+        @Query("genre") genre: String,
         @Query("ktai_coupon") coupon: Int,
         @Query("free_drink") drink: Int,
         @Query("private_room") privateRoom: Int,

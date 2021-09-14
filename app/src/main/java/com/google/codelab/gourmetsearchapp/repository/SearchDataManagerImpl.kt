@@ -19,6 +19,7 @@ class SearchDataManagerImpl @Inject constructor(
 
     override fun fetchNearStores(
         range: Int,
+        genre: String,
         coupon: Int,
         drink: Int,
         room: Int,
@@ -30,6 +31,7 @@ class SearchDataManagerImpl @Inject constructor(
             latLng.value.latitude,
             latLng.value.longitude,
             range,
+            genre,
             coupon,
             drink,
             room,

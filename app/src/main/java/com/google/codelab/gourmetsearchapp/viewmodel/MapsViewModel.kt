@@ -17,8 +17,8 @@ class MapsViewModel @Inject constructor(
     val reset: PublishSubject<Signal> = PublishSubject.create()
     val showViewPager = ObservableBoolean(false)
 
-    fun fetchNearStores(range: Int = 3, coupon: Int = 0, drink: Int = 0, room: Int = 0,wifi: Int= 0, lunch: Int = 0) {
-        usecase.fetchNearStores(range, coupon, drink, room, wifi, lunch)
+    fun fetchNearStores(range: Int = 3, genre: String = "", coupon: Int = 0, drink: Int = 0, room: Int = 0,wifi: Int= 0, lunch: Int = 0) {
+        usecase.fetchNearStores(range, genre, coupon, drink, room, wifi, lunch)
             .execute(
                 onSuccess = {
                     if (it.store.isNotEmpty()) {

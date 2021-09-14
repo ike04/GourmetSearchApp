@@ -9,6 +9,7 @@ data class FilterEntity(
     val id: Int,
 
     val searchRange: Int,
+    val genre: String,
     val coupon: Boolean,
     val drink: Boolean,
     val privateRoom: Boolean,

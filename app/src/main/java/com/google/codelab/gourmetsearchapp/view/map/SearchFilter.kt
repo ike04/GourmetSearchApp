@@ -34,3 +34,29 @@ enum class SearchFilter(val id: Int, @StringRes val title: Int, val range: Int) 
         }
     }
 }
+
+enum class SearchChips(@StringRes val genre: Int, val code: String) {
+    PUB(R.string.text_filter_chip_1, "G001"),
+    BAR(R.string.text_filter_chip_2, "G002"),
+    JAPANESE(R.string.text_filter_chip_3, "G004"),
+    WESTERN(R.string.text_filter_chip_4, "G005"),
+    ITALIAN(R.string.text_filter_chip_5, "G006"),
+    CHINESE(R.string.text_filter_chip_6, "G007"),
+    GRILLED_MEAT(R.string.text_filter_chip_7, "G008"),
+    CAFE(R.string.text_filter_chip_8, "G014");
+
+    companion object {
+        fun getCode(id: Int): String = values()[id].code
+
+
+        fun getId(code: String): Int {
+            var id = 8 // not exist
+            values().forEachIndexed { index, searchChips ->
+                if (searchChips.code == code) {
+                    id = index
+                }
+            }
+            return id
+        }
+    }
+}

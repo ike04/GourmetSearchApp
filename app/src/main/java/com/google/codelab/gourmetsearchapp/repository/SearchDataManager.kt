@@ -9,6 +9,7 @@ import io.reactivex.rxjava3.core.Single
 interface SearchDataManager {
     fun fetchNearStores(
         range: Int,
+        genre: String,
         coupon: Int,
         drink: Int,
         room: Int,

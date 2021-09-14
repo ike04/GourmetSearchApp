@@ -12,6 +12,7 @@ class MapsUsecaseImpl @Inject constructor(
 
     override fun fetchNearStores(
         range: Int,
+        genre: String,
         coupon: Int,
         drink: Int,
         room: Int,
@@ -21,6 +22,7 @@ class MapsUsecaseImpl @Inject constructor(
     ): Single<StoresBusinessModel> {
         return repository.fetchNearStores(
             range,
+            genre,
             coupon,
             drink,
             room,
