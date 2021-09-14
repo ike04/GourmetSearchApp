@@ -35,6 +35,7 @@
                 android:layout_marginStart="@dimen/s_spacing"
                 android:layout_marginTop="@dimen/s_spacing"
                 android:text="@{item.name}"
+                android:maxLines="1"
                 android:textAppearance="@style/TextAppearance.AppCompat.Small"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -59,7 +60,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/s_spacing"
                 android:layout_marginBottom="@dimen/s_spacing"
-                android:orientation="horizontal"
+                android:orientation="vertical"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/store_image">
 
@@ -68,10 +69,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/s_spacing"
-                    android:layout_weight="1"
                     android:ellipsize="end"
-                    android:maxLength="10"
-                    android:maxLines="2"
                     android:text="@{item.genre}"
                     tools:text="ジャンル" />
 
@@ -81,12 +79,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/s_spacing"
                     android:layout_marginEnd="@dimen/s_spacing"
-                    android:layout_weight="1"
-                    android:ellipsize="end"
-                    android:gravity="end"
-                    android:maxLength="10"
-                    android:maxLines="2"
                     android:text="@{item.budget}"
+                    android:maxLines="1"
                     android:textAppearance="@style/TextAppearance.AppCompat.Small"
                     tools:text="平均：5000円" />
             </LinearLayout>

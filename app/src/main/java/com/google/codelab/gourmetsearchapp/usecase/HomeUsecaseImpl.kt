@@ -2,7 +2,9 @@ package com.google.codelab.gourmetsearchapp.usecase
 
 import com.google.codelab.gourmetsearchapp.model.businessmodel.StoresBusinessModel
 import com.google.codelab.gourmetsearchapp.repository.SearchDataManager
+import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
+import io.reactivex.rxjava3.kotlin.subscribeBy
 import javax.inject.Inject
 
 class HomeUsecaseImpl @Inject constructor(
