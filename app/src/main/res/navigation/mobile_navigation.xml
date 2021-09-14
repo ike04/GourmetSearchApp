@@ -5,19 +5,19 @@
     android:id="@+id/mobile_navigation"
     app:startDestination="@+id/navigation_map">
 
-    <fragment
+    <custom_fragment
         android:id="@+id/navigation_home"
         android:name="com.google.codelab.gourmetsearchapp.view.home.HomeFragment"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_home" />
 
-    <fragment
+    <custom_fragment
         android:id="@+id/navigation_map"
         android:name="com.google.codelab.gourmetsearchapp.view.map.MapsFragment"
         android:label="@string/title_map"
         tools:layout="@layout/fragment_maps" />
 
-    <fragment
+    <custom_fragment
         android:id="@+id/navigation_favorite_stores"
         android:name="com.google.codelab.gourmetsearchapp.view.favorite.FavoriteStoresFragment"
         android:label="@string/title_favorite_stores"

@@ -7,10 +7,11 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.google.android.material.snackbar.Snackbar
 import com.google.codelab.gourmetsearchapp.R
 import com.google.codelab.gourmetsearchapp.databinding.StoreWebViewFragmentBinding
 import com.google.codelab.gourmetsearchapp.util.ShareUtils
-import com.google.codelab.gourmetsearchapp.view.map.SearchFilterDialogFragment
+import com.google.codelab.gourmetsearchapp.view.OnBackPressHandler
 import com.google.codelab.gourmetsearchapp.viewmodel.StoreWebViewViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
@@ -19,7 +20,7 @@ import io.reactivex.rxjava3.kotlin.addTo
 import io.reactivex.rxjava3.kotlin.subscribeBy
 
 @AndroidEntryPoint
-class StoreWebViewFragment : Fragment() {
+class StoreWebViewFragment : Fragment(), OnBackPressHandler {
     private lateinit var binding: StoreWebViewFragmentBinding
     private val viewModel: StoreWebViewViewModel by viewModels()
     private val storeId: String
@@ -72,14 +73,6 @@ class StoreWebViewFragment : Fragment() {
                     .show()
             }.addTo(disposables)
 
-        viewModel.errorStream
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribeBy {
-                Toast.makeText(requireContext(), R.string.error_unexpected, Toast.LENGTH_SHORT)
-                    .show()
-            }.addTo(disposables)
-
-
         return binding.root
     }
 
@@ -87,6 +80,13 @@ class StoreWebViewFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.fetchFavoriteStore(storeId)
+
+        viewModel.error
+            .subscribeBy { failure ->
+                Snackbar.make(view, failure.message, Snackbar.LENGTH_INDEFINITE)
+                    .setAction(R.string.retry) { failure.retry }
+                    .show()
+            }.addTo(disposables)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -105,10 +105,13 @@ class StoreWebViewFragment : Fragment() {
                 startActivity(shareIntent)
                 true
             }
-            else -> {
-                true
-            }
+            else -> true
         }
+    }
+
+    override fun onBackPressed(): Boolean {
+        parentFragmentManager.popBackStack()
+        return true
     }
 
     override fun onDestroy() {

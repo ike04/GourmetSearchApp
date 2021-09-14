@@ -13,9 +13,17 @@ class HomeViewModel @Inject constructor(
 ) : BaseViewModel(usecase) {
     private var currentPage = 1
     val storeList: PublishSubject<StoresBusinessModel> = PublishSubject.create()
+    val hasLocation: PublishSubject<Boolean> = PublishSubject.create()
     val moreLoad = ObservableBoolean(true)
 
-    fun fetchStores(range: Int = 3, coupon: Int = 0, drink: Int = 0, room: Int = 0, wifi: Int= 0, lunch: Int = 0) {
+    fun fetchStores(
+        range: Int = 3,
+        coupon: Int = 0,
+        drink: Int = 0,
+        room: Int = 0,
+        wifi: Int = 0,
+        lunch: Int = 0
+    ) {
         usecase.fetchNearStores(range, coupon, drink, room, wifi, lunch, currentPage)
             .execute(
                 onSuccess = {
@@ -26,6 +34,18 @@ class HomeViewModel @Inject constructor(
                     storeList.onNext(it)
                 },
                 retry = { fetchStores() }
+            )
+    }
+
+    fun resetPages() {
+        currentPage = 0
+    }
+
+    fun checkLocationPermission() {
+        usecase.hasLocationPermission()
+            .execute(
+                onSuccess = { hasLocation.onNext(it) },
+                retry = { checkLocationPermission() }
             )
     }
 }

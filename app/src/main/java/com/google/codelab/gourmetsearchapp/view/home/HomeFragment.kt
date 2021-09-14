@@ -4,15 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.snackbar.Snackbar
+import com.google.codelab.gourmetsearchapp.R
 import com.google.codelab.gourmetsearchapp.databinding.FragmentHomeBinding
+import com.google.codelab.gourmetsearchapp.ext.ContextExt.showAlertDialog
 import com.google.codelab.gourmetsearchapp.ext.showFragment
 import com.google.codelab.gourmetsearchapp.model.businessmodel.Store
 import com.google.codelab.gourmetsearchapp.view.webview.StoreWebViewFragment
@@ -22,7 +21,6 @@ import com.xwray.groupie.GroupieViewHolder
 import com.xwray.groupie.OnItemClickListener
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.kotlin.addTo
 import io.reactivex.rxjava3.kotlin.subscribeBy
@@ -50,8 +48,9 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
+        binding.viewModel = viewModel
 
         return binding.root
     }
@@ -59,20 +58,52 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.swipedLayout.setOnRefreshListener {
+            storeList.clear()
+            viewModel.resetPages()
+            viewModel.fetchStores()
+            binding.swipedLayout.isRefreshing = false
+        }
         binding.recyclerView.apply {
             adapter = groupAdapter
             layoutManager =
                 GridLayoutManager(requireContext(), 2, GridLayoutManager.VERTICAL, false)
         }
 
-        viewModel.fetchStores()
+        viewModel.checkLocationPermission()
+
+        viewModel.hasLocation
+            .subscribeBy { hasLocation ->
+                if (hasLocation) {
+                    viewModel.fetchStores()
+                } else {
+                    requireContext().showAlertDialog(
+                        R.string.no_locations_title,
+                        R.string.no_locations_message,
+                        parentFragmentManager
+                    )
+                }
+            }.addTo(disposable)
 
         viewModel.storeList
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeBy { stores ->
-                storeList.addAll(stores.store)
-                groupAdapter.update(storeList.map { StoreItem(it, requireContext()) })
+                if(stores.store.isNotEmpty()) {
+                    storeList.addAll(stores.store)
+                    groupAdapter.update(storeList.map { StoreItem(it, requireContext()) })
+                } else {
+                    binding.recyclerView.layoutManager =
+                        GridLayoutManager(requireContext(), 1, GridLayoutManager.VERTICAL, false)
+                    groupAdapter.update(listOf(EmptyItem(R.string.no_result_near_restaurant, requireContext())))
+                }
+            }.addTo(disposable)
+
+        viewModel.error
+            .subscribeBy { failure ->
+                Snackbar.make(view, failure.message, Snackbar.LENGTH_INDEFINITE)
+                    .setAction(R.string.retry) { failure.retry }
+                    .show()
             }.addTo(disposable)
 
         binding.recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
@@ -85,5 +116,10 @@ class HomeFragment : Fragment() {
         })
 
         groupAdapter.setOnItemClickListener(onItemClickListener)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        disposable.clear()
     }
 }

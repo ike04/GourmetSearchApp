@@ -8,7 +8,3 @@ data class FilterDataModel(
     val wifi: Boolean,
     val lunch: Boolean
 )
-
-data class FavoriteStoreIds(
-    val storeIds: List<String>
-)

@@ -19,6 +19,8 @@ interface SearchDataManager {
 
     fun saveLocation(latLng: LatLng)
 
+    fun hasLocationPermission(): Single<Boolean>
+
     fun getLocationStream(): Observable<LatLng>
 
     fun saveFilterData(filterData: FilterDataModel)

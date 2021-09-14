@@ -45,6 +45,12 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
     private val storeList: MutableList<Store> = ArrayList()
     private val disposable = CompositeDisposable()
 
+    companion object {
+        fun newInstance(): MapsFragment {
+            return MapsFragment()
+        }
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -176,7 +182,9 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
                         map.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 14.0f))
 
                         viewModel.saveLocation(currentLatLng)
-                        viewModel.fetchNearStores()
+                        if (storeList.isEmpty()) {
+                            viewModel.fetchNearStores()
+                        }
                     }
                 }
             }

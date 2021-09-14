@@ -13,4 +13,6 @@ interface HomeUsecase : Usecase {
         lunch: Int,
         startPage: Int = 1
     ): Single<StoresBusinessModel>
+
+    fun hasLocationPermission(): Single<Boolean>
 }

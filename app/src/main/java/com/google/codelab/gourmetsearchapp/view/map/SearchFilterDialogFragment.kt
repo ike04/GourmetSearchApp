@@ -67,16 +67,7 @@ class SearchFilterDialogFragment : BottomSheetDialogFragment() {
     }
 
     private fun setFilterCondition(filterData: FilterDataModel) {
-        binding.radioGroup.check(
-            when (filterData.searchRange) {
-                1 -> R.id.range_300
-                2 -> R.id.range_500
-                3 -> R.id.range_1000
-                4 -> R.id.range_2000
-                5 -> R.id.range_3000
-                else -> R.id.range_1000
-            }
-        )
+        binding.radioGroup.check(SearchFilter.getId(filterData.searchRange).id)
         binding.apply {
             checkBoxCoupon.isChecked = filterData.coupon
             checkBoxDrink.isChecked = filterData.drink
@@ -89,7 +80,7 @@ class SearchFilterDialogFragment : BottomSheetDialogFragment() {
 
     private fun fetchFilterConditionStores() {
         val model = FilterDataModel(
-            searchRange = getSearchRange(),
+            searchRange = SearchFilter.getRange(binding.radioGroup.checkedRadioButtonId).range,
             coupon = binding.checkBoxCoupon.isChecked,
             drink = binding.checkBoxDrink.isChecked,
             privateRoom = binding.checkBoxPrivateRoom.isChecked,
@@ -107,17 +98,6 @@ class SearchFilterDialogFragment : BottomSheetDialogFragment() {
             getCheckboxFlag(model.wifi),
             getCheckboxFlag(model.lunch)
         )
-    }
-
-    private fun getSearchRange(): Int {
-        return when (binding.radioGroup.checkedRadioButtonId) {
-            R.id.range_300 -> 1
-            R.id.range_500 -> 2
-            R.id.range_1000 -> 3
-            R.id.range_2000 -> 4
-            R.id.range_3000 -> 5
-            else -> 3
-        }
     }
 
     private fun getCheckboxFlag(flg: Boolean): Int {

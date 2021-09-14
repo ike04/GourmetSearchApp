@@ -27,7 +27,7 @@ class OnboardingFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentOnboardingBinding.inflate(layoutInflater)
         binding.onboarding = onboarding
         return binding.root
@@ -39,10 +39,6 @@ class OnboardingFragment : Fragment() {
             resumeAnimation()
             resumeAnimationAfterStart = false
         }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
     }
 
     fun resumeAnimationAfterStart() {
