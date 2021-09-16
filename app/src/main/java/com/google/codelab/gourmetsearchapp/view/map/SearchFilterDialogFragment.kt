@@ -51,7 +51,7 @@ class SearchFilterDialogFragment : BottomSheetDialogFragment() {
         viewModel.filterData
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribeBy { setFilterCondition(it)}
+            .subscribeBy { setFilterCondition(it) }
             .addTo(disposable)
 
         viewModel.onSearchClicked
