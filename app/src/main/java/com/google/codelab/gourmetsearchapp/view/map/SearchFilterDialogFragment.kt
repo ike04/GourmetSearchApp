@@ -98,15 +98,7 @@ class SearchFilterDialogFragment : BottomSheetDialogFragment() {
 
         viewModel.saveFilterData(model)
 
-        parentViewModel.fetchNearStores(
-            model.searchRange,
-            model.genre,
-            model.coupon,
-            model.drink,
-            model.privateRoom,
-            model.wifi,
-            model.lunch
-        )
+        parentViewModel.fetchNearStores()
     }
 
     private fun getCheckboxFlag(flg: Boolean): Int {

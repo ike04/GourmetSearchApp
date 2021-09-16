@@ -16,16 +16,8 @@ class HomeViewModel @Inject constructor(
     val hasLocation: PublishSubject<Boolean> = PublishSubject.create()
     val moreLoad = ObservableBoolean(true)
 
-    fun fetchStores(
-        range: Int = 3,
-        genre: String = "",
-        coupon: Int = 0,
-        drink: Int = 0,
-        room: Int = 0,
-        wifi: Int = 0,
-        lunch: Int = 0
-    ) {
-        usecase.fetchNearStores(range, genre, coupon, drink, room, wifi, lunch, currentPage)
+    fun fetchStores() {
+        usecase.fetchNearStores(currentPage)
             .execute(
                 onSuccess = {
                     if (it.store.size < 20) {
@@ -39,7 +31,8 @@ class HomeViewModel @Inject constructor(
     }
 
     fun resetPages() {
-        currentPage = 0
+        currentPage = 1
+        moreLoad.set(true)
     }
 
     fun checkLocationPermission() {

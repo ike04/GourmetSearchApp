@@ -16,29 +16,36 @@ class SearchDataManagerImpl @Inject constructor(
     private val local: LocalData
 ) : SearchDataManager {
     private val latLng: BehaviorSubject<LatLng> = BehaviorSubject.create()
+    private val filterData: BehaviorSubject<FilterDataModel> = BehaviorSubject.create()
 
-    override fun fetchNearStores(
-        range: Int,
-        genre: String,
-        coupon: Int,
-        drink: Int,
-        room: Int,
-        wifi: Int,
-        lunch: Int,
-        startPage: Int
-    ): Single<StoresBusinessModel> {
-        return remote.fetchStores(
-            latLng.value.latitude,
-            latLng.value.longitude,
-            range,
-            genre,
-            coupon,
-            drink,
-            room,
-            wifi,
-            lunch,
-            startPage
-        ).map { StoresMapper.transform(it) }
+    override fun fetchNearStores(startPage: Int): Single<StoresBusinessModel> {
+        return if (filterData.hasValue()) {
+            remote.fetchStores(
+                latLng.value.latitude,
+                latLng.value.longitude,
+                filterData.value.searchRange,
+                filterData.value.genre,
+                filterData.value.coupon,
+                filterData.value.drink,
+                filterData.value.privateRoom,
+                filterData.value.wifi,
+                filterData.value.lunch,
+                startPage
+            ).map { StoresMapper.transform(it) }
+        } else {
+            remote.fetchStores(
+                latLng.value.latitude,
+                latLng.value.longitude,
+                3,
+                "",
+                0,
+                0,
+                0,
+                0,
+                0,
+                startPage
+            ).map { StoresMapper.transform(it) }
+        }
     }
 
     override fun saveLocation(latLng: LatLng) {
@@ -51,6 +58,7 @@ class SearchDataManagerImpl @Inject constructor(
 
     override fun saveFilterData(filterData: FilterDataModel) {
         local.saveFilterData(filterData)
+        this.filterData.onNext(filterData)
     }
 
     override fun fetchFilterData() {
