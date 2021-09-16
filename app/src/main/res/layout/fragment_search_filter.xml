@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="viewModel"
             type="com.google.codelab.gourmetsearchapp.viewmodel.SearchFilterDialogViewModel" />
@@ -41,8 +42,8 @@
             android:id="@+id/scrollView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/s_spacing"
             android:layout_marginStart="@dimen/s_spacing"
+            android:layout_marginTop="@dimen/s_spacing"
             android:layout_marginEnd="@dimen/s_spacing"
             app:layout_constraintBottom_toTopOf="@+id/radio_group"
             app:layout_constraintEnd_toEndOf="parent"
@@ -70,8 +71,8 @@
             android:layout_marginStart="@dimen/s_spacing"
             android:gravity="center"
             android:text="@string/text_filter_range_text"
-            android:textStyle="bold"
             android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@id/radio_group"
             app:layout_constraintEnd_toStartOf="@id/radio_group"
             app:layout_constraintStart_toStartOf="parent"
@@ -160,6 +161,31 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/text_filter_lunch" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/keyword_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/keyword_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/s_spacing"
+                    android:text="@string/text_filter_keyword"
+                    app:layout_constraintStart_toStartOf="@id/keyword_view"
+                    app:layout_constraintTop_toTopOf="@id/keyword_view"
+                    tools:text="フリーキーワードで絞り込み" />
+
+                <EditText
+                    android:id="@+id/keyword_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/s_spacing"
+                    android:hint="@string/text_filter_keyword_hint"
+                    app:layout_constraintStart_toStartOf="@id/keyword_view"
+                    app:layout_constraintTop_toBottomOf="@id/keyword_label" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>
 
         <androidx.constraintlayout.widget.Guideline
@@ -173,15 +199,15 @@
             android:id="@+id/filter_search_button"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/m_spacing"
-            android:layout_marginBottom="@dimen/s_spacing"
             android:layout_marginStart="@dimen/xxl_spacing"
+            android:layout_marginTop="@dimen/m_spacing"
             android:layout_marginEnd="@dimen/xxl_spacing"
+            android:layout_marginBottom="@dimen/s_spacing"
             android:onClick="@{v -> viewModel.onSearchClick()}"
             android:text="@string/text_filter_search_button"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="@id/guideline"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
         <Button

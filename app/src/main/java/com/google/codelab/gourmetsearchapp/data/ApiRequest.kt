@@ -21,6 +21,7 @@ interface ApiRequest {
         @Query("private_room") privateRoom: Int,
         @Query("wifi") wifi: Int,
         @Query("lunch") lunch: Int,
+        @Query("keyword") keyword: String,
         @Query("format") format: String
     ): Single<Response<StoresResponse>>
 }

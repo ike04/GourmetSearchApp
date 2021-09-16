@@ -81,6 +81,7 @@ class SearchFilterDialogFragment : BottomSheetDialogFragment() {
             checkBoxPrivateRoom.isChecked = filterData.privateRoom == CHECK
             checkBoxWifi.isChecked = filterData.wifi == CHECK
             checkBoxLunch.isChecked = filterData.lunch == CHECK
+            keywordText.setText(filterData.keyword)
         }
 
     }
@@ -93,7 +94,8 @@ class SearchFilterDialogFragment : BottomSheetDialogFragment() {
             drink = getCheckboxFlag(binding.checkBoxDrink.isChecked),
             privateRoom = getCheckboxFlag(binding.checkBoxPrivateRoom.isChecked),
             wifi = getCheckboxFlag(binding.checkBoxWifi.isChecked),
-            lunch = getCheckboxFlag(binding.checkBoxLunch.isChecked)
+            lunch = getCheckboxFlag(binding.checkBoxLunch.isChecked),
+            keyword = binding.keywordText.text.toString()
         )
 
         viewModel.saveFilterData(model)

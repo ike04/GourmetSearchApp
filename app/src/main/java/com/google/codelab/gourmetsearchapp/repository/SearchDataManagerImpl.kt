@@ -30,6 +30,7 @@ class SearchDataManagerImpl @Inject constructor(
                 filterData.value.privateRoom,
                 filterData.value.wifi,
                 filterData.value.lunch,
+                filterData.value.keyword,
                 startPage
             ).map { StoresMapper.transform(it) }
         } else {
@@ -43,6 +44,7 @@ class SearchDataManagerImpl @Inject constructor(
                 0,
                 0,
                 0,
+                "",
                 startPage
             ).map { StoresMapper.transform(it) }
         }

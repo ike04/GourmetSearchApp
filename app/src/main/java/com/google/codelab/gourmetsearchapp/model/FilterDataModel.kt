@@ -7,5 +7,6 @@ data class FilterDataModel(
     val drink: Int,
     val privateRoom: Int,
     val wifi: Int,
-    val lunch: Int
+    val lunch: Int,
+    val keyword: String
 )
