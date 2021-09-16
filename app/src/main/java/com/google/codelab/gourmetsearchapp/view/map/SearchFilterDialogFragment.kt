@@ -29,6 +29,7 @@ class SearchFilterDialogFragment : BottomSheetDialogFragment() {
     private val disposable = CompositeDisposable()
 
     companion object {
+        private const val CHECK = 1
         fun newInstance(): SearchFilterDialogFragment {
             return SearchFilterDialogFragment()
         }
@@ -75,11 +76,11 @@ class SearchFilterDialogFragment : BottomSheetDialogFragment() {
         binding.radioGroup.check(SearchFilter.getId(filterData.searchRange).id)
         binding.apply {
             chipGroup.check(SearchChips.getId(filterData.genre))
-            checkBoxCoupon.isChecked = filterData.coupon
-            checkBoxDrink.isChecked = filterData.drink
-            checkBoxPrivateRoom.isChecked = filterData.privateRoom
-            checkBoxWifi.isChecked = filterData.wifi
-            checkBoxLunch.isChecked = filterData.lunch
+            checkBoxCoupon.isChecked = filterData.coupon == CHECK
+            checkBoxDrink.isChecked = filterData.drink == CHECK
+            checkBoxPrivateRoom.isChecked = filterData.privateRoom == CHECK
+            checkBoxWifi.isChecked = filterData.wifi == CHECK
+            checkBoxLunch.isChecked = filterData.lunch == CHECK
         }
 
     }
@@ -88,11 +89,11 @@ class SearchFilterDialogFragment : BottomSheetDialogFragment() {
         val model = FilterDataModel(
             searchRange = SearchFilter.getRange(binding.radioGroup.checkedRadioButtonId).range,
             genre = SearchChips.getCode(binding.chipGroup.checkedChipId),
-            coupon = binding.checkBoxCoupon.isChecked,
-            drink = binding.checkBoxDrink.isChecked,
-            privateRoom = binding.checkBoxPrivateRoom.isChecked,
-            wifi = binding.checkBoxWifi.isChecked,
-            lunch = binding.checkBoxLunch.isChecked
+            coupon = getCheckboxFlag(binding.checkBoxCoupon.isChecked),
+            drink = getCheckboxFlag(binding.checkBoxDrink.isChecked),
+            privateRoom = getCheckboxFlag(binding.checkBoxPrivateRoom.isChecked),
+            wifi = getCheckboxFlag(binding.checkBoxWifi.isChecked),
+            lunch = getCheckboxFlag(binding.checkBoxLunch.isChecked)
         )
 
         viewModel.saveFilterData(model)
@@ -100,11 +101,11 @@ class SearchFilterDialogFragment : BottomSheetDialogFragment() {
         parentViewModel.fetchNearStores(
             model.searchRange,
             model.genre,
-            getCheckboxFlag(model.coupon),
-            getCheckboxFlag(model.drink),
-            getCheckboxFlag(model.privateRoom),
-            getCheckboxFlag(model.wifi),
-            getCheckboxFlag(model.lunch)
+            model.coupon,
+            model.drink,
+            model.privateRoom,
+            model.wifi,
+            model.lunch
         )
     }
 
