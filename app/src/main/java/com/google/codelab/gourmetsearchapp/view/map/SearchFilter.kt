@@ -56,7 +56,7 @@ enum class SearchChips(@StringRes val genre: Int, val code: String) {
 
 
         fun getId(code: String): Int {
-            var id = 8 // not exist
+            var id = -1 // not exist
             values().forEachIndexed { index, searchChips ->
                 if (searchChips.code == code) {
                     id = index
