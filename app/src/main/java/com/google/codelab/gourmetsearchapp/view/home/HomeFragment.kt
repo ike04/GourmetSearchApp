@@ -80,7 +80,7 @@ class HomeFragment : Fragment() {
                     requireContext().showAlertDialog(
                         R.string.no_locations_title,
                         R.string.no_locations_message,
-                        parentFragmentManager
+                        this
                     )
                 }
             }.addTo(disposable)

@@ -1,9 +1,11 @@
 package com.google.codelab.gourmetsearchapp.view.splash
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.AppLaunchChecker
 import com.google.codelab.gourmetsearchapp.databinding.ActivitySplashBinding
+import com.google.codelab.gourmetsearchapp.util.MapUtils
 import com.google.codelab.gourmetsearchapp.view.MainActivity
 import com.google.codelab.gourmetsearchapp.view.onboarding.OnboardingActivity
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
@@ -27,7 +29,12 @@ class SplashActivity : AppCompatActivity() {
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeBy {
-                val intent = Intent(this@SplashActivity, OnboardingActivity::class.java)
+                val intent = if (AppLaunchChecker.hasStartedFromLauncher(this)) {
+                    Intent(this@SplashActivity, MainActivity::class.java)
+                } else {
+                    Intent(this@SplashActivity, OnboardingActivity::class.java)
+                }
+                AppLaunchChecker.onActivityCreate(this)
                 startActivity(intent)
                 finish()
             }
