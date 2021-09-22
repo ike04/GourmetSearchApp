@@ -46,6 +46,7 @@
     <string name="text_filter_keyword_hint">入力例：店名、駅名</string>
 
     <!--    WebView          -->
+    <string name="text_web_view_title">店舗詳細</string>
     <string name="text_add_favorite">お気に入りに追加しました</string>
     <string name="text_delete_favorite">お気に入りから削除しました</string>
 

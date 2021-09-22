@@ -1,6 +1,7 @@
 package com.google.codelab.gourmetsearchapp.view.map
 
 import android.Manifest
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
@@ -19,10 +20,9 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.material.snackbar.Snackbar
 import com.google.codelab.gourmetsearchapp.R
 import com.google.codelab.gourmetsearchapp.databinding.FragmentMapsBinding
-import com.google.codelab.gourmetsearchapp.ext.showFragment
 import com.google.codelab.gourmetsearchapp.model.businessmodel.Store
 import com.google.codelab.gourmetsearchapp.util.MapUtils
-import com.google.codelab.gourmetsearchapp.view.webview.StoreWebViewFragment
+import com.google.codelab.gourmetsearchapp.view.webview.WebViewActivity
 import com.google.codelab.gourmetsearchapp.viewmodel.MapsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
@@ -77,10 +77,10 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
             PagerStoreAdapter(storeList) {
                 val position = binding.storePager.currentItem
 
-                StoreWebViewFragment.newInstance(
-                    storeList[position].id,
-                    storeList[position].urls
-                ).showFragment(parentFragmentManager)
+                val intent = Intent(requireContext(), WebViewActivity::class.java)
+                intent.putExtra(WebViewActivity.ID, storeList[position].id)
+                intent.putExtra(WebViewActivity.URL, storeList[position].urls)
+                startActivity(intent)
             }
 
         viewModel.storeList
@@ -92,7 +92,11 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
                     storeList.add(store)
                 }
                 binding.storePager.adapter?.notifyDataSetChanged()
-                Toast.makeText(requireContext(),"周辺のレストランが${storeList.size}件見つかりました",Toast.LENGTH_LONG).show()
+                Toast.makeText(
+                    requireContext(),
+                    "周辺のレストランが${storeList.size}件見つかりました",
+                    Toast.LENGTH_LONG
+                ).show()
             }.addTo(disposable)
 
         viewModel.reset
