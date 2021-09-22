@@ -42,6 +42,8 @@
     <string name="text_filter_chip_6">中華</string>
     <string name="text_filter_chip_7">焼肉</string>
     <string name="text_filter_chip_8">カフェ</string>
+    <string name="text_filter_keyword">フリーキーワードで絞り込み</string>
+    <string name="text_filter_keyword_hint">入力例：店名、駅名</string>
 
     <!--    WebView          -->
     <string name="text_add_favorite">お気に入りに追加しました</string>

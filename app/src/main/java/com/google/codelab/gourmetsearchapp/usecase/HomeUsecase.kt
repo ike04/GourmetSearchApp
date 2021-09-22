@@ -4,16 +4,7 @@ import com.google.codelab.gourmetsearchapp.model.businessmodel.StoresBusinessMod
 import io.reactivex.rxjava3.core.Single
 
 interface HomeUsecase : Usecase {
-    fun fetchNearStores(
-        range: Int,
-        genre: String,
-        coupon: Int,
-        drink: Int,
-        room: Int,
-        wifi: Int,
-        lunch: Int,
-        startPage: Int = 1
-    ): Single<StoresBusinessModel>
+    fun fetchNearStores(startPage: Int = 1): Single<StoresBusinessModel>
 
     fun hasLocationPermission(): Single<Boolean>
 }

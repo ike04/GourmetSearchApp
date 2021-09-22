@@ -51,7 +51,7 @@ class SearchFilterDialogFragment : BottomSheetDialogFragment() {
         viewModel.filterData
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribeBy { setFilterCondition(it)}
+            .subscribeBy { setFilterCondition(it) }
             .addTo(disposable)
 
         viewModel.onSearchClicked
@@ -81,6 +81,7 @@ class SearchFilterDialogFragment : BottomSheetDialogFragment() {
             checkBoxPrivateRoom.isChecked = filterData.privateRoom == CHECK
             checkBoxWifi.isChecked = filterData.wifi == CHECK
             checkBoxLunch.isChecked = filterData.lunch == CHECK
+            keywordText.setText(filterData.keyword)
         }
 
     }
@@ -93,20 +94,13 @@ class SearchFilterDialogFragment : BottomSheetDialogFragment() {
             drink = getCheckboxFlag(binding.checkBoxDrink.isChecked),
             privateRoom = getCheckboxFlag(binding.checkBoxPrivateRoom.isChecked),
             wifi = getCheckboxFlag(binding.checkBoxWifi.isChecked),
-            lunch = getCheckboxFlag(binding.checkBoxLunch.isChecked)
+            lunch = getCheckboxFlag(binding.checkBoxLunch.isChecked),
+            keyword = binding.keywordText.text.toString()
         )
 
         viewModel.saveFilterData(model)
 
-        parentViewModel.fetchNearStores(
-            model.searchRange,
-            model.genre,
-            model.coupon,
-            model.drink,
-            model.privateRoom,
-            model.wifi,
-            model.lunch
-        )
+        parentViewModel.fetchNearStores()
     }
 
     private fun getCheckboxFlag(flg: Boolean): Int {
@@ -126,6 +120,7 @@ class SearchFilterDialogFragment : BottomSheetDialogFragment() {
             checkBoxPrivateRoom.isChecked = false
             checkBoxWifi.isChecked = false
             checkBoxLunch.isChecked = false
+            keywordText.setText("")
         }
     }
 

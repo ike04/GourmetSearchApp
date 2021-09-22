@@ -24,6 +24,7 @@ class RemoteData @Inject constructor(
         room: Int,
         wifi: Int,
         lunch: Int,
+        keyword: String,
         start: Int = 1
     ): Single<Response<StoresResponse>> {
         return api.fetchNearStores(
@@ -39,6 +40,7 @@ class RemoteData @Inject constructor(
             room,
             wifi,
             lunch,
+            keyword,
             FORMAT
         )
     }

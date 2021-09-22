@@ -23,7 +23,8 @@ class LocalData @Inject constructor(private val dao: FilterDao) {
                     drink = filterData.drink,
                     privateRoom = filterData.privateRoom,
                     wifi = filterData.wifi,
-                    lunch = filterData.lunch
+                    lunch = filterData.lunch,
+                    keyword = filterData.keyword
                 )
             )
         }
@@ -44,16 +45,15 @@ class LocalData @Inject constructor(private val dao: FilterDao) {
                         drink = localData.drink,
                         privateRoom = localData.privateRoom,
                         wifi = localData.wifi,
-                        lunch = localData.lunch
+                        lunch = localData.lunch,
+                        keyword = localData.keyword
                     )
                 )
             }
     }
 
     fun resetFilter() {
-        Single.fromCallable {
-            dao.deleteFilterData()
-        }
+        Single.fromCallable { dao.deleteFilterData() }
             .subscribeOn(Schedulers.io())
             .subscribe()
     }
