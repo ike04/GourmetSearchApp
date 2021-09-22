@@ -120,6 +120,7 @@ class SearchFilterDialogFragment : BottomSheetDialogFragment() {
             checkBoxPrivateRoom.isChecked = false
             checkBoxWifi.isChecked = false
             checkBoxLunch.isChecked = false
+            keywordText.setText("")
         }
     }
 

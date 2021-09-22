@@ -32,6 +32,7 @@
             android:background="@color/transparent"
             android:clickable="true"
             android:focusable="true"
+            android:foreground="?android:selectableItemBackground"
             android:onClick="@{v -> viewModel.onCancelClick()}"
             android:src="@drawable/ic_baseline_clear_24"
             app:layout_constraintBottom_toBottomOf="@id/filter_title_text_view"
@@ -104,18 +105,21 @@
                 android:id="@+id/range_300"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:buttonTint="@color/teal_700"
                 android:text="@string/text_filter_range_checkbox_1" />
 
             <RadioButton
                 android:id="@+id/range_500"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:buttonTint="@color/teal_700"
                 android:text="@string/text_filter_range_checkbox_2" />
 
             <RadioButton
                 android:id="@+id/range_1000"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:buttonTint="@color/teal_700"
                 android:checked="true"
                 android:text="@string/text_filter_range_checkbox_3" />
 
@@ -123,12 +127,14 @@
                 android:id="@+id/range_2000"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:buttonTint="@color/teal_700"
                 android:text="@string/text_filter_range_checkbox_4" />
 
             <RadioButton
                 android:id="@+id/range_3000"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:buttonTint="@color/teal_700"
                 android:text="@string/text_filter_range_checkbox_5" />
         </RadioGroup>
 
@@ -147,30 +153,35 @@
                 android:id="@+id/checkBox_coupon"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:buttonTint="@color/teal_700"
                 android:text="@string/text_filter_coupon" />
 
             <CheckBox
                 android:id="@+id/checkBox_drink"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:buttonTint="@color/teal_700"
                 android:text="@string/text_filter_drink" />
 
             <CheckBox
                 android:id="@+id/checkBox_private_room"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:buttonTint="@color/teal_700"
                 android:text="@string/text_filter_private_room" />
 
             <CheckBox
                 android:id="@+id/checkBox_wifi"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:buttonTint="@color/teal_700"
                 android:text="@string/text_filter_wifi" />
 
             <CheckBox
                 android:id="@+id/checkBox_lunch"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:buttonTint="@color/teal_700"
                 android:text="@string/text_filter_lunch" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -213,7 +224,7 @@
             android:layout_marginStart="@dimen/xxl_spacing"
             android:layout_marginTop="@dimen/m_spacing"
             android:layout_marginEnd="@dimen/xxl_spacing"
-            android:layout_marginBottom="@dimen/s_spacing"
+            android:layout_marginBottom="@dimen/m_spacing"
             android:onClick="@{v -> viewModel.onSearchClick()}"
             android:text="@string/text_filter_search_button"
             app:layout_constraintBottom_toBottomOf="parent"
