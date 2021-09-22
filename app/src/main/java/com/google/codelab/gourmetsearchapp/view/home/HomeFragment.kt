@@ -1,5 +1,6 @@
 package com.google.codelab.gourmetsearchapp.view.home
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,9 +13,8 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.codelab.gourmetsearchapp.R
 import com.google.codelab.gourmetsearchapp.databinding.FragmentHomeBinding
 import com.google.codelab.gourmetsearchapp.ext.ContextExt.showAlertDialog
-import com.google.codelab.gourmetsearchapp.ext.showFragment
 import com.google.codelab.gourmetsearchapp.model.businessmodel.Store
-import com.google.codelab.gourmetsearchapp.view.webview.StoreWebViewFragment
+import com.google.codelab.gourmetsearchapp.view.webview.WebViewActivity
 import com.google.codelab.gourmetsearchapp.viewmodel.HomeViewModel
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
@@ -38,10 +38,10 @@ class HomeFragment : Fragment() {
     private val onItemClickListener = OnItemClickListener { item, _ ->
         val index = groupAdapter.getAdapterPosition(item)
 
-        StoreWebViewFragment.newInstance(
-            storeList[index].id,
-            storeList[index].urls
-        ).showFragment(parentFragmentManager)
+        val intent = Intent(requireContext(), WebViewActivity::class.java)
+        intent.putExtra(WebViewActivity.ID, storeList[index].id)
+        intent.putExtra(WebViewActivity.URL, storeList[index].urls)
+        startActivity(intent)
     }
 
     override fun onCreateView(
@@ -89,13 +89,20 @@ class HomeFragment : Fragment() {
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeBy { stores ->
-                if(stores.store.isNotEmpty()) {
+                if (stores.store.isNotEmpty()) {
                     storeList.addAll(stores.store)
                     groupAdapter.update(storeList.map { StoreItem(it, requireContext()) })
                 } else {
                     binding.recyclerView.layoutManager =
                         GridLayoutManager(requireContext(), 1, GridLayoutManager.VERTICAL, false)
-                    groupAdapter.update(listOf(EmptyItem(R.string.no_result_near_restaurant, requireContext())))
+                    groupAdapter.update(
+                        listOf(
+                            EmptyItem(
+                                R.string.no_result_near_restaurant,
+                                requireContext()
+                            )
+                        )
+                    )
                 }
             }.addTo(disposable)
 
