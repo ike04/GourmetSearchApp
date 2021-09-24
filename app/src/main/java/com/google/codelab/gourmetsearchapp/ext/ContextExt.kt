@@ -3,22 +3,23 @@ package com.google.codelab.gourmetsearchapp.ext
 import android.content.Context
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
-import androidx.fragment.app.FragmentManager
-import com.google.codelab.gourmetsearchapp.view.map.MapsFragment
+import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
+import com.google.codelab.gourmetsearchapp.R
 
 object ContextExt {
     fun Context.showAlertDialog(
         @StringRes title: Int,
         @StringRes message: Int,
-        fragmentManager: FragmentManager
+        fragment: Fragment
     ) {
         AlertDialog.Builder(this)
             .setTitle(title)
             .setMessage(message)
             .setPositiveButton(android.R.string.ok) { _, _ ->
-                MapsFragment.newInstance().showFragment(fragmentManager, true)
+                fragment.findNavController().navigate(R.id.navigation_map)
             }.setOnDismissListener {
-                MapsFragment.newInstance().showFragment(fragmentManager, true)
+                fragment.findNavController().navigate(R.id.navigation_map)
             }
             .show()
     }

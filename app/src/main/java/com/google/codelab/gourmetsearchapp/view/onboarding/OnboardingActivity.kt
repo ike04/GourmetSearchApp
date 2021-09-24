@@ -7,6 +7,7 @@ import androidx.activity.viewModels
 import androidx.viewpager.widget.ViewPager
 import com.google.codelab.gourmetsearchapp.R
 import com.google.codelab.gourmetsearchapp.databinding.ActivityOnboardingBinding
+import com.google.codelab.gourmetsearchapp.util.MapUtils
 import com.google.codelab.gourmetsearchapp.view.MainActivity
 import com.google.codelab.gourmetsearchapp.viewmodel.OnboardingViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -30,6 +31,7 @@ class OnboardingActivity : AppCompatActivity() {
         binding.viewModel = viewModel
 
         supportActionBar?.hide()
+        MapUtils.requestLocationPermission(this, this)
         setContentView(binding.root)
         setOnboarding()
         setupViews()
