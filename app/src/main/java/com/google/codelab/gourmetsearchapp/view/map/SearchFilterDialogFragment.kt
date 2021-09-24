@@ -141,4 +141,9 @@ class SearchFilterDialogFragment : BottomSheetDialogFragment() {
             binding.chipGroup.addView(chip)
         }
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        disposable.clear()
+    }
 }

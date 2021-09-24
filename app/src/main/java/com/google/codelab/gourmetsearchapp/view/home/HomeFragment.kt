@@ -132,7 +132,7 @@ class HomeFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.favorite -> {
-
+                SwitchHomeListFragment.newInstance().show(childFragmentManager, "")
                 true
             }
             else -> super.onOptionsItemSelected(item)
