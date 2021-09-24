@@ -3,6 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <variable
+            name="viewModel"
+            type="com.google.codelab.gourmetsearchapp.viewmodel.SwitchHomeListViewModel" />
 
     </data>
 
@@ -32,7 +35,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:buttonTint="@color/teal_700"
-                    android:checked="true"
                     android:text="近くのレストラン" />
 
                 <RadioButton
@@ -47,6 +49,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:onClick="@{v -> viewModel.onClicked()}"
                     android:text="@string/text_filter_search_button"
                     android:layout_marginBottom="@dimen/l_spacing"/>
             </RadioGroup>
