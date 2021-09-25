@@ -7,7 +7,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class FavoriteStoresViewModel @Inject constructor(
+class SettingsViewModel @Inject constructor(
     private val usecase: FavoriteStoresUsecase
 ) : BaseViewModel(usecase) {
 

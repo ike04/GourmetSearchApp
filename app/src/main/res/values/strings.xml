@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">GourmetSearchApp</string>
     <string name="title_home">Home</string>
-    <string name="title_favorite_stores">Favorite</string>
+    <string name="title_setting">Settings</string>
     <string name="title_map">Map</string>
 
     <!--    onboarding       -->
