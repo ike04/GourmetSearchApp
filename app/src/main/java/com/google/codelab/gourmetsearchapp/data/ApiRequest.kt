@@ -24,4 +24,12 @@ interface ApiRequest {
         @Query("keyword") keyword: String,
         @Query("format") format: String
     ): Single<Response<StoresResponse>>
+
+    @GET(".")
+    fun fetchFavoriteStores(
+        @Query("key") key: String,
+        @Query("count") count: Int,
+        @Query("id") storeId: String,
+        @Query("format") format: String
+    ): Single<Response<StoresResponse>>
 }

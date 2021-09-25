@@ -2,11 +2,9 @@ package com.google.codelab.gourmetsearchapp.view.home
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
@@ -28,7 +26,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
-    private val viewModel: HomeViewModel by viewModels()
+    private val viewModel: HomeViewModel by activityViewModels()
     private lateinit var binding: FragmentHomeBinding
     private val groupAdapter = GroupAdapter<GroupieViewHolder>()
     private val storeList: MutableList<Store> = ArrayList()
@@ -52,6 +50,7 @@ class HomeFragment : Fragment() {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
         binding.viewModel = viewModel
 
+        setHasOptionsMenu(true)
         return binding.root
     }
 
@@ -61,14 +60,15 @@ class HomeFragment : Fragment() {
         binding.swipedLayout.setOnRefreshListener {
             storeList.clear()
             viewModel.resetPages()
-            viewModel.fetchStores()
+            if (viewModel.selectedFavorite.get()) {
+                viewModel.fetchFavoriteStores(true)
+            } else {
+                viewModel.fetchStores()
+            }
             binding.swipedLayout.isRefreshing = false
         }
-        binding.recyclerView.apply {
-            adapter = groupAdapter
-            layoutManager =
-                GridLayoutManager(requireContext(), 2, GridLayoutManager.VERTICAL, false)
-        }
+
+        binding.recyclerView.adapter = groupAdapter
 
         viewModel.checkLocationPermission()
 
@@ -91,6 +91,8 @@ class HomeFragment : Fragment() {
             .subscribeBy { stores ->
                 if (stores.store.isNotEmpty()) {
                     storeList.addAll(stores.store)
+                    binding.recyclerView.layoutManager =
+                        GridLayoutManager(requireContext(), 2, GridLayoutManager.VERTICAL, false)
                     groupAdapter.update(storeList.map { StoreItem(it, requireContext()) })
                 } else {
                     binding.recyclerView.layoutManager =
@@ -104,6 +106,12 @@ class HomeFragment : Fragment() {
                         )
                     )
                 }
+            }.addTo(disposable)
+
+        viewModel.reset
+            .subscribeBy {
+                storeList.clear()
+                groupAdapter.notifyDataSetChanged()
             }.addTo(disposable)
 
         viewModel.error
@@ -123,6 +131,20 @@ class HomeFragment : Fragment() {
         })
 
         groupAdapter.setOnItemClickListener(onItemClickListener)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.home_menu, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.favorite -> {
+                SwitchHomeListFragment.newInstance().show(childFragmentManager, "")
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     override fun onDestroy() {
