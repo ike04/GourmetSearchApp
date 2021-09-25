@@ -50,6 +50,11 @@
     <string name="text_filter_keyword">フリーキーワードで絞り込み</string>
     <string name="text_filter_keyword_hint">入力例：店名、駅名</string>
 
+    <!--    Setting          -->
+    <string name="text_cell_title1">アプリの設定</string>
+    <string name="text_cell_title2">アプリの使い方</string>
+    <string name="text_cell_title3">プライバシーポリシー</string>
+
     <!--    WebView          -->
     <string name="text_web_view_title">店舗詳細</string>
     <string name="text_add_favorite">お気に入りに追加しました</string>
