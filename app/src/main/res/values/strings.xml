@@ -13,6 +13,11 @@
     <string name="text_onboarding_instruction03">お気に入りのレストランをアプリに登録しよう。</string>
     <string name="text_onboarding_button">今すぐ始める</string>
 
+    <!--    Home             -->
+    <string name="text_switch_dialog_title">リストを切り替える</string>
+    <string name="text_switch_dialog_button1">近くのレストラン</string>
+    <string name="text_switch_dialog_button2">お気に入りのレストラン</string>
+
     <!--    map              -->
     <string name="no_result_near_restaurant">検索条件にあったレストランが見つかりませんでした。</string>
     <string name="no_location_authorization">現在地は表示できません</string>

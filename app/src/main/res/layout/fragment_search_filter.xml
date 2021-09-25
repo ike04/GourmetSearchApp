@@ -55,6 +55,7 @@
             android:id="@+id/scrollView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/s_spacing"
             android:layout_marginStart="@dimen/s_spacing"
             android:layout_marginEnd="@dimen/s_spacing"
             app:layout_constraintBottom_toTopOf="@+id/radio_group"
