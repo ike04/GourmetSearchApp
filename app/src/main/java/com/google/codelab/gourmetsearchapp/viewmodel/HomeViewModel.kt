@@ -43,7 +43,6 @@ class HomeViewModel @Inject constructor(
                 if (it.store.size < 20) {
                     moreLoad.set(false)
                 }
-                currentPage += it.totalPages
                 storeList.onNext(it)
             }
     }

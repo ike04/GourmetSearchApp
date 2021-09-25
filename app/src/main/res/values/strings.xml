@@ -53,7 +53,7 @@
     <!--    Setting          -->
     <string name="text_cell_title1">アプリの設定</string>
     <string name="text_cell_title2">アプリの使い方</string>
-    <string name="text_cell_title3">プライバシーポリシー</string>
+    <string name="text_cell_title3">OSSライセンス</string>
 
     <!--    WebView          -->
     <string name="text_web_view_title">店舗詳細</string>
