@@ -5,6 +5,7 @@ import com.google.codelab.gourmetsearchapp.Signal
 import com.google.codelab.gourmetsearchapp.model.businessmodel.StoresBusinessModel
 import com.google.codelab.gourmetsearchapp.usecase.HomeUsecase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import io.reactivex.rxjava3.kotlin.subscribeBy
 import io.reactivex.rxjava3.subjects.PublishSubject
 import javax.inject.Inject
 
@@ -37,17 +38,14 @@ class HomeViewModel @Inject constructor(
         usecase.fetchFavoriteStores(forceUpdate)
 
         usecase.getFavoriteStoreStream()
-            .execute(
-                onSuccess = {
-                    if (it.store.size < 20) {
-                        moreLoad.set(false)
-                    }
-                    currentPage += it.totalPages
-                    storeList.onNext(it)
-                },
-                retry = { usecase.fetchFavoriteStores(forceUpdate) }
-            )
-        
+            .firstElement()
+            .subscribeBy {
+                if (it.store.size < 20) {
+                    moreLoad.set(false)
+                }
+                currentPage += it.totalPages
+                storeList.onNext(it)
+            }
     }
 
     fun resetPages() {

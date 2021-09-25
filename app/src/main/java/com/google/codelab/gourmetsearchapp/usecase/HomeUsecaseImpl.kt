@@ -1,6 +1,5 @@
 package com.google.codelab.gourmetsearchapp.usecase
 
-import com.google.codelab.gourmetsearchapp.model.Failure
 import com.google.codelab.gourmetsearchapp.model.businessmodel.StoresBusinessModel
 import com.google.codelab.gourmetsearchapp.repository.FavoriteDataManager
 import com.google.codelab.gourmetsearchapp.repository.SearchDataManager
@@ -47,6 +46,7 @@ class HomeUsecaseImpl @Inject constructor(
     }
 
     private fun createStoreIdQuery(storeIds: List<String>): String {
+        if (storeIds.isEmpty()) return ""
         val nextListCount = if (Integer.min(storeIds.size - currentStoresCount, LIMIT) > 0) {
             storeIds.size - currentStoresCount
         } else {

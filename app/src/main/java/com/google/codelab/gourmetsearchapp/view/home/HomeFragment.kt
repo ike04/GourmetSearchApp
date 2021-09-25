@@ -68,11 +68,7 @@ class HomeFragment : Fragment() {
             binding.swipedLayout.isRefreshing = false
         }
 
-        binding.recyclerView.apply {
-            adapter = groupAdapter
-            layoutManager =
-                GridLayoutManager(requireContext(), 2, GridLayoutManager.VERTICAL, false)
-        }
+        binding.recyclerView.adapter = groupAdapter
 
         viewModel.checkLocationPermission()
 
@@ -95,7 +91,9 @@ class HomeFragment : Fragment() {
             .subscribeBy { stores ->
                 if (stores.store.isNotEmpty()) {
                     storeList.addAll(stores.store)
-                    groupAdapter.update(storeList.distinct().map { StoreItem(it, requireContext()) })
+                    binding.recyclerView.layoutManager =
+                        GridLayoutManager(requireContext(), 2, GridLayoutManager.VERTICAL, false)
+                    groupAdapter.update(storeList.map { StoreItem(it, requireContext()) })
                 } else {
                     binding.recyclerView.layoutManager =
                         GridLayoutManager(requireContext(), 1, GridLayoutManager.VERTICAL, false)
