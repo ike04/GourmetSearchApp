@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
@@ -61,9 +60,14 @@ class HomeFragment : Fragment() {
         binding.swipedLayout.setOnRefreshListener {
             storeList.clear()
             viewModel.resetPages()
-            viewModel.fetchStores()
+            if (viewModel.selectedFavorite.get()) {
+                viewModel.fetchFavoriteStores(true)
+            } else {
+                viewModel.fetchStores()
+            }
             binding.swipedLayout.isRefreshing = false
         }
+
         binding.recyclerView.apply {
             adapter = groupAdapter
             layoutManager =
@@ -91,7 +95,7 @@ class HomeFragment : Fragment() {
             .subscribeBy { stores ->
                 if (stores.store.isNotEmpty()) {
                     storeList.addAll(stores.store)
-                    groupAdapter.update(storeList.map { StoreItem(it, requireContext()) })
+                    groupAdapter.update(storeList.distinct().map { StoreItem(it, requireContext()) })
                 } else {
                     binding.recyclerView.layoutManager =
                         GridLayoutManager(requireContext(), 1, GridLayoutManager.VERTICAL, false)

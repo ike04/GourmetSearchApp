@@ -42,11 +42,11 @@ class SwitchHomeListFragment : BottomSheetDialogFragment() {
             .subscribeBy {
                 dismiss()
                 parentViewModel.resetStoreList()
+                parentViewModel.resetPages()
                 parentViewModel.selectedFavorite.set(binding.favoriteStoreRadioButton.isChecked)
                 if (parentViewModel.selectedFavorite.get()) {
-                    // TODO
+                    parentViewModel.fetchFavoriteStores(true)
                 } else {
-                    parentViewModel.resetPages()
                     parentViewModel.fetchStores()
                 }
             }.addTo(disposable)

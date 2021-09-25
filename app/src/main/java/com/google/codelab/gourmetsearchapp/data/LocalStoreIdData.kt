@@ -10,9 +10,17 @@ import io.reactivex.rxjava3.subjects.PublishSubject
 import javax.inject.Inject
 
 class LocalStoreIdData @Inject constructor(private val dao: FavoriteStoreDao) {
+    private val storeIds: PublishSubject<List<String>> = PublishSubject.create()
     private val hasStoreId: PublishSubject<Boolean> = PublishSubject.create()
     private val addId: PublishSubject<Signal> = PublishSubject.create()
     private val deleteId: PublishSubject<Signal> = PublishSubject.create()
+
+    fun fetchStoreIds(): Single<List<String>> {
+        return Single.fromCallable { dao.loadFavoriteIds() }
+            .subscribeOn(Schedulers.io())
+            .onErrorReturn { emptyList() }
+            .map { it.map { it.storeId } }
+    }
 
     fun addStoreId(storeId: String) {
         Single.fromCallable { dao.saveFavoriteStoreId(FavoriteStoreEntity(storeId)) }
@@ -37,6 +45,8 @@ class LocalStoreIdData @Inject constructor(private val dao: FavoriteStoreDao) {
                 hasStoreId.onNext(it.isNotEmpty())
             }
     }
+
+    fun getStoreIdsStream(): Observable<List<String>> = storeIds.hide()
 
     fun getHasStoreIdStream(): Observable<Boolean> = hasStoreId.hide()
 

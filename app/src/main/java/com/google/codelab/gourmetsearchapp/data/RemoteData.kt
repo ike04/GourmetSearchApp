@@ -44,4 +44,8 @@ class RemoteData @Inject constructor(
             FORMAT
         )
     }
+
+    fun fetchFavoriteStores(ids: String): Single<Response<StoresResponse>> {
+        return api.fetchFavoriteStores(BuildConfig.API_KEY, COUNT, ids, FORMAT)
+    }
 }

@@ -33,6 +33,23 @@ class HomeViewModel @Inject constructor(
             )
     }
 
+    fun fetchFavoriteStores(forceUpdate: Boolean = false) {
+        usecase.fetchFavoriteStores(forceUpdate)
+
+        usecase.getFavoriteStoreStream()
+            .execute(
+                onSuccess = {
+                    if (it.store.size < 20) {
+                        moreLoad.set(false)
+                    }
+                    currentPage += it.totalPages
+                    storeList.onNext(it)
+                },
+                retry = { usecase.fetchFavoriteStores(forceUpdate) }
+            )
+        
+    }
+
     fun resetPages() {
         currentPage = 1
         moreLoad.set(true)
