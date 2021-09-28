@@ -70,6 +70,8 @@ class SettingsFragment : Fragment() {
                 startActivity(intent)
             }
             2 -> {
+                val intent = Intent(requireContext(), OssLicenseActivity::class.java)
+                startActivity(intent)
             }
             else -> {
             } //nothing
