@@ -36,10 +36,6 @@ abstract class RepositoryModule {
 
     @Singleton
     @Binds
-    abstract fun bindFavoriteStoresUsecase(favoriteStoresUsecaseImpl: FavoriteStoresUsecaseImpl): FavoriteStoresUsecase
-
-    @Singleton
-    @Binds
     abstract fun bindStoreWebViewUsecase(storeWebViewUsecaseImpl: StoreWebViewUsecaseImpl): StoreWebViewUsecase
 
     @Singleton

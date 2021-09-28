@@ -8,6 +8,7 @@ import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.kotlin.addTo
 import io.reactivex.rxjava3.kotlin.subscribeBy
 import io.reactivex.rxjava3.subjects.PublishSubject
+import java.lang.Integer.min
 import javax.inject.Inject
 
 class HomeUsecaseImpl @Inject constructor(
@@ -47,14 +48,14 @@ class HomeUsecaseImpl @Inject constructor(
 
     private fun createStoreIdQuery(storeIds: List<String>): String {
         if (storeIds.isEmpty()) return ""
-        val nextListCount = if (Integer.min(storeIds.size - currentStoresCount, LIMIT) > 0) {
-            storeIds.size - currentStoresCount
-        } else {
+        val nextListCount = if (storeIds.size - currentStoresCount > LIMIT ) {
             LIMIT
+        } else {
+            storeIds.size - currentStoresCount
         }
 
         // queryに含められるstore_idが20件までのため
-        return storeIds.subList(currentStoresCount, nextListCount).joinToString(",")
+        return storeIds.subList(currentStoresCount, currentStoresCount + nextListCount).joinToString(",")
     }
 
     private fun fetchStores(ids: String) {

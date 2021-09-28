@@ -17,6 +17,10 @@ import java.util.concurrent.TimeUnit
 class SplashActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySplashBinding
 
+    companion object {
+        const val FROM_SPLASH = "FROM_SPLASH"
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySplashBinding.inflate(layoutInflater)
@@ -33,6 +37,7 @@ class SplashActivity : AppCompatActivity() {
                     Intent(this@SplashActivity, MainActivity::class.java)
                 } else {
                     Intent(this@SplashActivity, OnboardingActivity::class.java)
+                        .putExtra(FROM_SPLASH, true)
                 }
                 AppLaunchChecker.onActivityCreate(this)
                 startActivity(intent)

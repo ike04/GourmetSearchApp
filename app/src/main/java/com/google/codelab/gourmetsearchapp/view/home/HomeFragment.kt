@@ -69,6 +69,7 @@ class HomeFragment : Fragment() {
         }
 
         binding.recyclerView.adapter = groupAdapter
+        binding.recyclerView.layoutManager = GridLayoutManager(requireContext(), 2, GridLayoutManager.VERTICAL, false)
 
         viewModel.checkLocationPermission()
 
@@ -91,8 +92,6 @@ class HomeFragment : Fragment() {
             .subscribeBy { stores ->
                 if (stores.store.isNotEmpty()) {
                     storeList.addAll(stores.store)
-                    binding.recyclerView.layoutManager =
-                        GridLayoutManager(requireContext(), 2, GridLayoutManager.VERTICAL, false)
                     groupAdapter.update(storeList.map { StoreItem(it, requireContext()) })
                 } else {
                     binding.recyclerView.layoutManager =
@@ -125,7 +124,11 @@ class HomeFragment : Fragment() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
                 if (!recyclerView.canScrollVertically(1) && viewModel.moreLoad.get()) {
-                    viewModel.fetchStores()
+                    if (viewModel.selectedFavorite.get()) {
+                        viewModel.fetchFavoriteStores()
+                    } else {
+                        viewModel.fetchStores()
+                    }
                 }
             }
         })

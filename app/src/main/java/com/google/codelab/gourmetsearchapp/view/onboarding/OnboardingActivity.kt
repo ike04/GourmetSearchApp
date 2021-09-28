@@ -1,14 +1,14 @@
 package com.google.codelab.gourmetsearchapp.view.onboarding
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager.widget.ViewPager
-import com.google.codelab.gourmetsearchapp.R
 import com.google.codelab.gourmetsearchapp.databinding.ActivityOnboardingBinding
 import com.google.codelab.gourmetsearchapp.util.MapUtils
 import com.google.codelab.gourmetsearchapp.view.MainActivity
+import com.google.codelab.gourmetsearchapp.view.splash.SplashActivity
 import com.google.codelab.gourmetsearchapp.viewmodel.OnboardingViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
@@ -30,6 +30,8 @@ class OnboardingActivity : AppCompatActivity() {
         binding = ActivityOnboardingBinding.inflate(layoutInflater)
         binding.viewModel = viewModel
 
+        val isFromSplash = intent.getBooleanExtra(SplashActivity.FROM_SPLASH, false)
+
         supportActionBar?.hide()
         MapUtils.requestLocationPermission(this, this)
         setContentView(binding.root)
@@ -40,8 +42,10 @@ class OnboardingActivity : AppCompatActivity() {
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeBy {
-                val intent = Intent(application, MainActivity::class.java)
-                startActivity(intent)
+                if (isFromSplash) {
+                    val intent = Intent(application, MainActivity::class.java)
+                    startActivity(intent)
+                }
                 finish()
             }.addTo(disposables)
     }
