@@ -6,13 +6,14 @@ import com.google.codelab.gourmetsearchapp.usecase.SearchFilterDialogUsecase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.rxjava3.kotlin.addTo
 import io.reactivex.rxjava3.kotlin.subscribeBy
+import io.reactivex.rxjava3.schedulers.Schedulers
 import io.reactivex.rxjava3.subjects.PublishSubject
 import javax.inject.Inject
 
 @HiltViewModel
 class SearchFilterDialogViewModel @Inject constructor(
     private val usecase: SearchFilterDialogUsecase
-) : BaseViewModel(usecase) {
+) : BaseViewModel(usecase, Schedulers.trampoline(), Schedulers.trampoline()) {
     val onSearchClicked: PublishSubject<Signal> = PublishSubject.create()
     val onResetClicked: PublishSubject<Signal> = PublishSubject.create()
     val onCancelClicked: PublishSubject<Signal> = PublishSubject.create()
