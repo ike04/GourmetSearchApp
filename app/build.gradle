@@ -107,6 +107,10 @@ dependencies {
     // room
     implementation "androidx.room:room-runtime:2.4.0-alpha04"
     kapt "androidx.room:room-compiler:2.4.0-alpha04"
+
+    // mockito
+    testImplementation "org.mockito.kotlin:mockito-kotlin:3.2.0"
+    testImplementation 'org.mockito:mockito-inline:3.11.2'
     
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
