@@ -48,6 +48,8 @@ jobs:
 
   test:
     runs-on: ubuntu-latest
+    env:
+      hotPepperApiKey: ${{ secrets.hotPepperApiKey }}
     steps:
     # チェックアウト
     - uses: actions/checkout@v2
