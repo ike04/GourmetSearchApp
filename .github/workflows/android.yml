@@ -34,6 +34,8 @@ jobs:
       run: touch local.properties
 
     - name: Add Api Key
+      env:
+        APOD_API_KEY: ${{ secrets.APOD_API_KEY }}
       run: echo "hotPepperApiKey=\"\"" >> local.properties
 
     # Gradleのキャッシュ復元
