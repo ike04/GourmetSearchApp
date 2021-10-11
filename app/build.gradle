@@ -18,7 +18,8 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        buildConfigField "String", "API_KEY", "\"${project.property("hotPepperApiKey")}\""
+        buildConfigField "String", "API_KEY", "\"${project.property("hotPepperApiKey")}\"" ?: "\"foo\""
+        resValue('string', "API_KEY", "\"${project.property("hotPepperApiKey")}\"" ?: "\"foo\"")
     }
 
     buildTypes {
