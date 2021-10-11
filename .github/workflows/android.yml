@@ -30,6 +30,11 @@ jobs:
           distribution: 'zulu'
           java-version: '8'
 
+      - name: Update API_KEY from Secrets
+          env:
+            MOCK_USERNAME: ${{ secrets.HOTPEPPERAPIKEY }}
+          run: echo API_KEY="$API_KEY" > ./local.properties
+
       - uses: actions/cache@v2
         with:
           path: ~/.gradle/caches
