@@ -62,10 +62,11 @@ jobs:
             ${{ runner.os }}-gradle-
 
       - name: Update API_KEY from Secrets
-          env:
-            MOCK_USERNAME: ${{ secrets.HOTPEPPERAPIKEY }}
           run: echo API_KEY="$API_KEY" > ./local.properties
-          
+          env:
+            API_KEY: ${{ secrets.HOTPEPPERAPIKEY }}
+
+
       - name: Test with Gradle
         run: ./gradlew test --stacktrace
 
