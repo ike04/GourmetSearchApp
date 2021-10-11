@@ -20,14 +20,14 @@ HotpepperグルメのAPI(https://webservice.recruit.co.jp/doc/hotpepper/referenc
    
 |onboarding|  list  | 
 | ---- | ---- | 
-|  <img src="https://user-images.githubusercontent.com/48178913/133264852-e4c43c12-0e42-4b45-985f-9194d6666c26.gif" >  | <img src="https://user-images.githubusercontent.com/48178913/133265331-79050c02-0b7e-442e-89fa-fa5afb9aab0d.gif">  | 
+|  <img src="https://user-images.githubusercontent.com/48178913/136657217-48525c2b-f5b3-4822-b24f-4658df061739.gif" >  | <img src="https://user-images.githubusercontent.com/48178913/136657308-bb54e688-44e6-4f32-ae1d-130099b1cb23.gif">  | 
 |  map  |  search filter  |
 | ---- | ---- |
 |  <img src="https://user-images.githubusercontent.com/48178913/133267236-a7ff233c-390d-4fc0-99ec-a3369c07d760.mp4" >  | <img src="https://user-images.githubusercontent.com/48178913/133266962-3040a686-6cfa-4181-ad64-acd4378b90c5.mp4">  |
 
-|エラーハンドリング|
-| ---- |
-|<img src="https://user-images.githubusercontent.com/48178913/133268269-8a326fcb-1a8f-444a-b025-b68055667ab8.jpg" width=50%>|
+| settings |エラーハンドリング|
+| ---- | ---- |
+|<img src="https://user-images.githubusercontent.com/48178913/136657405-24bb0f9b-178c-46f5-959e-f37217686b26.gif">|<img src="https://user-images.githubusercontent.com/48178913/133268269-8a326fcb-1a8f-444a-b025-b68055667ab8.jpg">|
 
 # 設計
 このアプリはRx、DataBinding、Daggerを利用したClean Architectureを使用しています。
@@ -46,7 +46,4 @@ HotpepperグルメのAPI(https://webservice.recruit.co.jp/doc/hotpepper/referenc
 - Glide
 - Groupie
 - Lottie
-
-# ToDo
-- お気に入り画面の実装
-- スプラッシュ画面の実装
+- mockito
