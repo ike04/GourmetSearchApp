@@ -28,7 +28,7 @@ class RemoteData @Inject constructor(
         start: Int = 1
     ): Single<Response<StoresResponse>> {
         return api.fetchNearStores(
-            BuildConfig.API_KEY,
+           "",
             COUNT,
             lat,
             lng,
@@ -46,6 +46,6 @@ class RemoteData @Inject constructor(
     }
 
     fun fetchFavoriteStores(ids: String): Single<Response<StoresResponse>> {
-        return api.fetchFavoriteStores(BuildConfig.API_KEY, COUNT, ids, FORMAT)
+        return api.fetchFavoriteStores("", COUNT, ids, FORMAT)
     }
 }
