@@ -81,48 +81,6 @@ jobs:
           if-no-files-found: warn
           retention-days: 14
 
-  lint:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-
-      - name: Run Inspection
-        run: ./gradlew lint
-
-      - name: Show results on GitHub
-        uses: yutailang0119/action-android-lint@v1
-        with:
-          xml_path: '**/build/reports/lint-results-*.xml'
-
-      - name: Upload results Artifact
-        uses: actions/upload-artifact@v2
-        if: success() || failure()
-        with:
-          name: results
-          path: |
-            **/build/reports/lint-results-*.html
-            **/build/reports/lint-results-*.xml
-          if-no-files-found: error
-          retention-days: 14
-
-  detekt:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-
-      - name: Lint with detekt
-        run: ./gradlew detekt
-
-      - name: Upload results Artifact
-        uses: actions/upload-artifact@v2
-        if: failure()
-        with:
-          name: results
-          path: |
-            **/build/reports/detekt/**/*
-          if-no-files-found: error
-          retention-days: 14
-
   ktlint:
     runs-on: ubuntu-latest
     steps:
