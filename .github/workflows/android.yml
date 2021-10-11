@@ -16,7 +16,8 @@ on:
       - docs/**
       - README.md
       - LICENSE
-
+env:
+  hotPepperApiKey: ${{secrets.HOTPEPPERAPIKEY}}
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -28,12 +29,6 @@ jobs:
         with:
           distribution: 'zulu'
           java-version: '8'
-
-      - name: Access to secret
-          env:
-            hotPepperApiKey: ${{ secrets.HOTPEPPERAPIKEY }}
-          run: |
-      　　　　　##access to $SECRET_SETTING if this script is bash
 
       - uses: actions/cache@v2
         with:
