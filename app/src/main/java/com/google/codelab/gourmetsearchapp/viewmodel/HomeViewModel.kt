@@ -6,13 +6,14 @@ import com.google.codelab.gourmetsearchapp.model.businessmodel.StoresBusinessMod
 import com.google.codelab.gourmetsearchapp.usecase.HomeUsecase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.rxjava3.kotlin.subscribeBy
+import io.reactivex.rxjava3.schedulers.Schedulers
 import io.reactivex.rxjava3.subjects.PublishSubject
 import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val usecase: HomeUsecase
-) : BaseViewModel(usecase) {
+) : BaseViewModel(usecase, Schedulers.trampoline(),Schedulers.trampoline()) {
     private var currentPage = 1
     val storeList: PublishSubject<StoresBusinessModel> = PublishSubject.create()
     val hasLocation: PublishSubject<Boolean> = PublishSubject.create()

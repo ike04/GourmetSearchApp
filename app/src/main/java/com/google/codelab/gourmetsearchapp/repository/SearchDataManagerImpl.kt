@@ -64,7 +64,7 @@ class SearchDataManagerImpl @Inject constructor(
     }
 
     override fun fetchFilterData() {
-        return local.fetchFilterData()
+        local.fetchFilterData()
     }
 
     override fun resetFilterData() {
