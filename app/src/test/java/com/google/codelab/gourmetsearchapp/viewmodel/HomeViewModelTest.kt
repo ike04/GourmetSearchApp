@@ -5,6 +5,7 @@ import com.google.codelab.gourmetsearchapp.model.businessmodel.StoresBusinessMod
 import com.google.codelab.gourmetsearchapp.usecase.HomeUsecase
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
+import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
@@ -20,6 +21,29 @@ class HomeViewModelTest {
 
     companion object {
         private val aStoresBusinessModel = StoresBusinessModel(totalPages = 1, store = listOf(Store(id = "J999999999", name = "レストラン", lat = 10.0, lng = 10.0, budget = "2000円", genre = "イタリアン", photo = "", urls = "")))
+        private val aStore20 = (listOf(
+            Store(id = "J999999999", name = "レストラン", lat = 10.0, lng = 10.0, budget = "2000円", genre = "イタリアン", photo = "", urls = ""),
+            Store(id = "J999999999", name = "レストラン", lat = 10.0, lng = 10.0, budget = "2000円", genre = "イタリアン", photo = "", urls = ""),
+            Store(id = "J999999999", name = "レストラン", lat = 10.0, lng = 10.0, budget = "2000円", genre = "イタリアン", photo = "", urls = ""),
+            Store(id = "J999999999", name = "レストラン", lat = 10.0, lng = 10.0, budget = "2000円", genre = "イタリアン", photo = "", urls = ""),
+            Store(id = "J999999999", name = "レストラン", lat = 10.0, lng = 10.0, budget = "2000円", genre = "イタリアン", photo = "", urls = ""),
+            Store(id = "J999999999", name = "レストラン", lat = 10.0, lng = 10.0, budget = "2000円", genre = "イタリアン", photo = "", urls = ""),
+            Store(id = "J999999999", name = "レストラン", lat = 10.0, lng = 10.0, budget = "2000円", genre = "イタリアン", photo = "", urls = ""),
+            Store(id = "J999999999", name = "レストラン", lat = 10.0, lng = 10.0, budget = "2000円", genre = "イタリアン", photo = "", urls = ""),
+            Store(id = "J999999999", name = "レストラン", lat = 10.0, lng = 10.0, budget = "2000円", genre = "イタリアン", photo = "", urls = ""),
+            Store(id = "J999999999", name = "レストラン", lat = 10.0, lng = 10.0, budget = "2000円", genre = "イタリアン", photo = "", urls = ""),
+            Store(id = "J999999999", name = "レストラン", lat = 10.0, lng = 10.0, budget = "2000円", genre = "イタリアン", photo = "", urls = ""),
+            Store(id = "J999999999", name = "レストラン", lat = 10.0, lng = 10.0, budget = "2000円", genre = "イタリアン", photo = "", urls = ""),
+            Store(id = "J999999999", name = "レストラン", lat = 10.0, lng = 10.0, budget = "2000円", genre = "イタリアン", photo = "", urls = ""),
+            Store(id = "J999999999", name = "レストラン", lat = 10.0, lng = 10.0, budget = "2000円", genre = "イタリアン", photo = "", urls = ""),
+            Store(id = "J999999999", name = "レストラン", lat = 10.0, lng = 10.0, budget = "2000円", genre = "イタリアン", photo = "", urls = ""),
+            Store(id = "J999999999", name = "レストラン", lat = 10.0, lng = 10.0, budget = "2000円", genre = "イタリアン", photo = "", urls = ""),
+            Store(id = "J999999999", name = "レストラン", lat = 10.0, lng = 10.0, budget = "2000円", genre = "イタリアン", photo = "", urls = ""),
+            Store(id = "J999999999", name = "レストラン", lat = 10.0, lng = 10.0, budget = "2000円", genre = "イタリアン", photo = "", urls = ""),
+            Store(id = "J999999999", name = "レストラン", lat = 10.0, lng = 10.0, budget = "2000円", genre = "イタリアン", photo = "", urls = ""),
+            Store(id = "J999999999", name = "レストラン", lat = 10.0, lng = 10.0, budget = "2000円", genre = "イタリアン", photo = "", urls = "")))
+
+        private val aStoresBusinessModel20 = StoresBusinessModel(totalPages = 20, store = aStore20)
     }
 
     @Before
@@ -30,23 +54,47 @@ class HomeViewModelTest {
     }
 
     @Test
-    fun testFetchStores() {
+    fun testFetchStores_count_1() {
         given(usecase.fetchNearStores(1)).willReturn(Single.just(aStoresBusinessModel))
         val testSubscriber = sut.storeList.test()
 
         sut.fetchStores()
 
         testSubscriber.assertValue(aStoresBusinessModel).assertValueCount(1).assertNoErrors()
+        assertFalse(sut.moreLoad.get())
     }
 
     @Test
-    fun testFetchFavoriteStores() {
+    fun testFetchStores_count_20() {
+        given(usecase.fetchNearStores(1)).willReturn(Single.just(aStoresBusinessModel20))
+        val testSubscriber = sut.storeList.test()
+
+        sut.fetchStores()
+
+        testSubscriber.assertValue(aStoresBusinessModel20).assertValueCount(1).assertNoErrors()
+        assertTrue(sut.moreLoad.get())
+    }
+
+    @Test
+    fun testFetchFavoriteStores_count_1() {
         given(usecase.getFavoriteStoreStream()).willReturn(Observable.just(aStoresBusinessModel))
         val testSubscriber = sut.storeList.test()
 
         sut.fetchFavoriteStores(true)
 
         testSubscriber.assertValue(aStoresBusinessModel).assertValueCount(1).assertNoErrors()
+        assertFalse(sut.moreLoad.get())
+    }
+
+    @Test
+    fun testFetchFavoriteStores_count_20() {
+        given(usecase.getFavoriteStoreStream()).willReturn(Observable.just(aStoresBusinessModel20))
+        val testSubscriber = sut.storeList.test()
+
+        sut.fetchFavoriteStores(true)
+
+        testSubscriber.assertValue(aStoresBusinessModel20).assertValueCount(1).assertNoErrors()
+        assertTrue(sut.moreLoad.get())
     }
 
     @Test

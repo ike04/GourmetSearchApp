@@ -20,7 +20,7 @@ class SearchFilterDialogViewModelTest {
     private lateinit var usecase: SearchFilterDialogUsecase
 
     companion object {
-        private val aFilterDataModel = FilterDataModel(searchRange = 1,genre = "イタリアン",coupon = 0,drink = 0,privateRoom = 0,wifi = 0,lunch = 0,keyword = "")
+        private val aFilterDataModel = FilterDataModel(searchRange = 1, genre = "イタリアン", coupon = 0, drink = 0, privateRoom = 0, wifi = 0, lunch = 0, keyword = "")
     }
 
     @Before
