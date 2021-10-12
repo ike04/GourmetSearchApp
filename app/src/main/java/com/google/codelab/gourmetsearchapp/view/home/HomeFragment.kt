@@ -63,15 +63,13 @@ class HomeFragment : Fragment() {
             if (viewModel.selectedFavorite.get()) {
                 viewModel.fetchFavoriteStores(true)
             } else {
-                viewModel.fetchStores()
+                viewModel.checkLocationPermission()
             }
             binding.swipedLayout.isRefreshing = false
         }
 
         binding.recyclerView.adapter = groupAdapter
         binding.recyclerView.layoutManager = GridLayoutManager(requireContext(), 2, GridLayoutManager.VERTICAL, false)
-
-        viewModel.checkLocationPermission()
 
         viewModel.hasLocation
             .subscribeBy { hasLocation ->
@@ -133,6 +131,7 @@ class HomeFragment : Fragment() {
             }
         })
 
+        viewModel.checkLocationPermission()
         groupAdapter.setOnItemClickListener(onItemClickListener)
     }
 
