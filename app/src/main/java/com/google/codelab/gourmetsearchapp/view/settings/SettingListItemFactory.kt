@@ -19,8 +19,14 @@ class SettingListItemFactory(val item: SettingsList) : BindableItem<CellSettingB
     }
 }
 
-enum class SettingsList(@StringRes val title: Int, @DrawableRes val image: Int) {
-    APP_SETTING(R.string.text_cell_title1, R.drawable.ic_baseline_handyman_24),
-    ONBOARDING(R.string.text_cell_title2, R.drawable.ic_baseline_help_24),
-    LICENSE(R.string.text_cell_title3, R.drawable.ic_baseline_phonelink_lock_24);
+enum class SettingsList(@StringRes val title: Int, @DrawableRes val image: Int, val position: Int) {
+    APP_SETTING(R.string.text_cell_title1, R.drawable.ic_baseline_handyman_24, 0),
+    ONBOARDING(R.string.text_cell_title2, R.drawable.ic_baseline_help_24, 1),
+    LICENSE(R.string.text_cell_title3, R.drawable.ic_baseline_phonelink_lock_24, 2);
+
+    companion object {
+        fun fromPosition(position: Int): SettingsList? {
+            return values().find { it.position == position }
+        }
+    }
 }
