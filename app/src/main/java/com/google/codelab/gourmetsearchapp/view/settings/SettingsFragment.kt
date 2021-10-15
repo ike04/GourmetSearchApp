@@ -12,6 +12,7 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.codelab.gourmetsearchapp.databinding.FragmentSettingsBinding
 import com.google.codelab.gourmetsearchapp.view.onboarding.OnboardingActivity
+import com.google.codelab.gourmetsearchapp.view.settings.SettingsList.*
 import com.google.codelab.gourmetsearchapp.viewmodel.SettingsViewModel
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
@@ -26,7 +27,7 @@ class SettingsFragment : Fragment() {
 
     private val onItemClickListener = OnItemClickListener { item, _ ->
         val index = groupAdapter.getAdapterPosition(item)
-        tappedAction(index)
+        SettingsList.fromPosition(index)?.let { tappedAction(it) }
     }
 
     override fun onCreateView(
@@ -52,9 +53,9 @@ class SettingsFragment : Fragment() {
         groupAdapter.setOnItemClickListener(onItemClickListener)
     }
 
-    private fun tappedAction(index: Int) {
-        when (index) {
-            0 -> {
+    private fun tappedAction(menu: SettingsList) {
+        when (menu) {
+            APP_SETTING -> {
                 val intent = Intent()
                 intent.action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
                 val uri = Uri.fromParts(
@@ -65,16 +66,14 @@ class SettingsFragment : Fragment() {
                 intent.data = uri
                 startActivity(intent)
             }
-            1 -> {
+            ONBOARDING -> {
                 val intent = Intent(requireContext(), OnboardingActivity::class.java)
                 startActivity(intent)
             }
-            2 -> {
+            LICENSE -> {
                 val intent = Intent(requireContext(), OssLicenseActivity::class.java)
                 startActivity(intent)
             }
-            else -> {
-            } //nothing
         }
     }
 }
