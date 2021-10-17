@@ -20,7 +20,7 @@ class HomeViewModelTest {
     private lateinit var usecase: HomeUsecase
 
     companion object {
-        private val aStoresBusinessModel = StoresBusinessModel(totalPages = 1, store = listOf(Store(id = "J999999999", name = "レストラン", lat = 10.0, lng = 10.0, budget = "2000円", genre = "イタリアン", photo = "", urls = "")))
+        private val aStoresBusinessModel = StoresBusinessModel(getPages = 1, store = listOf(Store(id = "J999999999", name = "レストラン", lat = 10.0, lng = 10.0, budget = "2000円", genre = "イタリアン", photo = "", urls = "")))
         private val aStore20 = (listOf(
             Store(id = "J999999999", name = "レストラン", lat = 10.0, lng = 10.0, budget = "2000円", genre = "イタリアン", photo = "", urls = ""),
             Store(id = "J999999999", name = "レストラン", lat = 10.0, lng = 10.0, budget = "2000円", genre = "イタリアン", photo = "", urls = ""),
@@ -43,7 +43,7 @@ class HomeViewModelTest {
             Store(id = "J999999999", name = "レストラン", lat = 10.0, lng = 10.0, budget = "2000円", genre = "イタリアン", photo = "", urls = ""),
             Store(id = "J999999999", name = "レストラン", lat = 10.0, lng = 10.0, budget = "2000円", genre = "イタリアン", photo = "", urls = "")))
 
-        private val aStoresBusinessModel20 = StoresBusinessModel(totalPages = 20, store = aStore20)
+        private val aStoresBusinessModel20 = StoresBusinessModel(getPages = 20, store = aStore20)
     }
 
     @Before

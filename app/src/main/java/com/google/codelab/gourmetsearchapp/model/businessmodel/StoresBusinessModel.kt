@@ -2,6 +2,7 @@ package com.google.codelab.gourmetsearchapp.model.businessmodel
 
 data class StoresBusinessModel(
     val totalPages: Int,
+    val getPages: Int,
     val store: List<Store>
 )
 

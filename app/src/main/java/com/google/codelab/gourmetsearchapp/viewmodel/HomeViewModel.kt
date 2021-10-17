@@ -32,7 +32,7 @@ class HomeViewModel @Inject constructor(
                     if (it.store.size < 20) {
                         moreLoad.set(false)
                     }
-                    currentPage += it.totalPages
+                    currentPage += it.getPages
                     storeList.onNext(it)
                 },
                 retry = { fetchStores() }
