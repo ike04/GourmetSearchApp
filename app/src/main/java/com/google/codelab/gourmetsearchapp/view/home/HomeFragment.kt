@@ -91,13 +91,6 @@ class HomeFragment : Fragment() {
                 if (stores.store.isNotEmpty()) {
                     storeList.addAll(stores.store)
                     groupAdapter.update(storeList.map { StoreItem(it, requireContext()) })
-                } else {
-                    val message = if (viewModel.selectedFavorite.get()) {
-                        R.string.no_result_favorite_restaurant
-                    } else {
-                        R.string.no_result_near_restaurant
-                    }
-                    groupAdapter.update(listOf(EmptyItem(message, requireContext())))
                 }
             }.addTo(disposable)
 
@@ -106,6 +99,12 @@ class HomeFragment : Fragment() {
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeBy { isEmpty ->
                 binding.recyclerView.layoutManager = if(isEmpty) {
+                    val message = if (viewModel.selectedFavorite.get()) {
+                        R.string.no_result_favorite_restaurant
+                    } else {
+                        R.string.no_result_near_restaurant
+                    }
+                    groupAdapter.update(listOf(EmptyItem(message, requireContext())))
                     GridLayoutManager(requireContext(), 1, GridLayoutManager.VERTICAL, false)
                 } else {
                     GridLayoutManager(requireContext(), 2, GridLayoutManager.VERTICAL, false)
