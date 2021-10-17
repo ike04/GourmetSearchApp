@@ -92,14 +92,12 @@ class HomeFragment : Fragment() {
                     storeList.addAll(stores.store)
                     groupAdapter.update(storeList.map { StoreItem(it, requireContext()) })
                 } else {
-                    groupAdapter.update(
-                        listOf(
-                            EmptyItem(
-                                R.string.no_result_near_restaurant,
-                                requireContext()
-                            )
-                        )
-                    )
+                    val message = if (viewModel.selectedFavorite.get()) {
+                        R.string.no_result_favorite_restaurant
+                    } else {
+                        R.string.no_result_near_restaurant
+                    }
+                    groupAdapter.update(listOf(EmptyItem(message, requireContext())))
                 }
             }.addTo(disposable)
 
