@@ -74,7 +74,7 @@ class HomeFragment : Fragment() {
         viewModel.hasLocation
             .subscribeBy { hasLocation ->
                 if (hasLocation) {
-                    viewModel.fetchStores()
+                    viewModel.fetchStores(true)
                 } else {
                     requireContext().showAlertDialog(
                         R.string.no_locations_title,
@@ -92,8 +92,6 @@ class HomeFragment : Fragment() {
                     storeList.addAll(stores.store)
                     groupAdapter.update(storeList.map { StoreItem(it, requireContext()) })
                 } else {
-                    binding.recyclerView.layoutManager =
-                        GridLayoutManager(requireContext(), 1, GridLayoutManager.VERTICAL, false)
                     groupAdapter.update(
                         listOf(
                             EmptyItem(
@@ -102,6 +100,17 @@ class HomeFragment : Fragment() {
                             )
                         )
                     )
+                }
+            }.addTo(disposable)
+
+        viewModel.isEmptyStores
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeBy { isEmpty ->
+                binding.recyclerView.layoutManager = if(isEmpty) {
+                    GridLayoutManager(requireContext(), 1, GridLayoutManager.VERTICAL, false)
+                } else {
+                    GridLayoutManager(requireContext(), 2, GridLayoutManager.VERTICAL, false)
                 }
             }.addTo(disposable)
 

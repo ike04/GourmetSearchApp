@@ -16,15 +16,19 @@ class HomeViewModel @Inject constructor(
 ) : BaseViewModel(usecase, Schedulers.trampoline(),Schedulers.trampoline()) {
     private var currentPage = 1
     val storeList: PublishSubject<StoresBusinessModel> = PublishSubject.create()
+    val isEmptyStores: PublishSubject<Boolean> = PublishSubject.create()
     val hasLocation: PublishSubject<Boolean> = PublishSubject.create()
     val reset: PublishSubject<Signal> = PublishSubject.create()
     val moreLoad = ObservableBoolean(true)
     val selectedFavorite = ObservableBoolean(false)
 
-    fun fetchStores() {
+    fun fetchStores(firstFetch: Boolean = false) {
         usecase.fetchNearStores(currentPage)
             .execute(
                 onSuccess = {
+                    if (firstFetch) {
+                        isEmptyStores.onNext(it.store.isEmpty())
+                    }
                     if (it.store.size < 20) {
                         moreLoad.set(false)
                     }
@@ -41,6 +45,9 @@ class HomeViewModel @Inject constructor(
         usecase.getFavoriteStoreStream()
             .firstElement()
             .subscribeBy {
+                if (forceUpdate) {
+                    isEmptyStores.onNext(it.store.isEmpty())
+                }
                 if (it.store.size < 20) {
                     moreLoad.set(false)
                 }
