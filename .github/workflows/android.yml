@@ -62,12 +62,12 @@ jobs:
             ${{ runner.os }}-gradle-
 
       - name: Create Local Properties File
-        run: touch local.properties
-        
+        run: touch gradle.properties
+
       - name: Update API_KEY from Secrets
         env:
           API_KEY: ${{ secrets.HOTPEPPERAPIKEY }}
-        run: echo "API_KEY=${HOTPEPPERAPIKEY}" >> ./local.properties
+        run: echo "hotPepperApiKey=${HOTPEPPERAPIKEY}" >> ./gradle.properties
 
 
       - name: Test with Gradle
