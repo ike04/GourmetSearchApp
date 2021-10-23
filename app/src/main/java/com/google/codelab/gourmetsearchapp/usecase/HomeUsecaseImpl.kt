@@ -9,7 +9,6 @@ import io.reactivex.rxjava3.kotlin.addTo
 import io.reactivex.rxjava3.kotlin.subscribeBy
 import io.reactivex.rxjava3.schedulers.Schedulers
 import io.reactivex.rxjava3.subjects.PublishSubject
-import java.lang.Integer.min
 import javax.inject.Inject
 
 class HomeUsecaseImpl @Inject constructor(
@@ -64,7 +63,7 @@ class HomeUsecaseImpl @Inject constructor(
             .execute(
                 onSuccess = { model ->
                     favoriteStoreList.onNext(model)
-                    currentStoresCount = model.totalPages
+                    currentStoresCount = model.getPages
                 },
                 retry = { fetchStores(ids) }
             )

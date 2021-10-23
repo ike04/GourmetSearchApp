@@ -5,13 +5,11 @@ import com.google.codelab.gourmetsearchapp.data.LocalData
 import com.google.codelab.gourmetsearchapp.data.RemoteData
 import com.google.codelab.gourmetsearchapp.model.FilterDataModel
 import com.google.codelab.gourmetsearchapp.model.businessmodel.StoresBusinessModel
-import com.google.codelab.gourmetsearchapp.model.local.FilterEntity
 import com.google.codelab.gourmetsearchapp.model.response.*
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
 import org.junit.Before
 
-import org.junit.Assert.*
 import org.junit.Test
 import org.mockito.Mock
 import org.mockito.MockitoAnnotations
@@ -32,7 +30,7 @@ class SearchDataManagerImplTest {
         private val aFilterData = FilterDataModel(searchRange = 3, genre = "", coupon = 0, drink = 0, privateRoom = 0, wifi = 0, lunch = 0, keyword = "")
         private val aStoreList = Store(id = "J999999999", name = "レストラン", logo= "", lat = 10.0, lng =  10.0, genre = Genre("イタリアン"), budget = Budget("2000円", "2000円"),urls = Urls(""),photo = Photos(photo = Photo("")))
         private val aStoresResponse = StoresResponse(results = Results(apiVersion = "1.0.0", totalPages = 1, store = listOf(aStoreList)))
-        private val aStoresBusinessModel = StoresBusinessModel(totalPages = 1, store = listOf(com.google.codelab.gourmetsearchapp.model.businessmodel.Store(id = "J999999999", name = "レストラン", lat = 10.0, lng = 10.0, budget = "2000円", genre = "イタリアン", photo = "", urls = "")))
+        private val aStoresBusinessModel = StoresBusinessModel(getPages = 1, store = listOf(com.google.codelab.gourmetsearchapp.model.businessmodel.Store(id = "J999999999", name = "レストラン", lat = 10.0, lng = 10.0, budget = "2000円", genre = "イタリアン", photo = "", urls = "")))
     }
 
     @Before

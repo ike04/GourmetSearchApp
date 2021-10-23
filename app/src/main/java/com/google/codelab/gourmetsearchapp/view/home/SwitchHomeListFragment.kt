@@ -47,7 +47,7 @@ class SwitchHomeListFragment : BottomSheetDialogFragment() {
                 if (parentViewModel.selectedFavorite.get()) {
                     parentViewModel.fetchFavoriteStores(true)
                 } else {
-                    parentViewModel.fetchStores()
+                    parentViewModel.fetchStores(true)
                 }
             }.addTo(disposable)
     }

@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
 import com.google.codelab.gourmetsearchapp.R
 import com.google.codelab.gourmetsearchapp.databinding.FragmentHomeBinding
@@ -57,6 +58,8 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val bottomNav = requireActivity().findViewById<BottomNavigationView>(R.id.nav_view)
+
         binding.swipedLayout.setOnRefreshListener {
             storeList.clear()
             viewModel.resetPages()
@@ -69,12 +72,11 @@ class HomeFragment : Fragment() {
         }
 
         binding.recyclerView.adapter = groupAdapter
-        binding.recyclerView.layoutManager = GridLayoutManager(requireContext(), 2, GridLayoutManager.VERTICAL, false)
 
         viewModel.hasLocation
             .subscribeBy { hasLocation ->
                 if (hasLocation) {
-                    viewModel.fetchStores()
+                    viewModel.fetchStores(true)
                 } else {
                     requireContext().showAlertDialog(
                         R.string.no_locations_title,
@@ -91,17 +93,28 @@ class HomeFragment : Fragment() {
                 if (stores.store.isNotEmpty()) {
                     storeList.addAll(stores.store)
                     groupAdapter.update(storeList.map { StoreItem(it, requireContext()) })
+                    bottomNav.getOrCreateBadge(R.id.navigation_home).apply {
+                        isVisible = true
+                        number = stores.totalPages
+                    }
+                }
+            }.addTo(disposable)
+
+        viewModel.isEmptyStores
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeBy { isEmpty ->
+                binding.recyclerView.layoutManager = if(isEmpty) {
+                    val message = if (viewModel.selectedFavorite.get()) {
+                        R.string.no_result_favorite_restaurant
+                    } else {
+                        R.string.no_result_near_restaurant
+                    }
+                    groupAdapter.update(listOf(EmptyItem(message, requireContext())))
+                    bottomNav.getOrCreateBadge(R.id.navigation_home).isVisible = false
+                    GridLayoutManager(requireContext(), 1, GridLayoutManager.VERTICAL, false)
                 } else {
-                    binding.recyclerView.layoutManager =
-                        GridLayoutManager(requireContext(), 1, GridLayoutManager.VERTICAL, false)
-                    groupAdapter.update(
-                        listOf(
-                            EmptyItem(
-                                R.string.no_result_near_restaurant,
-                                requireContext()
-                            )
-                        )
-                    )
+                    GridLayoutManager(requireContext(), 2, GridLayoutManager.VERTICAL, false)
                 }
             }.addTo(disposable)
 

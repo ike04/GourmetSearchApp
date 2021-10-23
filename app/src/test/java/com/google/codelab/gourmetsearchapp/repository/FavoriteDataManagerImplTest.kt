@@ -1,7 +1,6 @@
 package com.google.codelab.gourmetsearchapp.repository
 
 import com.google.codelab.gourmetsearchapp.Signal
-import com.google.codelab.gourmetsearchapp.data.LocalData
 import com.google.codelab.gourmetsearchapp.data.LocalStoreIdData
 import com.google.codelab.gourmetsearchapp.data.RemoteData
 import com.google.codelab.gourmetsearchapp.model.businessmodel.Store
@@ -30,7 +29,7 @@ class FavoriteDataManagerImplTest {
         private val aStoreIdList = listOf("J999999999")
         private val aStoreList = Store(id = "J999999999", name = "レストラン", logo= "", lat = 10.0, lng =  10.0, genre = Genre("イタリアン"), budget = Budget("2000円", "2000円"),urls = Urls(""),photo = Photos(photo = Photo("")))
         private val aStoresResponse = StoresResponse(results = Results(apiVersion = "1.0.0", totalPages = 1, store = listOf(aStoreList)))
-        private val aStoresBusinessModel = StoresBusinessModel(totalPages = 1, store = listOf(Store(id = "J999999999", name = "レストラン", lat = 10.0, lng = 10.0, budget = "2000円", genre = "イタリアン", photo = "", urls = "")))
+        private val aStoresBusinessModel = StoresBusinessModel(getPages = 1, store = listOf(Store(id = "J999999999", name = "レストラン", lat = 10.0, lng = 10.0, budget = "2000円", genre = "イタリアン", photo = "", urls = "")))
     }
 
     @Before

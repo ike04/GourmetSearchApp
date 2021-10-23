@@ -9,6 +9,7 @@ class StoresMapper {
             return response.body()?.results?.let {
                 StoresBusinessModel(
                     totalPages = it.totalPages,
+                    getPages = it.getPages,
                     store = transformStore(response.body())
                 )
             }
