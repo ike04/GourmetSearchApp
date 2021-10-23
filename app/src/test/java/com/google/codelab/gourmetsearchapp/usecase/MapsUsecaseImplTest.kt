@@ -18,7 +18,7 @@ class MapsUsecaseImplTest {
     private lateinit var repository: SearchDataManager
 
     companion object {
-        private val aStoresBusinessModel = StoresBusinessModel(getPages = 1, store = listOf(Store(id = "J999999999", name = "レストラン", lat = 10.0, lng = 10.0, budget = "2000円", genre = "イタリアン", photo = "", urls = "")))
+        private val aStoresBusinessModel = StoresBusinessModel(totalPages = 1, getPages = 1, store = listOf(Store(id = "J999999999", name = "レストラン", lat = 10.0, lng = 10.0, budget = "2000円", genre = "イタリアン", photo = "", urls = "")))
     }
 
     @Before
@@ -31,8 +31,8 @@ class MapsUsecaseImplTest {
     fun testFetchNearStores() {
         given(repository.fetchNearStores(1)).willReturn(Single.just(aStoresBusinessModel))
 
-        val test = sut.fetchNearStores(1)
+        val testObserver = sut.fetchNearStores(1).test()
 
-        test.test().assertValue(aStoresBusinessModel).assertNoErrors()
+        testObserver.assertValue(aStoresBusinessModel).assertNoErrors()
     }
 }

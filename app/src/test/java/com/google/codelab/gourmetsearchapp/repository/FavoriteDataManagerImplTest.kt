@@ -28,8 +28,8 @@ class FavoriteDataManagerImplTest {
         private val aStoreId = "J999999999"
         private val aStoreIdList = listOf("J999999999")
         private val aStoreList = Store(id = "J999999999", name = "レストラン", logo= "", lat = 10.0, lng =  10.0, genre = Genre("イタリアン"), budget = Budget("2000円", "2000円"),urls = Urls(""),photo = Photos(photo = Photo("")))
-        private val aStoresResponse = StoresResponse(results = Results(apiVersion = "1.0.0", totalPages = 1, store = listOf(aStoreList)))
-        private val aStoresBusinessModel = StoresBusinessModel(getPages = 1, store = listOf(Store(id = "J999999999", name = "レストラン", lat = 10.0, lng = 10.0, budget = "2000円", genre = "イタリアン", photo = "", urls = "")))
+        private val aStoresResponse = StoresResponse(results = Results(apiVersion = "1.0.0", totalPages = 1, getPages = 1, store = listOf(aStoreList)))
+        private val aStoresBusinessModel = StoresBusinessModel(totalPages = 1, getPages = 1, store = listOf(Store(id = "J999999999", name = "レストラン", lat = 10.0, lng = 10.0, budget = "2000円", genre = "イタリアン", photo = "", urls = "")))
     }
 
     @Before
@@ -42,53 +42,53 @@ class FavoriteDataManagerImplTest {
     fun testFetchStoreIds() {
         given(sut.fetchStoreIds()).willReturn(Single.just(aStoreIdList))
 
-        val test = sut.fetchStoreIds()
+        val testObserver = sut.fetchStoreIds().test()
 
-        test.test().assertValue(aStoreIdList).assertNoErrors()
+        testObserver.assertValue(aStoreIdList).assertNoErrors()
     }
 
     @Test
     fun testFetchFavoriteStores() {
         given(remote.fetchFavoriteStores(aStoreId)).willReturn(Single.just(Response.success(aStoresResponse)))
 
-        val test = sut.fetchFavoriteStores(aStoreId)
+        val testObserver = sut.fetchFavoriteStores(aStoreId).test()
 
-        test.test().assertValue(aStoresBusinessModel).assertNoErrors()
+        testObserver.assertValue(aStoresBusinessModel).assertNoErrors()
     }
 
     @Test
     fun testGetStoreIdsStream() {
         given(local.getStoreIdsStream()).willReturn(Observable.just(aStoreIdList))
 
-        val test = sut.getStoreIdsStream()
+        val testObserver = sut.getStoreIdsStream().test()
 
-        test.test().assertValue(aStoreIdList).assertNoErrors()
+        testObserver.assertValue(aStoreIdList).assertNoErrors()
     }
 
     @Test
     fun testGetHasStoreIdStream() {
         given(local.getHasStoreIdStream()).willReturn(Observable.just(true))
 
-        val test = sut.getHasStoreIdStream()
+        val testObserver = sut.getHasStoreIdStream().test()
 
-        test.test().assertValue(true).assertNoErrors()
+        testObserver.assertValue(true).assertNoErrors()
     }
 
     @Test
     fun testGetAddIdStream() {
         given(local.getAddIdStream()).willReturn(Observable.just(Signal))
 
-        val test = sut.getAddIdStream()
+        val testObserver = sut.getAddIdStream().test()
 
-        test.test().assertValue(Signal).assertNoErrors()
+        testObserver.assertValue(Signal).assertNoErrors()
     }
 
     @Test
     fun testGetDeleteIdStream() {
         given(local.getDeleteIdStream()).willReturn(Observable.just(Signal))
 
-        val test = sut.getDeleteIdStream()
+        val testObserver = sut.getDeleteIdStream().test()
 
-        test.test().assertValue(Signal).assertNoErrors()
+        testObserver.assertValue(Signal).assertNoErrors()
     }
 }
