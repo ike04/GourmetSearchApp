@@ -7,14 +7,14 @@ import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.kotlin.addTo
 import io.reactivex.rxjava3.kotlin.subscribeBy
+import io.reactivex.rxjava3.schedulers.Schedulers
 import io.reactivex.rxjava3.subjects.PublishSubject
-import java.lang.Integer.min
 import javax.inject.Inject
 
 class HomeUsecaseImpl @Inject constructor(
     private val repository: SearchDataManager,
     private val favoriteRepository: FavoriteDataManager
-) : BaseUsecase(), HomeUsecase {
+) : BaseUsecase(Schedulers.trampoline(), Schedulers.trampoline()), HomeUsecase {
     private val favoriteStoreList: PublishSubject<StoresBusinessModel> = PublishSubject.create()
     private val favoriteIds: MutableList<String> = ArrayList()
     private var currentStoresCount: Int = 0
@@ -63,7 +63,7 @@ class HomeUsecaseImpl @Inject constructor(
             .execute(
                 onSuccess = { model ->
                     favoriteStoreList.onNext(model)
-                    currentStoresCount = model.totalPages
+                    currentStoresCount = model.getPages
                 },
                 retry = { fetchStores(ids) }
             )

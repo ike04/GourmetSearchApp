@@ -47,6 +47,7 @@ class SearchFilterDialogFragment : BottomSheetDialogFragment() {
         super.onCreate(savedInstanceState)
 
         viewModel.fetchFilterData()
+        viewModel.hasLocationPermission()
 
         viewModel.filterData
             .subscribeOn(Schedulers.io())

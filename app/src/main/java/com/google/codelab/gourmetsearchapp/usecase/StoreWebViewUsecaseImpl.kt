@@ -5,11 +5,12 @@ import com.google.codelab.gourmetsearchapp.repository.FavoriteDataManager
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
+import io.reactivex.rxjava3.schedulers.Schedulers
 import javax.inject.Inject
 
 class StoreWebViewUsecaseImpl @Inject constructor(
     private val repository: FavoriteDataManager
-) : BaseUsecase(), StoreWebViewUsecase {
+) : BaseUsecase(Schedulers.trampoline(), Schedulers.trampoline()), StoreWebViewUsecase {
     override fun addFavoriteStore(storeId: String) {
         repository.addFavoriteStoreId(storeId)
     }

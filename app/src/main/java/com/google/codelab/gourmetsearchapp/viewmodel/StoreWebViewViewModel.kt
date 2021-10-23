@@ -4,13 +4,14 @@ import androidx.databinding.ObservableBoolean
 import com.google.codelab.gourmetsearchapp.Signal
 import com.google.codelab.gourmetsearchapp.usecase.StoreWebViewUsecase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import io.reactivex.rxjava3.schedulers.Schedulers
 import io.reactivex.rxjava3.subjects.PublishSubject
 import javax.inject.Inject
 
 @HiltViewModel
 class StoreWebViewViewModel @Inject constructor(
     private val usecase: StoreWebViewUsecase
-) : BaseViewModel(usecase) {
+) : BaseViewModel(usecase, Schedulers.trampoline(), Schedulers.trampoline()) {
     val addFavoriteStore: PublishSubject<Signal> = PublishSubject.create()
     val deleteFavoriteStore: PublishSubject<Signal> = PublishSubject.create()
     val hasFavoriteStore = ObservableBoolean()

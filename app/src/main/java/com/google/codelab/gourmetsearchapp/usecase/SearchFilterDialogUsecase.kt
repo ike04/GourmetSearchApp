@@ -12,4 +12,6 @@ interface SearchFilterDialogUsecase: Usecase {
     fun resetFilterData()
 
     fun getFilterDataStream(): Observable<FilterDataModel>
+
+    fun getHasLocationPermissionStream(): Single<Boolean>
 }
