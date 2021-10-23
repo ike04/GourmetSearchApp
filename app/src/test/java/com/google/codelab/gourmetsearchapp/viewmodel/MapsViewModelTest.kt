@@ -20,9 +20,9 @@ class MapsViewModelTest {
     private lateinit var usecase: MapsUsecase
 
     companion object {
-        private val aStoresBusinessModel = StoresBusinessModel(getPages = 1, store = listOf(Store(id = "J999999999", name = "レストラン", lat = 10.0, lng = 10.0, budget = "2000円", genre = "イタリアン", photo = "", urls = "")))
+        private val aStoresBusinessModel = StoresBusinessModel(totalPages = 1, getPages = 1, store = listOf(Store(id = "J999999999", name = "レストラン", lat = 10.0, lng = 10.0, budget = "2000円", genre = "イタリアン", photo = "", urls = "")))
 
-        private val aNoStoresBusinessModel = StoresBusinessModel(getPages = 0, store = emptyList())
+        private val aNoStoresBusinessModel = StoresBusinessModel(totalPages = 0, getPages = 0, store = emptyList())
     }
 
     @Before

@@ -21,22 +21,7 @@ class HomeUsecaseImplTest {
 
     companion object {
         private const val storeId = "J999999999"
-        private val aStoresBusinessModel = StoresBusinessModel(
-            getPages = 1,
-            store = listOf(
-                Store(
-                    id = "J999999999",
-                    name = "レストラン",
-                    lat = 10.0,
-                    lng = 10.0,
-                    budget = "2000円",
-                    genre = "イタリアン",
-                    photo = "",
-                    urls = ""
-                )
-            )
-        )
-        private val aNoStoresBusinessModel = StoresBusinessModel(getPages = 1, store = emptyList())
+        private val aStoresBusinessModel = StoresBusinessModel(totalPages = 1, getPages = 1, store = listOf(Store(id = "J999999999", name = "レストラン", lat = 10.0, lng = 10.0, budget = "2000円", genre = "イタリアン", photo = "", urls = "")))
         private val aStoreIdList = listOf("J999999999")
     }
 
