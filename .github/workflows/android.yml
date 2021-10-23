@@ -61,10 +61,10 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
 
-#      - name: Update API_KEY from Secrets
-#          run: echo API_KEY="$API_KEY" > ./local.properties
-#          env:
-#            API_KEY: ${{ secrets.HOTPEPPERAPIKEY }}
+      - name: Update API_KEY from Secrets
+          run: echo "API_KEY=${HOTPEPPERAPIKEY}" >> ./local.properties
+          env:
+            API_KEY: ${{ secrets.HOTPEPPERAPIKEY }}
 
 
       - name: Test with Gradle
