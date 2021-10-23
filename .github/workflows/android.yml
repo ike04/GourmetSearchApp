@@ -61,6 +61,9 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
 
+      - name: Create Local Properties File
+        run: touch local.properties
+        
       - name: Update API_KEY from Secrets
         env:
           API_KEY: ${{ secrets.HOTPEPPERAPIKEY }}
