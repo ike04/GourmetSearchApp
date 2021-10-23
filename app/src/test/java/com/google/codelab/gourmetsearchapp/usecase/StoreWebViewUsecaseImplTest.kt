@@ -28,26 +28,26 @@ class StoreWebViewUsecaseImplTest {
     fun testGetHasStoreIdStream() {
         given(repository.getHasStoreIdStream()).willReturn(Observable.just(true))
 
-        val test = sut.getHasStoreIdStream()
+        val testObserver = sut.getHasStoreIdStream().test()
 
-        test.test().assertValue(true).assertNoErrors()
+        testObserver.assertValue(true).assertNoErrors()
     }
 
     @Test
     fun testGetAddIdStream() {
         given(repository.getAddIdStream()).willReturn(Observable.just(Signal))
 
-        val test = sut.getAddIdStream()
+        val testObserver = sut.getAddIdStream().test()
 
-        test.test().assertValue(Signal).assertNoErrors()
+        testObserver.assertValue(Signal).assertNoErrors()
     }
 
     @Test
     fun testGetDeleteIdStream() {
         given(repository.getDeleteIdStream()).willReturn(Observable.just(Signal))
 
-        val test = sut.getDeleteIdStream()
+        val testObserver = sut.getDeleteIdStream().test()
 
-        test.test().assertValue(Signal).assertNoErrors()
+        testObserver.assertValue(Signal).assertNoErrors()
     }
 }

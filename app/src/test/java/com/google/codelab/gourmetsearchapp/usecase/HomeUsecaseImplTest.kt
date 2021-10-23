@@ -36,9 +36,9 @@ class HomeUsecaseImplTest {
     fun testFetchNearStores() {
         given(repository.fetchNearStores(1)).willReturn(Single.just(aStoresBusinessModel))
 
-        val test  = sut.fetchNearStores(1).test()
+        val testObserver  = sut.fetchNearStores(1).test()
 
-        test.assertValue(aStoresBusinessModel).assertNoErrors()
+        testObserver.assertValue(aStoresBusinessModel).assertNoErrors()
     }
 
     @Test

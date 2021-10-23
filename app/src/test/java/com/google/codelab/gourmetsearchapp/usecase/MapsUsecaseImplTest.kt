@@ -31,8 +31,8 @@ class MapsUsecaseImplTest {
     fun testFetchNearStores() {
         given(repository.fetchNearStores(1)).willReturn(Single.just(aStoresBusinessModel))
 
-        val test = sut.fetchNearStores(1)
+        val testObserver = sut.fetchNearStores(1).test()
 
-        test.test().assertValue(aStoresBusinessModel).assertNoErrors()
+        testObserver.assertValue(aStoresBusinessModel).assertNoErrors()
     }
 }

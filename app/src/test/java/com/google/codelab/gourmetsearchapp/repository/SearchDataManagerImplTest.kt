@@ -48,9 +48,9 @@ class SearchDataManagerImplTest {
 
         sut.saveFilterData(aFilterData)
         sut.saveLocation(aLatLng)
-        val test = sut.fetchNearStores(1)
+        val testObserver = sut.fetchNearStores(1).test()
 
-        test.test().assertValue(aStoresBusinessModel).assertNoErrors()
+        testObserver.assertValue(aStoresBusinessModel).assertNoErrors()
     }
 
     @Test
@@ -60,26 +60,26 @@ class SearchDataManagerImplTest {
             aFilterData.wifi, aFilterData.lunch, aFilterData.keyword,1)).willReturn(Single.just(Response.success(aStoresResponse)))
 
         sut.saveLocation(aLatLng)
-        val test = sut.fetchNearStores(1)
+        val testObserver = sut.fetchNearStores(1).test()
 
-        test.test().assertValue(aStoresBusinessModel).assertNoErrors()
+        testObserver.assertValue(aStoresBusinessModel).assertNoErrors()
     }
 
     @Test
     fun testHasLocationPermission() {
         sut.saveLocation(aLatLng)
-        val test = sut.hasLocationPermission()
+        val testObserver = sut.hasLocationPermission().test()
 
-        test.test().assertValue(true).assertNoErrors()
+        testObserver.assertValue(true).assertNoErrors()
     }
 
     @Test
     fun testGetFilterDataStream() {
         given(local.getFilterDataStream()).willReturn(Observable.just(aFilterData))
 
-        val test = sut.getFilterDataStream()
+        val testObserver = sut.getFilterDataStream().test()
 
-        test.test().assertValue(aFilterData).assertNoErrors()
+        testObserver.assertValue(aFilterData).assertNoErrors()
     }
 
 }

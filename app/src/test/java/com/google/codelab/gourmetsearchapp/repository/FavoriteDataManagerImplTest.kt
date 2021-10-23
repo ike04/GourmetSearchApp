@@ -42,53 +42,53 @@ class FavoriteDataManagerImplTest {
     fun testFetchStoreIds() {
         given(sut.fetchStoreIds()).willReturn(Single.just(aStoreIdList))
 
-        val test = sut.fetchStoreIds()
+        val testObserver = sut.fetchStoreIds().test()
 
-        test.test().assertValue(aStoreIdList).assertNoErrors()
+        testObserver.assertValue(aStoreIdList).assertNoErrors()
     }
 
     @Test
     fun testFetchFavoriteStores() {
         given(remote.fetchFavoriteStores(aStoreId)).willReturn(Single.just(Response.success(aStoresResponse)))
 
-        val test = sut.fetchFavoriteStores(aStoreId)
+        val testObserver = sut.fetchFavoriteStores(aStoreId).test()
 
-        test.test().assertValue(aStoresBusinessModel).assertNoErrors()
+        testObserver.assertValue(aStoresBusinessModel).assertNoErrors()
     }
 
     @Test
     fun testGetStoreIdsStream() {
         given(local.getStoreIdsStream()).willReturn(Observable.just(aStoreIdList))
 
-        val test = sut.getStoreIdsStream()
+        val testObserver = sut.getStoreIdsStream().test()
 
-        test.test().assertValue(aStoreIdList).assertNoErrors()
+        testObserver.assertValue(aStoreIdList).assertNoErrors()
     }
 
     @Test
     fun testGetHasStoreIdStream() {
         given(local.getHasStoreIdStream()).willReturn(Observable.just(true))
 
-        val test = sut.getHasStoreIdStream()
+        val testObserver = sut.getHasStoreIdStream().test()
 
-        test.test().assertValue(true).assertNoErrors()
+        testObserver.assertValue(true).assertNoErrors()
     }
 
     @Test
     fun testGetAddIdStream() {
         given(local.getAddIdStream()).willReturn(Observable.just(Signal))
 
-        val test = sut.getAddIdStream()
+        val testObserver = sut.getAddIdStream().test()
 
-        test.test().assertValue(Signal).assertNoErrors()
+        testObserver.assertValue(Signal).assertNoErrors()
     }
 
     @Test
     fun testGetDeleteIdStream() {
         given(local.getDeleteIdStream()).willReturn(Observable.just(Signal))
 
-        val test = sut.getDeleteIdStream()
+        val testObserver = sut.getDeleteIdStream().test()
 
-        test.test().assertValue(Signal).assertNoErrors()
+        testObserver.assertValue(Signal).assertNoErrors()
     }
 }
