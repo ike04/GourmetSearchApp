@@ -37,7 +37,12 @@ android.applicationVariants.all { variant ->
                           '**/*Lambda.class',
                           '**/*Lambda*.class',
                           '**/*Lambda*.*',
-                          '**/*Builder.*'
+                          '**/*Builder.*',
+                          '**/view/**/*.*',
+                          '**/data/*.*',
+                          '**/ext/*.*',
+                          '**/util/*.*',
+                          '**/di/*.*'
         ]
         def javaDebugTree = fileTree(dir: "${buildDir}/intermediates/javac/${realVariantName}/compile${variantName}JavaWithJavac/classes", excludes: fileFilter)
         def kotlinDebugTree = fileTree(dir: "${buildDir}/tmp/kotlin-classes/${realVariantName}", excludes: fileFilter)
