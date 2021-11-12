@@ -18,10 +18,29 @@ class StoreWebViewUsecaseImplTest {
     @Mock
     private lateinit var repository: FavoriteDataManager
 
+    companion object {
+        private const val aStoreId = "J999999999"
+    }
+
     @Before
     fun setUp() {
         MockitoAnnotations.openMocks(this)
         sut = StoreWebViewUsecaseImpl(repository)
+    }
+
+    @Test
+    fun testAddFavoriteStore() {
+        sut.addFavoriteStore(aStoreId)
+    }
+
+    @Test
+    fun testDeleteFavoriteStore() {
+        sut.deleteFavoriteStore(aStoreId)
+    }
+
+    @Test
+    fun testHasFavoriteStore() {
+        sut.hasFavoriteStore(aStoreId)
     }
 
     @Test
