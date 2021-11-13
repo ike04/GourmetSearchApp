@@ -31,6 +31,11 @@ class SearchFilterDialogViewModelTest {
     }
 
     @Test
+    fun testSaveFilterData() {
+        sut.saveFilterData(aFilterDataModel)
+    }
+
+    @Test
     fun testFetchFilterData() {
         given(usecase.getFilterDataStream()).willReturn(Observable.just(aFilterDataModel))
         val testObserver = sut.filterData.test()
@@ -38,6 +43,11 @@ class SearchFilterDialogViewModelTest {
         sut.fetchFilterData()
 
         testObserver.assertValue(aFilterDataModel).assertValueCount(1).assertNoErrors()
+    }
+
+    @Test
+    fun testResetFilter() {
+        sut.resetFilter()
     }
 
     @Test
@@ -65,5 +75,14 @@ class SearchFilterDialogViewModelTest {
         sut.onCancelClick()
 
         testObserver.assertValue(Signal).assertNoErrors()
+    }
+
+    @Test
+    fun testHasLocationPermission() {
+        given(usecase.getHasLocationPermissionStream()).willReturn(Single.just(true))
+
+        sut.hasLocationPermission()
+
+        assertTrue(sut.hasLocation.get())
     }
 }

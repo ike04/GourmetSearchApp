@@ -83,12 +83,12 @@ class SearchDataManagerImplTest {
 
     @Test
     fun testFetchFilterData() {
-        local.fetchFilterData()
+        sut.fetchFilterData()
     }
 
     @Test
     fun testResetFilterData() {
-        local.resetFilter()
+        sut.resetFilterData()
     }
 
     @Test
