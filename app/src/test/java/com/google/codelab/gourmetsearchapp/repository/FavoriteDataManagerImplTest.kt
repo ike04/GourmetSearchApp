@@ -57,6 +57,21 @@ class FavoriteDataManagerImplTest {
     }
 
     @Test
+    fun testAddFavoriteStoreId() {
+        sut.addFavoriteStoreId(aStoreId)
+    }
+
+    @Test
+    fun testDeleteFavoriteStoreId() {
+        sut.deleteFavoriteStoreId(aStoreId)
+    }
+
+    @Test
+    fun testHasFavoriteStoreId() {
+        sut.hasFavoriteStoreId(aStoreId)
+    }
+
+    @Test
     fun testGetStoreIdsStream() {
         given(local.getStoreIdsStream()).willReturn(Observable.just(aStoreIdList))
 

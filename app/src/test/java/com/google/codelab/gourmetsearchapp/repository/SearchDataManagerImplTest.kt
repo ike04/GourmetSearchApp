@@ -74,6 +74,24 @@ class SearchDataManagerImplTest {
     }
 
     @Test
+    fun testGetLocationStream() {
+        sut.saveLocation(aLatLng)
+        val testObserver = sut.getLocationStream().test()
+
+        testObserver.assertValue(aLatLng)
+    }
+
+    @Test
+    fun testFetchFilterData() {
+        sut.fetchFilterData()
+    }
+
+    @Test
+    fun testResetFilterData() {
+        sut.resetFilterData()
+    }
+
+    @Test
     fun testGetFilterDataStream() {
         given(local.getFilterDataStream()).willReturn(Observable.just(aFilterData))
 

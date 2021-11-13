@@ -1,5 +1,6 @@
 package com.google.codelab.gourmetsearchapp.viewmodel
 
+import com.google.codelab.gourmetsearchapp.Signal
 import com.google.codelab.gourmetsearchapp.model.businessmodel.Store
 import com.google.codelab.gourmetsearchapp.model.businessmodel.StoresBusinessModel
 import com.google.codelab.gourmetsearchapp.usecase.HomeUsecase
@@ -57,10 +58,12 @@ class HomeViewModelTest {
     fun testFetchStores_count_1() {
         given(usecase.fetchNearStores(1)).willReturn(Single.just(aStoresBusinessModel))
         val testSubscriber = sut.storeList.test()
+        val emptyTestObserver = sut.isEmptyStores.test()
 
-        sut.fetchStores()
+        sut.fetchStores(true)
 
         testSubscriber.assertValue(aStoresBusinessModel).assertValueCount(1).assertNoErrors()
+        emptyTestObserver.assertValue(false)
         assertFalse(sut.moreLoad.get())
     }
 
@@ -91,7 +94,7 @@ class HomeViewModelTest {
         given(usecase.getFavoriteStoreStream()).willReturn(Observable.just(aStoresBusinessModel20))
         val testSubscriber = sut.storeList.test()
 
-        sut.fetchFavoriteStores(true)
+        sut.fetchFavoriteStores()
 
         testSubscriber.assertValue(aStoresBusinessModel20).assertValueCount(1).assertNoErrors()
         assertTrue(sut.moreLoad.get())
@@ -102,6 +105,15 @@ class HomeViewModelTest {
         sut.resetPages()
 
         assertTrue(sut.moreLoad.get())
+    }
+
+    @Test
+    fun testResetStoreList() {
+        val testObserver = sut.reset.test()
+
+        sut.resetStoreList()
+
+        testObserver.assertValue(Signal).assertNoErrors()
     }
 
     @Test

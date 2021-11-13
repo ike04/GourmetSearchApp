@@ -3,9 +3,8 @@ package com.google.codelab.gourmetsearchapp.usecase
 import com.google.codelab.gourmetsearchapp.model.FilterDataModel
 import com.google.codelab.gourmetsearchapp.repository.SearchDataManager
 import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.Single
 import org.junit.Before
-
-import org.junit.Assert.*
 import org.junit.Test
 import org.mockito.Mock
 import org.mockito.MockitoAnnotations
@@ -29,6 +28,16 @@ class SearchFilterDialogUsecaseImplTest {
     }
 
     @Test
+    fun testSaveFilterData() {
+        sut.saveFilterData(aFilterDataModel)
+    }
+
+    @Test
+    fun testResetFilterData() {
+        sut.resetFilterData()
+    }
+
+    @Test
     fun testFetchFilterData() {
         given(repository.getFilterDataStream()).willReturn(Observable.just(aFilterDataModel))
         val testObserver = sut.getFilterDataStream().test()
@@ -36,5 +45,15 @@ class SearchFilterDialogUsecaseImplTest {
         sut.fetchFilterData()
 
         testObserver.assertValue(aFilterDataModel).assertNoErrors()
+    }
+
+    @Test
+    fun testGetHasLocationPermissionStream() {
+        given(repository.hasLocationPermission()).willReturn(Single.just(true))
+
+        val testObserver = sut.getHasLocationPermissionStream().test()
+
+        testObserver.assertValue(true).assertNoErrors()
+
     }
 }
