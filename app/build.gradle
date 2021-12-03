@@ -4,6 +4,8 @@ plugins {
     id 'kotlin-kapt'
     id 'dagger.hilt.android.plugin'
     id 'com.cookpad.android.plugin.license-tools'version "1.2.8"
+    id 'com.google.gms.google-services'
+    id 'com.google.firebase.crashlytics'
 }
 apply from: './jacoco.gradle'
 
@@ -111,6 +113,11 @@ dependencies {
     // room
     implementation "androidx.room:room-runtime:2.4.0-alpha04"
     kapt "androidx.room:room-compiler:2.4.0-alpha04"
+
+    // firebase
+    implementation platform('com.google.firebase:firebase-bom:29.0.1')
+    implementation 'com.google.firebase:firebase-analytics-ktx'
+    implementation 'com.google.firebase:firebase-crashlytics-ktx'
 
     // mockito
     testImplementation "org.mockito.kotlin:mockito-kotlin:3.2.0"
