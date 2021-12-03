@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - develop
     paths-ignore:
       - docs/**
       - README.md
@@ -11,6 +12,7 @@ on:
   pull_request:
     branches:
       - main
+      - develop
     paths-ignore:
       - docs/**
       - README.md
@@ -29,6 +31,14 @@ jobs:
       with:
         distribution: 'zulu'
         java-version: '11'
+
+    - name: Restore gradle.properties
+      env:
+        HOTPEPPERAPIKEY: ${{ secrets.HOTPEPPERAPIKEY }}
+      run: |
+        echo "android.useAndroidX=true" >> ./gradle.properties
+        echo "org.gradle.jvmargs=-Xmx2048m -Dfile.encoding=UTF-8" >> ./gradle.properties
+        echo "hotPepperApiKey=HOTPEPPERAPIKEY" >> ./gradle.properties
 
     # Gradleのキャッシュ復元
     - uses: actions/cache@v2
@@ -59,6 +69,14 @@ jobs:
         distribution: 'zulu'
         java-version: '11'
 
+    - name: Restore gradle.properties
+      env:
+        HOTPEPPERAPIKEY: ${{ secrets.HOTPEPPERAPIKEY }}
+      run: |
+        echo "android.useAndroidX=true" >> ./gradle.properties
+        echo "org.gradle.jvmargs=-Xmx2048m -Dfile.encoding=UTF-8" >> ./gradle.properties
+        echo "hotPepperApiKey=HOTPEPPERAPIKEY" >> ./gradle.properties
+
     # Gradleのキャッシュ復元
     - uses: actions/cache@v2
       with:
@@ -70,30 +88,3 @@ jobs:
     # テスト
     - name: Test with Gradle
       run: ./gradlew test --stacktrace
-
-  lint:
-    runs-on: ubuntu-latest
-    steps:
-    # チェックアウト
-    - uses: actions/checkout@v2
-
-    # 静的解析
-    - name: Run Inspection
-      run: ./gradlew lint
-
-    # 結果の表示
-    - uses: yutailang0119/action-android-lint@v1
-      with:
-        xml_path: '**/build/reports/lint-results-*.xml'
-
-    # アーティファクトへアップロード
-    - name: Upload results Artifact
-      uses: actions/upload-artifact@v2
-      if: success() || failure()
-      with:
-        name: results
-        path: |
-          **/build/reports/lint-results-*.html
-          **/build/reports/lint-results-*.xml
-        if-no-files-found: error
-        retention-days: 14
