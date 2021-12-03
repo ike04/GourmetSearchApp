@@ -30,6 +30,14 @@ jobs:
           distribution: 'zulu'
           java-version: '8'
 
+      - name: Restore gradle.properties
+        env:
+          HOTPEPPERAPIKEY: ${{ secrets.HOTPEPPERAPIKEY }}
+        run: |
+          echo "android.useAndroidX=true" >> ./gradle.properties
+          echo "org.gradle.jvmargs=-Xmx2048m -Dfile.encoding=UTF-8" >> ./gradle.properties
+          echo "hotPepperApiKey=HOTPEPPERAPIKEY" >> ./gradle.properties
+
       - uses: actions/cache@v2
         with:
           path: ~/.gradle/caches
@@ -60,9 +68,6 @@ jobs:
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
           restore-keys: |
             ${{ runner.os }}-gradle-
-
-      - name: Create Local Properties File
-        run: touch local.properties
 
       - name: Update API_KEY from Secrets
         env:
