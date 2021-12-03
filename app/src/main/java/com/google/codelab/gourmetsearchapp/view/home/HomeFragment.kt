@@ -13,6 +13,7 @@ import com.google.codelab.gourmetsearchapp.R
 import com.google.codelab.gourmetsearchapp.databinding.FragmentHomeBinding
 import com.google.codelab.gourmetsearchapp.ext.ContextExt.showAlertDialog
 import com.google.codelab.gourmetsearchapp.model.businessmodel.Store
+import com.google.codelab.gourmetsearchapp.viewmodel.MainViewModel
 import com.google.codelab.gourmetsearchapp.view.webview.WebViewActivity
 import com.google.codelab.gourmetsearchapp.viewmodel.HomeViewModel
 import com.xwray.groupie.GroupAdapter
@@ -27,6 +28,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
+    private val parentViewModel: MainViewModel by activityViewModels()
     private val viewModel: HomeViewModel by activityViewModels()
     private lateinit var binding: FragmentHomeBinding
     private val groupAdapter = GroupAdapter<GroupieViewHolder>()
@@ -123,6 +125,11 @@ class HomeFragment : Fragment() {
                 storeList.clear()
                 groupAdapter.notifyDataSetChanged()
             }.addTo(disposable)
+
+        parentViewModel.reselectItem
+            .filter { it.isHome() }
+            .subscribeBy { binding.recyclerView.smoothScrollToPosition(0) }
+            .addTo(disposable)
 
         viewModel.error
             .subscribeBy { failure ->

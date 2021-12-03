@@ -23,6 +23,7 @@ import com.google.codelab.gourmetsearchapp.databinding.FragmentMapsBinding
 import com.google.codelab.gourmetsearchapp.model.businessmodel.Store
 import com.google.codelab.gourmetsearchapp.util.MapUtils
 import com.google.codelab.gourmetsearchapp.view.webview.WebViewActivity
+import com.google.codelab.gourmetsearchapp.viewmodel.MainViewModel
 import com.google.codelab.gourmetsearchapp.viewmodel.MapsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
@@ -39,6 +40,7 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
     private lateinit var lastLocation: Location
 
     private val viewModel: MapsViewModel by activityViewModels()
+    private val parentViewModel: MainViewModel by activityViewModels()
     private val MY_PERMISSION_REQUEST_ACCESS_FINE_LOCATION = 1
     private var locationCallback: LocationCallback? = null
     private var mapMarkerPosition = 0
@@ -114,6 +116,15 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
                 Snackbar.make(view, failure.message, Snackbar.LENGTH_INDEFINITE)
                     .setAction(R.string.retry) { failure.retry }
                     .show()
+            }.addTo(disposable)
+
+        parentViewModel.reselectItem
+            .filter { it.isMap() }
+            .subscribeBy {
+                binding.storePager.setCurrentItem(0, true)
+                val selectedStoreLatLng =
+                    LatLng(storeList[0].lat, storeList[0].lng)
+                map.moveCamera(CameraUpdateFactory.newLatLng(selectedStoreLatLng))
             }.addTo(disposable)
 
         binding.storePager.orientation = ViewPager2.ORIENTATION_HORIZONTAL
