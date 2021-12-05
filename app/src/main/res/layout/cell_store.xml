@@ -48,7 +48,7 @@
                 android:layout_marginStart="@dimen/s_spacing"
                 android:layout_marginTop="@dimen/s_spacing"
                 android:layout_marginEnd="@dimen/s_spacing"
-                app:defaultImage="@{@drawable/ic_launcher_background}"
+                app:defaultImage="@{@drawable/ic_baseline_help_24}"
                 app:imageUrl="@{item.photo}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
