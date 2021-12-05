@@ -57,6 +57,7 @@ HotpepperグルメのAPI(https://webservice.recruit.co.jp/doc/hotpepper/referenc
 - Lottie
 - mockito
 - jacoco
+- Firebase Crashlytics
 
 # ダウンロード（Androidのみ)
 <img src="https://user-images.githubusercontent.com/48178913/137406829-947c0b8b-ecce-488a-830a-6cd8e2e5ab69.png">
