@@ -198,7 +198,7 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
 
                         viewModel.saveLocation(currentLatLng)
                         if (storeList.isEmpty()) {
-                            viewModel.fetchNearStores()
+                            viewModel.fetchFilterData()
                         }
                     }
                 }

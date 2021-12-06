@@ -35,7 +35,7 @@ class LocalData @Inject constructor(private val dao: FilterDao) {
     fun fetchFilterData() {
         Single.fromCallable { dao.loadFilterDate() }
             .subscribeOn(Schedulers.io())
-            .onErrorComplete()
+            .onErrorResumeWith { filterData.onNext(FilterDataModel()) }
             .subscribeBy { localData ->
                 filterData.onNext(
                     FilterDataModel(
