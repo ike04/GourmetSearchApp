@@ -20,6 +20,7 @@ android.applicationVariants.all { variant ->
         group = "testing"
         description = "Generate Jacoco coverage reports for ${realVariantName}"
 
+        test.finalizedBy(JacocoReport)
         reports {
             xml.enabled = false
             html.enabled = true
