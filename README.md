@@ -1,3 +1,4 @@
+[![CI](https://github.com/ike04/GourmetSearchApp/actions/workflows/ci_settings.yml/badge.svg?branch=develop)](https://github.com/ike04/GourmetSearchApp/actions/workflows/ci_settings.yml)
 # GourmetSearchApp
 HotPepperGourmetのAPIを利用したレストラン検索アプリ
 
