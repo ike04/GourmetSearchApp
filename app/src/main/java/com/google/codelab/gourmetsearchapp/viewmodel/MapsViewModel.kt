@@ -6,6 +6,8 @@ import com.google.codelab.gourmetsearchapp.Signal
 import com.google.codelab.gourmetsearchapp.model.businessmodel.StoresBusinessModel
 import com.google.codelab.gourmetsearchapp.usecase.MapsUsecase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import io.reactivex.rxjava3.kotlin.addTo
+import io.reactivex.rxjava3.kotlin.subscribeBy
 import io.reactivex.rxjava3.schedulers.Schedulers
 import io.reactivex.rxjava3.subjects.PublishSubject
 import javax.inject.Inject
@@ -37,6 +39,15 @@ class MapsViewModel @Inject constructor(
 
     fun resetStores() {
         reset.onNext(Signal)
+    }
+
+    fun fetchFilterData() {
+        usecase.fetchFilterData()
+
+        usecase.getFilterDataStream()
+            .firstElement()
+            .subscribeBy { fetchNearStores() }
+            .addTo(disposables)
     }
 
 }

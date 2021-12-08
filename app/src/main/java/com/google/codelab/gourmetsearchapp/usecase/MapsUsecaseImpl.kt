@@ -1,8 +1,10 @@
 package com.google.codelab.gourmetsearchapp.usecase
 
 import com.google.android.gms.maps.model.LatLng
+import com.google.codelab.gourmetsearchapp.model.FilterDataModel
 import com.google.codelab.gourmetsearchapp.model.businessmodel.StoresBusinessModel
 import com.google.codelab.gourmetsearchapp.repository.SearchDataManager
+import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.schedulers.Schedulers
 import javax.inject.Inject
@@ -18,4 +20,10 @@ class MapsUsecaseImpl @Inject constructor(
     override fun saveLocation(latLng: LatLng) {
         repository.saveLocation(latLng)
     }
+
+    override fun fetchFilterData() {
+        repository.fetchFilterData()
+    }
+
+    override fun getFilterDataStream(): Observable<FilterDataModel> = repository.getFilterDataStream()
 }

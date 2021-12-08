@@ -73,5 +73,6 @@ class SearchDataManagerImpl @Inject constructor(
 
     override fun getFilterDataStream(): Observable<FilterDataModel> {
         return local.getFilterDataStream()
+            .doOnNext { filterData.onNext(it) }
     }
 }
