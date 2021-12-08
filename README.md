@@ -1,4 +1,5 @@
 [![CI](https://github.com/ike04/GourmetSearchApp/actions/workflows/ci_settings.yml/badge.svg?branch=develop)](https://github.com/ike04/GourmetSearchApp/actions/workflows/ci_settings.yml)
+[![codecov](https://codecov.io/gh/ike04/GourmetSearchApp/branch/develop/graph/badge.svg?token=ZBFOQGC248)](https://codecov.io/gh/ike04/GourmetSearchApp)
 # GourmetSearchApp
 HotPepperGourmetのAPIを利用したレストラン検索アプリ
 
