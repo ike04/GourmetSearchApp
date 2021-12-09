@@ -7,6 +7,7 @@ import android.location.Location
 import android.os.Bundle
 import android.view.*
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -80,8 +81,8 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
                 val position = binding.storePager.currentItem
 
                 val intent = Intent(requireContext(), WebViewActivity::class.java)
-                intent.putExtra(WebViewActivity.ID, storeList[position].id)
-                intent.putExtra(WebViewActivity.URL, storeList[position].urls)
+                    .putExtra(WebViewActivity.ID, storeList[position].id)
+                    .putExtra(WebViewActivity.URL, storeList[position].urls)
                 startActivity(intent)
             }
 

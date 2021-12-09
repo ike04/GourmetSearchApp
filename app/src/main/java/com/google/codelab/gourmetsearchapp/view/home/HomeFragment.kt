@@ -40,8 +40,8 @@ class HomeFragment : Fragment() {
         val index = groupAdapter.getAdapterPosition(item)
 
         val intent = Intent(requireContext(), WebViewActivity::class.java)
-        intent.putExtra(WebViewActivity.ID, storeList[index].id)
-        intent.putExtra(WebViewActivity.URL, storeList[index].urls)
+            .putExtra(WebViewActivity.ID, storeList[index].id)
+            .putExtra(WebViewActivity.URL, storeList[index].urls)
         startActivity(intent)
     }
 

@@ -20,7 +20,7 @@
 
     <!--    map              -->
     <string name="no_result_near_restaurant">検索条件にあったレストランが見つかりませんでした。</string>
-    <string name="no_result_favorite_restaurant">お気に入り登録しているレストランがありません。気になるレストランを登録してみましょう！</string>
+    <string name="no_result_favorite_restaurant">お気に入り登録しているレストランがありません。\n気になるレストランを登録してみましょう！</string>
     <string name="no_location_authorization">現在地は表示できません</string>
     <string name="no_locations_title">位置情報がオフになっています。</string>
     <string name="no_locations_message">位置情報がオフになっているため、現在地を取得できません。</string>

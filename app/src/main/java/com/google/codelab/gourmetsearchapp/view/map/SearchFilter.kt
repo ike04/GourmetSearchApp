@@ -1,9 +1,10 @@
 package com.google.codelab.gourmetsearchapp.view.map
 
+import androidx.annotation.IdRes
 import androidx.annotation.StringRes
 import com.google.codelab.gourmetsearchapp.R
 
-enum class SearchFilter(val id: Int, @StringRes val title: Int, val range: Int) {
+enum class SearchFilter(@IdRes val id: Int, @StringRes val title: Int, val range: Int) {
     FIRST(R.id.range_300, R.string.text_filter_range_checkbox_1, 1),
     SECOND(R.id.range_500, R.string.text_filter_range_checkbox_2, 2),
     THIRD(R.id.range_1000, R.string.text_filter_range_checkbox_3, 3),
@@ -53,7 +54,6 @@ enum class SearchChips(@StringRes val genre: Int, val code: String) {
                 ""
             }
         }
-
 
         fun getId(code: String): Int {
             var id = -1 // not exist
