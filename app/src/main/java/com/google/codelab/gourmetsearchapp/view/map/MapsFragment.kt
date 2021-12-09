@@ -41,13 +41,13 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
 
     private val viewModel: MapsViewModel by activityViewModels()
     private val parentViewModel: MainViewModel by activityViewModels()
-    private val MY_PERMISSION_REQUEST_ACCESS_FINE_LOCATION = 1
     private var locationCallback: LocationCallback? = null
     private var mapMarkerPosition = 0
     private val storeList: MutableList<Store> = ArrayList()
     private val disposable = CompositeDisposable()
 
     companion object {
+        private const val MY_PERMISSION_REQUEST_ACCESS_FINE_LOCATION = 1
         fun newInstance(): MapsFragment {
             return MapsFragment()
         }
@@ -188,7 +188,7 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
             }
             locationCallback = object : LocationCallback() {
                 override fun onLocationResult(locationResult: LocationResult?) {
-                    super.onLocationResult(locationResult)
+                    locationResult?.let { super.onLocationResult(it) }
                     locationResult?.lastLocation?.let {
                         lastLocation = locationResult.lastLocation
 
@@ -204,7 +204,7 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
             }
             fusedLocationProviderClient.requestLocationUpdates(
                 locationRequest,
-                locationCallback,
+                locationCallback!!,
                 null
             )
         }
