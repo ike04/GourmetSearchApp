@@ -94,12 +94,12 @@ jobs:
       run: ./gradlew jacocoDebugTestReport
 
       # コードカバレッジをCodecovへアップロード
-    - name: Upload code coverage to Codecov
-      run: bash <(curl -s https://codecov.io/bash)
-      env:
-        CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v1
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
 
-      # テスト結果とコードカバレッジのアップロード
+        # テスト結果とコードカバレッジのアップロード
     - name: Upload test results and code coverage Artifact
       uses: actions/upload-artifact@v2
       if: success() || failure()
