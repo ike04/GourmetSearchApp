@@ -93,7 +93,6 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
                     mapMarkerPosition = MapUtils.addMarker(map, store, mapMarkerPosition)
                     storeList.add(store)
                 }
-                binding.storePager.adapter?.notifyDataSetChanged()
                 Toast.makeText(
                     requireContext(),
                     "周辺のレストランが${storeList.size}件見つかりました",
@@ -184,7 +183,7 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
             ) == PackageManager.PERMISSION_GRANTED
         ) {
             map.isMyLocationEnabled = true
-            val locationRequest = LocationRequest().apply {
+            val locationRequest = LocationRequest.create().apply {
                 priority = LocationRequest.PRIORITY_HIGH_ACCURACY
             }
             locationCallback = object : LocationCallback() {

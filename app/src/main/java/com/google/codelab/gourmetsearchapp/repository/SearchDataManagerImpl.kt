@@ -21,22 +21,22 @@ class SearchDataManagerImpl @Inject constructor(
     override fun fetchNearStores(startPage: Int): Single<StoresBusinessModel> {
         return if (filterData.hasValue()) {
             remote.fetchStores(
-                latLng.value.latitude,
-                latLng.value.longitude,
-                filterData.value.searchRange,
-                filterData.value.genre,
-                filterData.value.coupon,
-                filterData.value.drink,
-                filterData.value.privateRoom,
-                filterData.value.wifi,
-                filterData.value.lunch,
-                filterData.value.keyword,
+                latLng.value!!.latitude,
+                latLng.value!!.longitude,
+                filterData.value!!.searchRange,
+                filterData.value!!.genre,
+                filterData.value!!.coupon,
+                filterData.value!!.drink,
+                filterData.value!!.privateRoom,
+                filterData.value!!.wifi,
+                filterData.value!!.lunch,
+                filterData.value!!.keyword,
                 startPage
             ).map { StoresMapper.transform(it) }
         } else {
             remote.fetchStores(
-                latLng.value.latitude,
-                latLng.value.longitude,
+                latLng.value!!.latitude,
+                latLng.value!!.longitude,
                 3,
                 "",
                 0,

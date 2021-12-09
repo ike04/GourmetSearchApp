@@ -5,14 +5,12 @@ import retrofit2.Response
 
 class StoresMapper {
     companion object {
-        fun transform(response: Response<StoresResponse>): StoresBusinessModel? {
-            return response.body()?.results?.let {
-                StoresBusinessModel(
-                    totalPages = it.totalPages,
-                    getPages = it.getPages,
-                    store = transformStore(response.body())
-                )
-            }
+        fun transform(response: Response<StoresResponse>): StoresBusinessModel {
+            return StoresBusinessModel(
+                totalPages = response.body()?.results?.totalPages ?: 0,
+                getPages = response.body()?.results?.getPages ?: 0,
+                store = transformStore(response.body())
+            )
         }
 
         private fun transformStore(response: StoresResponse?): List<Store> {

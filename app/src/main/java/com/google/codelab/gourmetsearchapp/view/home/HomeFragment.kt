@@ -123,7 +123,6 @@ class HomeFragment : Fragment() {
         viewModel.reset
             .subscribeBy {
                 storeList.clear()
-                groupAdapter.notifyDataSetChanged()
             }.addTo(disposable)
 
         parentViewModel.reselectItem
