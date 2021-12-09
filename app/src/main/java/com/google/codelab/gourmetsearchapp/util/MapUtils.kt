@@ -44,7 +44,7 @@ object MapUtils {
     }
 
     fun addMarker(map: GoogleMap, store: Store, position: Int): Int {
-        val pin: Marker = map.addMarker(
+        val pin = map.addMarker(
             MarkerOptions()
                 .position(LatLng(store.lat, store.lng))
                 .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN))

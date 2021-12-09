@@ -95,7 +95,7 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
                 }
                 Toast.makeText(
                     requireContext(),
-                    "周辺のレストランが${storeList.size}件見つかりました",
+                    getString(R.string.around_store_count, storeList.size),
                     Toast.LENGTH_LONG
                 ).show()
             }.addTo(disposable)

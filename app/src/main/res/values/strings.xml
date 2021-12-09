@@ -24,6 +24,7 @@
     <string name="no_location_authorization">現在地は表示できません</string>
     <string name="no_locations_title">位置情報がオフになっています。</string>
     <string name="no_locations_message">位置情報がオフになっているため、現在地を取得できません。</string>
+    <string name="around_store_count">周辺のレストランが%1$d件見つかりました</string>
 
     <!--    search filter    -->
     <string name="text_filter_title">検索条件</string>
