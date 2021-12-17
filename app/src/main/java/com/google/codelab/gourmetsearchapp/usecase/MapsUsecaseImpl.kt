@@ -24,12 +24,12 @@ class MapsUsecaseImpl @Inject constructor(
             repository.fetchNearStores(startPage).toObservable(),
             favoriteRepository.fetchStoreIds().toObservable()
         ).doOnNext { (remote, local) ->
-            val newData = remote.store.map { store ->
+            val store = remote.store.map { store ->
                 val hasFavorite = local.contains(store.id)
                 store.copy(isFavorite = hasFavorite)
             }
-            val new = remote.copy(store = newData)
-            stores.onNext(new)
+            val latestStores = remote.copy(store = store)
+            stores.onNext(latestStores)
         }
             .subscribeBy()
             .addTo(disposables)
