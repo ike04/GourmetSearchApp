@@ -71,7 +71,7 @@ class WebViewActivity : AppCompatActivity() {
         viewModel.error
             .subscribeBy { failure ->
                 Snackbar.make(binding.root, failure.message, Snackbar.LENGTH_INDEFINITE)
-                    .setAction(R.string.retry) { failure.retry }
+                    .setAction(R.string.retry) { failure.retry.invoke() }
                     .show()
             }.addTo(disposables)
     }

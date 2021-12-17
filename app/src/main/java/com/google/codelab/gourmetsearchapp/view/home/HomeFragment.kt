@@ -137,7 +137,7 @@ class HomeFragment : Fragment() {
         viewModel.error
             .subscribeBy { failure ->
                 Snackbar.make(view, failure.message, Snackbar.LENGTH_INDEFINITE)
-                    .setAction(R.string.retry) { failure.retry }
+                    .setAction(R.string.retry) { failure.retry.invoke() }
                     .show()
             }.addTo(disposable)
 
