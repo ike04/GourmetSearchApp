@@ -24,7 +24,8 @@ class StoresMapper {
                         genre = store.genre.name,
                         budget = store.budget.average,
                         urls = store.urls.url,
-                        photo = store.photo.photo.logo
+                        photo = store.photo.photo.logo,
+                        isFavorite = false
                     )
                 }
             } ?: emptyList()

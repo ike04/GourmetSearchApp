@@ -7,7 +7,9 @@ import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
 
 interface MapsUsecase : Usecase {
-    fun fetchNearStores(startPage: Int = 1): Single<StoresBusinessModel>
+    fun fetchNearStores(startPage: Int = 1)
+
+    fun getNearStores(): Observable<StoresBusinessModel>
 
     fun saveLocation(latLng: LatLng)
 
