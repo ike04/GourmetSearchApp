@@ -22,6 +22,8 @@ class MapsViewModel @Inject constructor(
 
     fun fetchNearStores() {
         usecase.fetchNearStores()
+
+        usecase.getNearStores()
             .execute(
                 onSuccess = {
                     if (it.store.isNotEmpty()) {
