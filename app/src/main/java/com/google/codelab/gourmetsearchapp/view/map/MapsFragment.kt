@@ -7,7 +7,6 @@ import android.location.Location
 import android.os.Bundle
 import android.view.*
 import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -121,10 +120,12 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
         parentViewModel.reselectItem
             .filter { it.isMap() }
             .subscribeBy {
-                binding.storePager.setCurrentItem(0, true)
-                val selectedStoreLatLng =
-                    LatLng(storeList[0].lat, storeList[0].lng)
-                map.moveCamera(CameraUpdateFactory.newLatLng(selectedStoreLatLng))
+                if (storeList.isNotEmpty()) {
+                    binding.storePager.setCurrentItem(0, true)
+                    val selectedStoreLatLng =
+                        LatLng(storeList[0].lat, storeList[0].lng)
+                    map.moveCamera(CameraUpdateFactory.newLatLng(selectedStoreLatLng))
+                }
             }.addTo(disposable)
 
         binding.storePager.orientation = ViewPager2.ORIENTATION_HORIZONTAL
