@@ -34,7 +34,7 @@ abstract class BaseUsecase constructor(
             ).addTo(disposables)
     }
 
-    private fun Throwable.toMessage(): Int {
+    protected fun Throwable.toMessage(): Int {
         return when (this) {
             is HttpException -> toMessage()
             is UnknownHostException -> R.string.error_offline

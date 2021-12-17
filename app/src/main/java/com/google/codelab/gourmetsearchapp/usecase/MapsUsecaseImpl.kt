@@ -1,6 +1,7 @@
 package com.google.codelab.gourmetsearchapp.usecase
 
 import com.google.android.gms.maps.model.LatLng
+import com.google.codelab.gourmetsearchapp.model.Failure
 import com.google.codelab.gourmetsearchapp.model.FilterDataModel
 import com.google.codelab.gourmetsearchapp.model.businessmodel.StoresBusinessModel
 import com.google.codelab.gourmetsearchapp.repository.FavoriteDataManager
@@ -23,15 +24,20 @@ class MapsUsecaseImpl @Inject constructor(
         Observables.combineLatest(
             repository.fetchNearStores(startPage).toObservable(),
             favoriteRepository.fetchStoreIds().toObservable()
-        ).doOnNext { (remote, local) ->
-            val store = remote.store.map { store ->
-                val hasFavorite = local.contains(store.id)
-                store.copy(isFavorite = hasFavorite)
-            }
-            val latestStores = remote.copy(store = store)
-            stores.onNext(latestStores)
-        }
-            .subscribeBy()
+        )
+            .subscribeBy(
+                onNext = { (remote, local) ->
+                    val store = remote.store.map { store ->
+                        val hasFavorite = local.contains(store.id)
+                        store.copy(isFavorite = hasFavorite)
+                    }
+                    val latestStores = remote.copy(store = store)
+                    stores.onNext(latestStores)
+                },
+                onError = {
+                    error.onNext(Failure(it, it.toMessage()) { fetchNearStores(startPage) })
+                }
+            )
             .addTo(disposables)
     }
 
@@ -46,4 +52,6 @@ class MapsUsecaseImpl @Inject constructor(
     }
 
     override fun getFilterDataStream(): Observable<FilterDataModel> = repository.getFilterDataStream()
+
+    override fun errorSignal(): Observable<Failure> = error.hide()
 }

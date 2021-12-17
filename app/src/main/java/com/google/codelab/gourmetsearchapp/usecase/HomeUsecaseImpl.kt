@@ -1,5 +1,6 @@
 package com.google.codelab.gourmetsearchapp.usecase
 
+import com.google.codelab.gourmetsearchapp.model.Failure
 import com.google.codelab.gourmetsearchapp.model.businessmodel.StoresBusinessModel
 import com.google.codelab.gourmetsearchapp.repository.FavoriteDataManager
 import com.google.codelab.gourmetsearchapp.repository.SearchDataManager
@@ -78,5 +79,7 @@ class HomeUsecaseImpl @Inject constructor(
 
     override fun getStoreIdsStream(): Observable<List<String>> =
         favoriteRepository.getStoreIdsStream()
+
+    override fun errorSignal(): Observable<Failure> = error.hide()
 
 }

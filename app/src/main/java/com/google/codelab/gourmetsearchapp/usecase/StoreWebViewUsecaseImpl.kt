@@ -1,6 +1,7 @@
 package com.google.codelab.gourmetsearchapp.usecase
 
 import com.google.codelab.gourmetsearchapp.Signal
+import com.google.codelab.gourmetsearchapp.model.Failure
 import com.google.codelab.gourmetsearchapp.repository.FavoriteDataManager
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Observable
@@ -28,4 +29,6 @@ class StoreWebViewUsecaseImpl @Inject constructor(
     override fun getAddIdStream(): Observable<Signal> =repository.getAddIdStream()
 
     override fun getDeleteIdStream(): Observable<Signal> = repository.getDeleteIdStream()
+
+    override fun errorSignal(): Observable<Failure> = error.hide()
 }

@@ -1,5 +1,6 @@
 package com.google.codelab.gourmetsearchapp.usecase
 
+import com.google.codelab.gourmetsearchapp.model.Failure
 import com.google.codelab.gourmetsearchapp.model.FilterDataModel
 import com.google.codelab.gourmetsearchapp.repository.SearchDataManager
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -27,4 +28,6 @@ class SearchFilterDialogUsecaseImpl @Inject constructor(
     override fun getFilterDataStream(): Observable<FilterDataModel> = repository.getFilterDataStream()
 
     override fun getHasLocationPermissionStream(): Single<Boolean> = repository.hasLocationPermission()
+
+    override fun errorSignal(): Observable<Failure> = error.hide()
 }
