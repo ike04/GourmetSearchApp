@@ -53,6 +53,7 @@ android.applicationVariants.all { variant ->
                           '**/ext/*.*',
                           '**/util/*.*',
                           '**/di/*.*',
+                          '**/local/*.*',
                           '**/model/*.*'
         ]
         def javaDebugTree = fileTree(dir: "${buildDir}/intermediates/javac/${realVariantName}/compile${variantName}JavaWithJavac/classes", excludes: fileFilter)

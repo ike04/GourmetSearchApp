@@ -24,7 +24,6 @@ class MapsViewModel @Inject constructor(
         usecase.fetchNearStores()
 
         usecase.getNearStores()
-            .subscribeOn(Schedulers.io())
             .subscribeBy {
                 if (it.store.isNotEmpty()) {
                     showViewPager.set(true)
