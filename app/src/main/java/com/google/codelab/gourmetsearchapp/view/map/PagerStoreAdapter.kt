@@ -9,8 +9,7 @@ import com.google.codelab.gourmetsearchapp.model.businessmodel.Store
 class PagerStoreAdapter(
     private val store: List<Store>,
     private val onCellClick: (Store) -> Unit
-) :
-    RecyclerView.Adapter<PagerViewHolder>() {
+) : RecyclerView.Adapter<PagerViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PagerViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -30,7 +29,6 @@ class PagerStoreAdapter(
 }
 
 class PagerViewHolder(val binding: PagerStoreBinding) : RecyclerView.ViewHolder(binding.root) {
-
     fun bind(store: Store) {
         binding.item = store
     }

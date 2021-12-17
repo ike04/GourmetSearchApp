@@ -5,17 +5,19 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.AppLaunchChecker
 import com.google.codelab.gourmetsearchapp.databinding.ActivitySplashBinding
-import com.google.codelab.gourmetsearchapp.util.MapUtils
 import com.google.codelab.gourmetsearchapp.view.MainActivity
 import com.google.codelab.gourmetsearchapp.view.onboarding.OnboardingActivity
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.disposables.CompositeDisposable
+import io.reactivex.rxjava3.kotlin.addTo
 import io.reactivex.rxjava3.kotlin.subscribeBy
 import io.reactivex.rxjava3.schedulers.Schedulers
 import java.util.concurrent.TimeUnit
 
 class SplashActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySplashBinding
+    private val disposable = CompositeDisposable()
 
     companion object {
         const val FROM_SPLASH = "FROM_SPLASH"
@@ -29,7 +31,7 @@ class SplashActivity : AppCompatActivity() {
         supportActionBar?.hide()
 
         Observable
-            .timer(3, TimeUnit.SECONDS)
+            .timer(2, TimeUnit.SECONDS)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeBy {
@@ -42,6 +44,11 @@ class SplashActivity : AppCompatActivity() {
                 AppLaunchChecker.onActivityCreate(this)
                 startActivity(intent)
                 finish()
-            }
+            }.addTo(disposable)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        disposable.clear()
     }
 }

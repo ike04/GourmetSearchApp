@@ -7,6 +7,7 @@ import android.location.Location
 import android.os.Bundle
 import android.view.*
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -41,13 +42,13 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
 
     private val viewModel: MapsViewModel by activityViewModels()
     private val parentViewModel: MainViewModel by activityViewModels()
-    private val MY_PERMISSION_REQUEST_ACCESS_FINE_LOCATION = 1
     private var locationCallback: LocationCallback? = null
     private var mapMarkerPosition = 0
     private val storeList: MutableList<Store> = ArrayList()
     private val disposable = CompositeDisposable()
 
     companion object {
+        private const val MY_PERMISSION_REQUEST_ACCESS_FINE_LOCATION = 1
         fun newInstance(): MapsFragment {
             return MapsFragment()
         }
@@ -80,8 +81,8 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
                 val position = binding.storePager.currentItem
 
                 val intent = Intent(requireContext(), WebViewActivity::class.java)
-                intent.putExtra(WebViewActivity.ID, storeList[position].id)
-                intent.putExtra(WebViewActivity.URL, storeList[position].urls)
+                    .putExtra(WebViewActivity.ID, storeList[position].id)
+                    .putExtra(WebViewActivity.URL, storeList[position].urls)
                 startActivity(intent)
             }
 
@@ -93,10 +94,9 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
                     mapMarkerPosition = MapUtils.addMarker(map, store, mapMarkerPosition)
                     storeList.add(store)
                 }
-                binding.storePager.adapter?.notifyDataSetChanged()
                 Toast.makeText(
                     requireContext(),
-                    "周辺のレストランが${storeList.size}件見つかりました",
+                    getString(R.string.around_store_count, storeList.size),
                     Toast.LENGTH_LONG
                 ).show()
             }.addTo(disposable)
@@ -184,12 +184,12 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
             ) == PackageManager.PERMISSION_GRANTED
         ) {
             map.isMyLocationEnabled = true
-            val locationRequest = LocationRequest().apply {
+            val locationRequest = LocationRequest.create().apply {
                 priority = LocationRequest.PRIORITY_HIGH_ACCURACY
             }
             locationCallback = object : LocationCallback() {
                 override fun onLocationResult(locationResult: LocationResult?) {
-                    super.onLocationResult(locationResult)
+                    locationResult?.let { super.onLocationResult(it) }
                     locationResult?.lastLocation?.let {
                         lastLocation = locationResult.lastLocation
 
@@ -205,7 +205,7 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
             }
             fusedLocationProviderClient.requestLocationUpdates(
                 locationRequest,
-                locationCallback,
+                locationCallback!!,
                 null
             )
         }

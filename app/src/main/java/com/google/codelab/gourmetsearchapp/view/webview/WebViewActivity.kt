@@ -74,7 +74,6 @@ class WebViewActivity : AppCompatActivity() {
                     .setAction(R.string.retry) { failure.retry }
                     .show()
             }.addTo(disposables)
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
