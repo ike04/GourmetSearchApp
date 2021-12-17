@@ -1,11 +1,13 @@
 package com.google.codelab.gourmetsearchapp.viewmodel
 
 import com.google.codelab.gourmetsearchapp.Signal
+import com.google.codelab.gourmetsearchapp.model.Failure
 import com.google.codelab.gourmetsearchapp.model.businessmodel.Store
 import com.google.codelab.gourmetsearchapp.model.businessmodel.StoresBusinessModel
 import com.google.codelab.gourmetsearchapp.usecase.MapsUsecase
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
+import io.reactivex.rxjava3.subjects.PublishSubject
 import org.junit.Before
 
 import org.junit.Assert.*
@@ -16,6 +18,8 @@ import org.mockito.kotlin.given
 
 class MapsViewModelTest {
     private lateinit var sut: MapsViewModel
+
+    private lateinit var anErrorSubject: PublishSubject<Failure>
 
     @Mock
     private lateinit var usecase: MapsUsecase
@@ -29,6 +33,8 @@ class MapsViewModelTest {
     fun setUp() {
         MockitoAnnotations.openMocks(this)
 
+        anErrorSubject = PublishSubject.create()
+        given(usecase.errorSignal()).willReturn(anErrorSubject)
         sut = MapsViewModel(usecase)
     }
 

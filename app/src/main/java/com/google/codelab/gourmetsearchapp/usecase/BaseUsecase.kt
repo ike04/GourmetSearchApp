@@ -34,6 +34,8 @@ abstract class BaseUsecase constructor(
             ).addTo(disposables)
     }
 
+    override fun errorSignal(): Observable<Failure> = error.hide()
+
     protected fun Throwable.toMessage(): Int {
         return when (this) {
             is HttpException -> toMessage()

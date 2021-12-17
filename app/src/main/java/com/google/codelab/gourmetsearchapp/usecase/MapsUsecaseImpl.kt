@@ -52,6 +52,4 @@ class MapsUsecaseImpl @Inject constructor(
     }
 
     override fun getFilterDataStream(): Observable<FilterDataModel> = repository.getFilterDataStream()
-
-    override fun errorSignal(): Observable<Failure> = error.hide()
 }

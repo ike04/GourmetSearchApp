@@ -28,6 +28,4 @@ class SearchFilterDialogUsecaseImpl @Inject constructor(
     override fun getFilterDataStream(): Observable<FilterDataModel> = repository.getFilterDataStream()
 
     override fun getHasLocationPermissionStream(): Single<Boolean> = repository.hasLocationPermission()
-
-    override fun errorSignal(): Observable<Failure> = error.hide()
 }

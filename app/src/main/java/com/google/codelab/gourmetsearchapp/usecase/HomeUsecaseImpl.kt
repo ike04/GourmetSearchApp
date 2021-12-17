@@ -80,6 +80,4 @@ class HomeUsecaseImpl @Inject constructor(
     override fun getStoreIdsStream(): Observable<List<String>> =
         favoriteRepository.getStoreIdsStream()
 
-    override fun errorSignal(): Observable<Failure> = error.hide()
-
 }

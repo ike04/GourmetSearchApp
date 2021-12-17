@@ -29,6 +29,4 @@ class StoreWebViewUsecaseImpl @Inject constructor(
     override fun getAddIdStream(): Observable<Signal> =repository.getAddIdStream()
 
     override fun getDeleteIdStream(): Observable<Signal> = repository.getDeleteIdStream()
-
-    override fun errorSignal(): Observable<Failure> = error.hide()
 }

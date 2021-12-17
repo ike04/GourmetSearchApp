@@ -1,8 +1,10 @@
 package com.google.codelab.gourmetsearchapp.viewmodel
 
 import com.google.codelab.gourmetsearchapp.Signal
+import com.google.codelab.gourmetsearchapp.model.Failure
 import com.google.codelab.gourmetsearchapp.usecase.StoreWebViewUsecase
 import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.subjects.PublishSubject
 import org.junit.Before
 
 import org.junit.Assert.*
@@ -14,6 +16,8 @@ import org.mockito.kotlin.given
 class StoreWebViewViewModelTest {
     private lateinit var sut: StoreWebViewViewModel
 
+    private lateinit var anErrorSubject: PublishSubject<Failure>
+
     @Mock
     private lateinit var usecase: StoreWebViewUsecase
 
@@ -24,6 +28,8 @@ class StoreWebViewViewModelTest {
     @Before
     fun setUp() {
         MockitoAnnotations.openMocks(this)
+        anErrorSubject = PublishSubject.create()
+        given(usecase.errorSignal()).willReturn(anErrorSubject)
 
         sut = StoreWebViewViewModel(usecase)
     }
