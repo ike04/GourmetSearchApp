@@ -13,9 +13,9 @@ import com.google.codelab.gourmetsearchapp.R
 import com.google.codelab.gourmetsearchapp.databinding.FragmentHomeBinding
 import com.google.codelab.gourmetsearchapp.ext.ContextExt.showAlertDialog
 import com.google.codelab.gourmetsearchapp.model.businessmodel.Store
-import com.google.codelab.gourmetsearchapp.viewmodel.MainViewModel
 import com.google.codelab.gourmetsearchapp.view.webview.WebViewActivity
 import com.google.codelab.gourmetsearchapp.viewmodel.HomeViewModel
+import com.google.codelab.gourmetsearchapp.viewmodel.MainViewModel
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 import com.xwray.groupie.OnItemClickListener
@@ -33,16 +33,19 @@ class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
     private val groupAdapter = GroupAdapter<GroupieViewHolder>()
     private val storeList: MutableList<Store> = ArrayList()
+    private var hasNoStores = true
 
     private val disposable = CompositeDisposable()
 
     private val onItemClickListener = OnItemClickListener { item, _ ->
         val index = groupAdapter.getAdapterPosition(item)
 
-        val intent = Intent(requireContext(), WebViewActivity::class.java)
-            .putExtra(WebViewActivity.ID, storeList[index].id)
-            .putExtra(WebViewActivity.URL, storeList[index].urls)
-        startActivity(intent)
+        if (!hasNoStores) {
+            val intent = Intent(requireContext(), WebViewActivity::class.java)
+                .putExtra(WebViewActivity.ID, storeList[index].id)
+                .putExtra(WebViewActivity.URL, storeList[index].urls)
+            startActivity(intent)
+        }
     }
 
     override fun onCreateView(
@@ -118,6 +121,7 @@ class HomeFragment : Fragment() {
                 } else {
                     GridLayoutManager(requireContext(), 2, GridLayoutManager.VERTICAL, false)
                 }
+                hasNoStores = isEmpty
             }.addTo(disposable)
 
         viewModel.reset
