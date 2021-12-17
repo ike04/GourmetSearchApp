@@ -14,5 +14,6 @@ data class Store(
     val genre: String,
     val budget: String,
     val urls: String,
-    val photo: String
+    val photo: String,
+    var isFavorite: Boolean
 )
