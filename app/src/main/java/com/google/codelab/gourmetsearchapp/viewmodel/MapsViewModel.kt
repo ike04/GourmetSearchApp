@@ -24,15 +24,13 @@ class MapsViewModel @Inject constructor(
         usecase.fetchNearStores()
 
         usecase.getNearStores()
-            .execute(
-                onSuccess = {
-                    if (it.store.isNotEmpty()) {
-                        showViewPager.set(true)
-                    }
-                    storeList.onNext(it)
-                },
-                retry = { fetchNearStores() }
-            )
+            .subscribeOn(Schedulers.io())
+            .subscribeBy {
+                if (it.store.isNotEmpty()) {
+                    showViewPager.set(true)
+                }
+                storeList.onNext(it)
+            }.addTo(disposables)
     }
 
     fun saveLocation(latLng: LatLng) {
