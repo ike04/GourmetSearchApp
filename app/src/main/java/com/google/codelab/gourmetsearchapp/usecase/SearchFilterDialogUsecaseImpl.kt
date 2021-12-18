@@ -1,5 +1,6 @@
 package com.google.codelab.gourmetsearchapp.usecase
 
+import com.google.codelab.gourmetsearchapp.model.Failure
 import com.google.codelab.gourmetsearchapp.model.FilterDataModel
 import com.google.codelab.gourmetsearchapp.repository.SearchDataManager
 import dagger.hilt.android.lifecycle.HiltViewModel

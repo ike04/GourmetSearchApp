@@ -1,6 +1,7 @@
 package com.google.codelab.gourmetsearchapp.usecase
 
 import com.google.codelab.gourmetsearchapp.Signal
+import com.google.codelab.gourmetsearchapp.model.Failure
 import com.google.codelab.gourmetsearchapp.repository.FavoriteDataManager
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Observable

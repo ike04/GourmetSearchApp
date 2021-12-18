@@ -1,10 +1,12 @@
 package com.google.codelab.gourmetsearchapp.viewmodel
 
 import com.google.codelab.gourmetsearchapp.Signal
+import com.google.codelab.gourmetsearchapp.model.Failure
 import com.google.codelab.gourmetsearchapp.model.FilterDataModel
 import com.google.codelab.gourmetsearchapp.usecase.SearchFilterDialogUsecase
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
+import io.reactivex.rxjava3.subjects.PublishSubject
 import org.junit.Before
 
 import org.junit.Assert.*
@@ -16,6 +18,8 @@ import org.mockito.kotlin.given
 class SearchFilterDialogViewModelTest {
     private lateinit var sut: SearchFilterDialogViewModel
 
+    private lateinit var anErrorSubject: PublishSubject<Failure>
+
     @Mock
     private lateinit var usecase: SearchFilterDialogUsecase
 
@@ -26,6 +30,8 @@ class SearchFilterDialogViewModelTest {
     @Before
     fun setUp() {
         MockitoAnnotations.openMocks(this)
+        anErrorSubject = PublishSubject.create()
+        given(usecase.errorSignal()).willReturn(anErrorSubject)
 
         sut = SearchFilterDialogViewModel(usecase)
     }

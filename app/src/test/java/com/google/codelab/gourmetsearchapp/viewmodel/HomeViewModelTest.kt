@@ -1,11 +1,13 @@
 package com.google.codelab.gourmetsearchapp.viewmodel
 
 import com.google.codelab.gourmetsearchapp.Signal
+import com.google.codelab.gourmetsearchapp.model.Failure
 import com.google.codelab.gourmetsearchapp.model.businessmodel.Store
 import com.google.codelab.gourmetsearchapp.model.businessmodel.StoresBusinessModel
 import com.google.codelab.gourmetsearchapp.usecase.HomeUsecase
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
+import io.reactivex.rxjava3.subjects.PublishSubject
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Before
@@ -16,6 +18,8 @@ import org.mockito.kotlin.given
 
 class HomeViewModelTest {
     private lateinit var sut: HomeViewModel
+
+    private lateinit var anErrorSubject: PublishSubject<Failure>
 
     @Mock
     private lateinit var usecase: HomeUsecase
@@ -51,6 +55,8 @@ class HomeViewModelTest {
     fun setUp() {
         MockitoAnnotations.openMocks(this)
 
+        anErrorSubject = PublishSubject.create()
+        given(usecase.errorSignal()).willReturn(anErrorSubject)
         sut = HomeViewModel(usecase)
     }
 

@@ -5,6 +5,7 @@ import com.google.codelab.gourmetsearchapp.Signal
 import com.google.codelab.gourmetsearchapp.model.businessmodel.StoresBusinessModel
 import com.google.codelab.gourmetsearchapp.usecase.HomeUsecase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import io.reactivex.rxjava3.kotlin.addTo
 import io.reactivex.rxjava3.kotlin.subscribeBy
 import io.reactivex.rxjava3.schedulers.Schedulers
 import io.reactivex.rxjava3.subjects.PublishSubject
@@ -52,7 +53,7 @@ class HomeViewModel @Inject constructor(
                     moreLoad.set(false)
                 }
                 storeList.onNext(it)
-            }
+            }.addTo(disposables)
     }
 
     fun resetPages() {

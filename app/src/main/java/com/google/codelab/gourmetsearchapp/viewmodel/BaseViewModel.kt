@@ -27,6 +27,12 @@ abstract class BaseViewModel constructor(
     val error: PublishSubject<Failure> = PublishSubject.create()
     val loadingSignal = ObservableBoolean(false)
 
+    init {
+        usecase.errorSignal()
+            .subscribeBy { error.onNext(it) }
+            .addTo(disposables)
+    }
+
     protected fun <T : Any> Single<T>.execute(onSuccess: (T) -> Unit, retry: () -> Unit) {
         this
             .subscribeOn(subscribeOnScheduler)
