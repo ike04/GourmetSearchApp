@@ -44,6 +44,7 @@ class MapsViewModelTest {
         val testObserver = sut.storeList.test()
         val showViewPagerObserver = sut.showViewPager
 
+        sut.setup()
         sut.fetchNearStores()
 
         testObserver.assertValue(aStoresBusinessModel).assertValueCount(1).assertNoErrors()
@@ -56,6 +57,7 @@ class MapsViewModelTest {
         val testObserver = sut.storeList.test()
         val showViewPagerObserver = sut.showViewPager
 
+        sut.setup()
         sut.fetchNearStores()
 
         testObserver.assertValue(aNoStoresBusinessModel).assertValueCount(1).assertNoErrors()
