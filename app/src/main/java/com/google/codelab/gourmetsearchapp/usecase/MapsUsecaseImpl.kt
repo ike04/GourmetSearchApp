@@ -8,6 +8,7 @@ import com.google.codelab.gourmetsearchapp.repository.FavoriteDataManager
 import com.google.codelab.gourmetsearchapp.repository.SearchDataManager
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.kotlin.Observables
+import io.reactivex.rxjava3.kotlin.Singles
 import io.reactivex.rxjava3.kotlin.addTo
 import io.reactivex.rxjava3.kotlin.subscribeBy
 import io.reactivex.rxjava3.schedulers.Schedulers
@@ -21,12 +22,12 @@ class MapsUsecaseImpl @Inject constructor(
     private val stores: PublishSubject<StoresBusinessModel> = PublishSubject.create()
 
     override fun fetchNearStores(startPage: Int) {
-        Observables.combineLatest(
-            repository.fetchNearStores(startPage).toObservable(),
-            favoriteRepository.fetchStoreIds().toObservable()
+        Singles.zip(
+            repository.fetchNearStores(startPage),
+            favoriteRepository.fetchStoreIds()
         )
             .subscribeBy(
-                onNext = { (remote, local) ->
+                onSuccess = { (remote, local) ->
                     val store = remote.store.map { store ->
                         val hasFavorite = local.contains(store.id)
                         store.copy(isFavorite = hasFavorite)
@@ -43,13 +44,9 @@ class MapsUsecaseImpl @Inject constructor(
 
     override fun getNearStores(): Observable<StoresBusinessModel> = stores.hide()
 
-    override fun saveLocation(latLng: LatLng) {
-        repository.saveLocation(latLng)
-    }
+    override fun saveLocation(latLng: LatLng) = repository.saveLocation(latLng)
 
-    override fun fetchFilterData() {
-        repository.fetchFilterData()
-    }
+    override fun fetchFilterData() = repository.fetchFilterData()
 
     override fun getFilterDataStream(): Observable<FilterDataModel> = repository.getFilterDataStream()
 }

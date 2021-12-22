@@ -62,6 +62,7 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
         binding.viewModel = viewModel
 
         setHasOptionsMenu(true)
+        viewModel.setup()
 
         return binding.root
     }
@@ -93,6 +94,7 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
                     mapMarkerPosition = MapUtils.addMarker(map, store, mapMarkerPosition)
                     storeList.add(store)
                 }
+                binding.storePager.adapter?.notifyDataSetChanged()
                 Toast.makeText(
                     requireContext(),
                     getString(R.string.around_store_count, storeList.size),
