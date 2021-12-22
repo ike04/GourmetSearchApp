@@ -2,7 +2,9 @@ package com.google.codelab.gourmetsearchapp.ext
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import com.google.android.material.snackbar.Snackbar
 import com.google.codelab.gourmetsearchapp.R
+import com.google.codelab.gourmetsearchapp.model.Failure
 
 fun Fragment.showFragment(fragmentManager: FragmentManager, setToRoot: Boolean = false) {
     if (setToRoot) {
@@ -18,4 +20,10 @@ fun Fragment.showFragment(fragmentManager: FragmentManager, setToRoot: Boolean =
             .addToBackStack(null)
             .commit()
     }
+}
+
+fun Fragment.showSnackBarWithAction(failure: Failure) {
+    Snackbar.make(this.requireView(), failure.message, Snackbar.LENGTH_LONG)
+        .setAction(R.string.retry) { failure.resolve() }
+        .show()
 }

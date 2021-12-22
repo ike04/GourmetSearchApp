@@ -12,6 +12,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.codelab.gourmetsearchapp.R
 import com.google.codelab.gourmetsearchapp.databinding.FragmentHomeBinding
 import com.google.codelab.gourmetsearchapp.ext.ContextExt.showAlertDialog
+import com.google.codelab.gourmetsearchapp.ext.showSnackBarWithAction
 import com.google.codelab.gourmetsearchapp.model.businessmodel.Store
 import com.google.codelab.gourmetsearchapp.view.webview.WebViewActivity
 import com.google.codelab.gourmetsearchapp.viewmodel.HomeViewModel
@@ -136,9 +137,7 @@ class HomeFragment : Fragment() {
 
         viewModel.error
             .subscribeBy { failure ->
-                Snackbar.make(view, failure.message, Snackbar.LENGTH_INDEFINITE)
-                    .setAction(R.string.retry) { failure.retry.invoke() }
-                    .show()
+                showSnackBarWithAction(failure)
             }.addTo(disposable)
 
         binding.recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {

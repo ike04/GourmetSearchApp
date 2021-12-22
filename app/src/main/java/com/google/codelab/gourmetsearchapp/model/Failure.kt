@@ -4,4 +4,8 @@ data class Failure(
     val error: Throwable,
     val message: Int,
     val retry: () -> Unit
-)
+) {
+    fun resolve() {
+        this.retry.invoke()
+    }
+}
