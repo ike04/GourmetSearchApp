@@ -20,9 +20,7 @@ class MapsViewModel @Inject constructor(
     val reset: PublishSubject<Signal> = PublishSubject.create()
     val showViewPager = ObservableBoolean(false)
 
-    fun fetchNearStores() {
-        usecase.fetchNearStores()
-
+    fun setup() {
         usecase.getNearStores()
             .subscribeBy {
                 if (it.store.isNotEmpty()) {
@@ -30,6 +28,10 @@ class MapsViewModel @Inject constructor(
                 }
                 storeList.onNext(it)
             }.addTo(disposables)
+    }
+
+    fun fetchNearStores() {
+        usecase.fetchNearStores()
     }
 
     fun saveLocation(latLng: LatLng) {

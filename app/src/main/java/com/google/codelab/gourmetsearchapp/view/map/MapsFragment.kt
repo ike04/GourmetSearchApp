@@ -20,6 +20,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.material.snackbar.Snackbar
 import com.google.codelab.gourmetsearchapp.R
 import com.google.codelab.gourmetsearchapp.databinding.FragmentMapsBinding
+import com.google.codelab.gourmetsearchapp.ext.showSnackBarWithAction
 import com.google.codelab.gourmetsearchapp.model.businessmodel.Store
 import com.google.codelab.gourmetsearchapp.util.MapUtils
 import com.google.codelab.gourmetsearchapp.view.webview.WebViewActivity
@@ -62,6 +63,7 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
         binding.viewModel = viewModel
 
         setHasOptionsMenu(true)
+        viewModel.setup()
 
         return binding.root
     }
@@ -93,6 +95,7 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
                     mapMarkerPosition = MapUtils.addMarker(map, store, mapMarkerPosition)
                     storeList.add(store)
                 }
+                binding.storePager.adapter?.notifyDataSetChanged()
                 Toast.makeText(
                     requireContext(),
                     getString(R.string.around_store_count, storeList.size),
@@ -112,9 +115,7 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
 
         viewModel.error
             .subscribeBy { failure ->
-                Snackbar.make(view, failure.message, Snackbar.LENGTH_INDEFINITE)
-                    .setAction(R.string.retry) { failure.retry.invoke() }
-                    .show()
+                showSnackBarWithAction(failure)
             }.addTo(disposable)
 
         parentViewModel.reselectItem
