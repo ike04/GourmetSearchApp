@@ -5,6 +5,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.codelab.gourmetsearchapp.Signal
 import com.google.codelab.gourmetsearchapp.model.businessmodel.StoresBusinessModel
 import com.google.codelab.gourmetsearchapp.usecase.MapsUsecase
+import com.google.codelab.gourmetsearchapp.view.map.SearchFilter
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.rxjava3.kotlin.addTo
 import io.reactivex.rxjava3.kotlin.subscribeBy
@@ -18,6 +19,7 @@ class MapsViewModel @Inject constructor(
 ) : BaseViewModel(usecase, Schedulers.trampoline(), Schedulers.trampoline()) {
     val storeList: PublishSubject<StoresBusinessModel> = PublishSubject.create()
     val reset: PublishSubject<Signal> = PublishSubject.create()
+    val zoom: PublishSubject<Float> = PublishSubject.create()
     val showViewPager = ObservableBoolean(false)
 
     fun setup() {
@@ -47,7 +49,10 @@ class MapsViewModel @Inject constructor(
 
         usecase.getFilterDataStream()
             .firstElement()
-            .subscribeBy { fetchNearStores() }
+            .subscribeBy {
+                zoom.onNext(SearchFilter.getId(it.searchRange).zoom)
+                fetchNearStores()
+            }
             .addTo(disposables)
     }
 
