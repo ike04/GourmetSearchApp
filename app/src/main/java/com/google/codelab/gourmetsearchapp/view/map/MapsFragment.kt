@@ -103,6 +103,13 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
                 ).show()
             }.addTo(disposable)
 
+        viewModel.zoom
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeBy {
+                map.moveCamera(CameraUpdateFactory.zoomTo(it))
+            }.addTo(disposable)
+
         viewModel.reset
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
@@ -196,7 +203,6 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
                         lastLocation = locationResult.lastLocation
 
                         val currentLatLng = LatLng(lastLocation.latitude, lastLocation.longitude)
-                        map.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 14.0f))
 
                         viewModel.saveLocation(currentLatLng)
                         if (storeList.isEmpty()) {
