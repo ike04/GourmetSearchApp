@@ -3,21 +3,22 @@ package com.google.codelab.gourmetsearchapp.view.map
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.location.Location
 import android.os.Bundle
 import android.view.*
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.viewpager2.widget.ViewPager2
-import com.google.android.gms.location.*
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationRequest
+import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
-import com.google.android.material.snackbar.Snackbar
 import com.google.codelab.gourmetsearchapp.R
 import com.google.codelab.gourmetsearchapp.databinding.FragmentMapsBinding
 import com.google.codelab.gourmetsearchapp.ext.showSnackBarWithAction
@@ -38,14 +39,26 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
     private lateinit var binding: FragmentMapsBinding
     private lateinit var map: GoogleMap
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
-    private lateinit var lastLocation: Location
 
     private val viewModel: MapsViewModel by activityViewModels()
     private val parentViewModel: MainViewModel by activityViewModels()
-    private var locationCallback: LocationCallback? = null
     private var mapMarkerPosition = 0
     private val storeList: MutableList<Store> = ArrayList()
     private val disposable = CompositeDisposable()
+
+    private val requestPermissionLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { granted ->
+        if (granted) {
+            enableLocation()
+        } else {
+            Toast.makeText(
+                requireContext(),
+                R.string.no_location_authorization,
+                Toast.LENGTH_LONG
+            ).show()
+        }
+    }
 
     companion object {
         private const val MY_PERMISSION_REQUEST_ACCESS_FINE_LOCATION = 1
@@ -86,6 +99,16 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
                     .putExtra(WebViewActivity.URL, storeList[position].urls)
                 startActivity(intent)
             }
+
+        viewModel.latLng
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeBy {
+                if (storeList.isEmpty()) {
+                    viewModel.fetchFilterData()
+                }
+                map.moveCamera(CameraUpdateFactory.newLatLng(it))
+            }.addTo(disposable)
 
         viewModel.storeList
             .subscribeOn(Schedulers.io())
@@ -144,7 +167,7 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
         if (MapUtils.hasLocationPermission(requireContext())) {
             enableLocation()
         } else {
-            MapUtils.requestLocationPermission(requireContext(), requireActivity())
+            requestPermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
         }
 
         map.setOnMarkerClickListener {
@@ -173,7 +196,6 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
         when (requestCode) {
             MY_PERMISSION_REQUEST_ACCESS_FINE_LOCATION -> {
                 if (permissions.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    // 許可された
                     enableLocation()
                 } else {
                     Toast.makeText(
@@ -196,26 +218,7 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
             val locationRequest = LocationRequest.create().apply {
                 priority = LocationRequest.PRIORITY_HIGH_ACCURACY
             }
-            locationCallback = object : LocationCallback() {
-                override fun onLocationResult(locationResult: LocationResult?) {
-                    locationResult?.let { super.onLocationResult(it) }
-                    locationResult?.lastLocation?.let {
-                        lastLocation = locationResult.lastLocation
-
-                        val currentLatLng = LatLng(lastLocation.latitude, lastLocation.longitude)
-
-                        viewModel.saveLocation(currentLatLng)
-                        if (storeList.isEmpty()) {
-                            viewModel.fetchFilterData()
-                        }
-                    }
-                }
-            }
-            fusedLocationProviderClient.requestLocationUpdates(
-                locationRequest,
-                locationCallback!!,
-                null
-            )
+            viewModel.getLocation(locationRequest, fusedLocationProviderClient)
         }
     }
 
@@ -231,6 +234,11 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
             }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        viewModel.stopLocationUpdates(fusedLocationProviderClient)
     }
 
     override fun onDestroy() {
