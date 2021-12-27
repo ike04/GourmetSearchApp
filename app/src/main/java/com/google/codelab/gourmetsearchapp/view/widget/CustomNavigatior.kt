@@ -1,4 +1,4 @@
-package com.google.codelab.gourmetsearchapp.view
+package com.google.codelab.gourmetsearchapp.view.widget
 
 import android.content.Context
 import android.os.Bundle

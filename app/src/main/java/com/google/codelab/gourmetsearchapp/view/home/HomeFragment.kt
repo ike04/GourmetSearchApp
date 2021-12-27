@@ -14,7 +14,7 @@ import com.google.codelab.gourmetsearchapp.R
 import com.google.codelab.gourmetsearchapp.databinding.FragmentHomeBinding
 import com.google.codelab.gourmetsearchapp.ext.showSnackBarWithAction
 import com.google.codelab.gourmetsearchapp.model.businessmodel.Store
-import com.google.codelab.gourmetsearchapp.view.GeneralDialogFragment
+import com.google.codelab.gourmetsearchapp.view.widget.GeneralDialogFragment
 import com.google.codelab.gourmetsearchapp.view.webview.WebViewActivity
 import com.google.codelab.gourmetsearchapp.viewmodel.HomeViewModel
 import com.google.codelab.gourmetsearchapp.viewmodel.MainViewModel
