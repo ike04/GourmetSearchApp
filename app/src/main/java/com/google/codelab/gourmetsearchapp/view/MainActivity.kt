@@ -11,6 +11,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.codelab.gourmetsearchapp.R
 import com.google.codelab.gourmetsearchapp.databinding.ActivityMainBinding
+import com.google.codelab.gourmetsearchapp.view.widget.OnBackPressHandler
 import com.google.codelab.gourmetsearchapp.viewmodel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 

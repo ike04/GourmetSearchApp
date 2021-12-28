@@ -2,6 +2,7 @@ package com.google.codelab.gourmetsearchapp.usecase
 
 import com.google.codelab.gourmetsearchapp.R
 import com.google.codelab.gourmetsearchapp.model.Failure
+import com.google.codelab.gourmetsearchapp.model.NoLocationPermissionException
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Scheduler
@@ -40,6 +41,7 @@ abstract class BaseUsecase constructor(
         return when (this) {
             is HttpException -> toMessage()
             is UnknownHostException -> R.string.error_offline
+            is NoLocationPermissionException -> R.string.no_location_authorization
             else -> R.string.error_unexpected
         }
     }

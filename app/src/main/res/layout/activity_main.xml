@@ -19,7 +19,7 @@
 
     <fragment
         android:id="@+id/nav_host_fragment_activity_main"
-        android:name="com.google.codelab.gourmetsearchapp.view.CustomNavHostFragment"
+        android:name="com.google.codelab.gourmetsearchapp.view.widget.CustomNavHostFragment"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:defaultNavHost="true"

@@ -9,3 +9,5 @@ data class Failure(
         this.retry.invoke()
     }
 }
+
+class NoLocationPermissionException : Throwable()

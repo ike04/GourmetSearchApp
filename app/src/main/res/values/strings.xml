@@ -21,7 +21,7 @@
     <!--    map              -->
     <string name="no_result_near_restaurant">検索条件にあったレストランが見つかりませんでした。</string>
     <string name="no_result_favorite_restaurant">お気に入り登録しているレストランがありません。\n気になるレストランを登録してみましょう！</string>
-    <string name="no_location_authorization">現在地は表示できません</string>
+    <string name="no_location_authorization">アプリの位置情報がオフのため現在地を取得できません。</string>
     <string name="no_locations_title">位置情報がオフになっています。</string>
     <string name="no_locations_message">位置情報がオフになっているため、現在地を取得できません。</string>
     <string name="around_store_count">周辺のレストランが%1$d件見つかりました</string>
@@ -62,10 +62,15 @@
     <string name="text_add_favorite">お気に入りに追加しました</string>
     <string name="text_delete_favorite">お気に入りから削除しました</string>
 
+    <!--   Dialog            -->
+    <string name="text_dialog_ok">OK</string>
+    <string name="text_dialog_cancel">Cancel</string>
+    <string name="text_open_app_settings">アプリの設定を開く</string>
+
     <!--    error message    -->
     <string name="error_message_default"></string>
-    <string name="error_message_404"></string>
-    <string name="error_message_500"></string>
+    <string name="error_message_404">該当するデータが見つかりませんでした。</string>
+    <string name="error_message_500">通信にエラーが発生しました。時間をおいて再度ご確認ください。</string>
     <string name="error_offline">ネットワークに接続できません。</string>
     <string name="error_unexpected">予期せぬエラーが発生しました。</string>
     <string name="retry">retry</string>

@@ -1,19 +1,20 @@
 package com.google.codelab.gourmetsearchapp.view.home
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.provider.Settings
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.snackbar.Snackbar
 import com.google.codelab.gourmetsearchapp.R
 import com.google.codelab.gourmetsearchapp.databinding.FragmentHomeBinding
-import com.google.codelab.gourmetsearchapp.ext.ContextExt.showAlertDialog
 import com.google.codelab.gourmetsearchapp.ext.showSnackBarWithAction
 import com.google.codelab.gourmetsearchapp.model.businessmodel.Store
+import com.google.codelab.gourmetsearchapp.view.widget.GeneralDialogFragment
 import com.google.codelab.gourmetsearchapp.view.webview.WebViewActivity
 import com.google.codelab.gourmetsearchapp.viewmodel.HomeViewModel
 import com.google.codelab.gourmetsearchapp.viewmodel.MainViewModel
@@ -84,11 +85,22 @@ class HomeFragment : Fragment() {
                 if (hasLocation) {
                     viewModel.fetchStores(true)
                 } else {
-                    requireContext().showAlertDialog(
-                        R.string.no_locations_title,
-                        R.string.no_locations_message,
-                        this
-                    )
+                    GeneralDialogFragment.Builder.from(this)
+                        .setTitle(R.string.no_locations_title)
+                        .setMessage(R.string.no_locations_message)
+                        .setPositiveButton(R.string.text_open_app_settings) {
+                            val intent = Intent()
+                            intent.action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
+                            val uri = Uri.fromParts(
+                                "package",
+                                requireContext().packageName,
+                                null
+                            )
+                            intent.data = uri
+                            startActivity(intent)
+                        }
+                        .build()
+                        .show(childFragmentManager, "")
                 }
             }.addTo(disposable)
 

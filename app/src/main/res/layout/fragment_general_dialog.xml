@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tool="http://schemas.android.com/tools"
+    >
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+        <TextView
+            android:id="@+id/general_dialog_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/l_spacing"
+            android:layout_marginTop="@dimen/m_spacing"
+            android:layout_marginEnd="@dimen/l_spacing"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tool:text="タイトル"
+            />
+
+        <TextView
+            android:id="@+id/general_dialog_message"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/l_spacing"
+            android:layout_marginTop="@dimen/m_spacing"
+            android:layout_marginEnd="@dimen/l_spacing"
+            android:textColor="@color/gray"
+            android:textSize="13sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/general_dialog_title"
+            tool:text="メッセージ"
+            />
+
+        <Button
+            android:id="@+id/cancel_button"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="110dp"
+            android:layout_height="36dp"
+            android:layout_marginTop="@dimen/l_spacing"
+            android:layout_marginEnd="@dimen/xs_spacing"
+            android:layout_marginBottom="@dimen/xs_spacing"
+            android:padding="@dimen/xs_spacing"
+            android:text="@string/text_dialog_cancel"
+            android:textColor="@color/teal_200"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/ok_button"
+            app:layout_constraintTop_toBottomOf="@id/general_dialog_message"
+            />
+
+        <Button
+            android:id="@+id/ok_button"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="110dp"
+            android:layout_height="36dp"
+            android:layout_marginTop="@dimen/l_spacing"
+            android:layout_marginEnd="@dimen/xs_spacing"
+            android:layout_marginBottom="@dimen/xs_spacing"
+            android:padding="@dimen/xs_spacing"
+            android:text="@string/text_dialog_ok"
+            android:textColor="@color/teal_200"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/general_dialog_message"
+            />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
