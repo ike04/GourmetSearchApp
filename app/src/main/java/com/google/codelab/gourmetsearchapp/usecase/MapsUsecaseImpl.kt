@@ -54,10 +54,11 @@ class MapsUsecaseImpl @Inject constructor(
 
     override fun getLocation(fusedLocationProviderClient: FusedLocationProviderClient) {
         locationDataManager.fetchLocation(fusedLocationProviderClient)
-            .subscribeBy(onError = {
-                error.onNext(
-                    Failure(it, it.toMessage()) { getLocation(fusedLocationProviderClient) })
-            })
+            .subscribeBy(
+                onError = {
+                    error.onNext(
+                        Failure(it, it.toMessage()) { getLocation(fusedLocationProviderClient) })
+                })
             .addTo(disposables)
     }
 
