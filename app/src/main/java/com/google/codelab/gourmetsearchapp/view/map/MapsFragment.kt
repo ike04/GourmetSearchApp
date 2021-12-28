@@ -1,6 +1,7 @@
 package com.google.codelab.gourmetsearchapp.view.map
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
@@ -50,7 +51,7 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
         ActivityResultContracts.RequestPermission()
     ) { granted ->
         if (granted) {
-            enableLocation()
+            viewModel.getLocation(fusedLocationProviderClient)
         } else {
             Toast.makeText(
                 requireContext(),
@@ -61,7 +62,6 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
     }
 
     companion object {
-        private const val MY_PERMISSION_REQUEST_ACCESS_FINE_LOCATION = 1
         fun newInstance(): MapsFragment {
             return MapsFragment()
         }
@@ -81,6 +81,7 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
         return binding.root
     }
 
+    @SuppressLint("MissingPermission")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val mapFragment =
@@ -108,6 +109,7 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
                     viewModel.fetchFilterData()
                 }
                 map.moveCamera(CameraUpdateFactory.newLatLng(it))
+                map.isMyLocationEnabled = true
             }.addTo(disposable)
 
         viewModel.storeList
@@ -165,7 +167,7 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
     override fun onMapReady(googleMap: GoogleMap) {
         map = googleMap
         if (MapUtils.hasLocationPermission(requireContext())) {
-            enableLocation()
+            viewModel.getLocation(fusedLocationProviderClient)
         } else {
             requestPermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
         }
@@ -185,41 +187,6 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
                 }
             }
         })
-    }
-
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        when (requestCode) {
-            MY_PERMISSION_REQUEST_ACCESS_FINE_LOCATION -> {
-                if (permissions.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    enableLocation()
-                } else {
-                    Toast.makeText(
-                        requireContext(),
-                        R.string.no_location_authorization,
-                        Toast.LENGTH_LONG
-                    ).show()
-                }
-            }
-        }
-    }
-
-    private fun enableLocation() {
-        if (ActivityCompat.checkSelfPermission(
-                requireContext(),
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) == PackageManager.PERMISSION_GRANTED
-        ) {
-            map.isMyLocationEnabled = true
-            val locationRequest = LocationRequest.create().apply {
-                priority = LocationRequest.PRIORITY_HIGH_ACCURACY
-            }
-            viewModel.getLocation(locationRequest, fusedLocationProviderClient)
-        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

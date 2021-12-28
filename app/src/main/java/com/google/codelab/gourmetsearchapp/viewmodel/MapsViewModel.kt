@@ -41,28 +41,15 @@ class MapsViewModel @Inject constructor(
             }.addTo(disposables)
     }
 
-    @SuppressLint("MissingPermission")
     fun getLocation(
-        locationRequest: LocationRequest,
         fusedLocationProviderClient: FusedLocationProviderClient
     ) {
-        locationCallback = object : LocationCallback() {
-            override fun onLocationResult(locationResult: LocationResult?) {
-                locationResult?.let { super.onLocationResult(it) }
-                locationResult?.lastLocation?.let { lastLocation ->
-                    val currentLatLng = LatLng(lastLocation.latitude, lastLocation.longitude)
-                    saveLocation(currentLatLng)
-                    latLng.onNext(currentLatLng)
-                }
-            }
-        }
-        locationCallback?.let {
-            fusedLocationProviderClient.requestLocationUpdates(
-                locationRequest,
-                it,
-                Looper.getMainLooper()
-            )
-        }
+        usecase.getLocation(fusedLocationProviderClient)
+
+        usecase.getLocationStream()
+            .doOnNext { saveLocation(it) }
+            .subscribeBy { latLng.onNext(it) }
+            .addTo(disposables)
     }
 
     fun stopLocationUpdates(fusedLocationProviderClient: FusedLocationProviderClient) {
