@@ -1,12 +1,8 @@
 package com.google.codelab.gourmetsearchapp.viewmodel
 
-import android.annotation.SuppressLint
-import android.os.Looper
 import androidx.databinding.ObservableBoolean
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationCallback
-import com.google.android.gms.location.LocationRequest
-import com.google.android.gms.location.LocationResult
 import com.google.android.gms.maps.model.LatLng
 import com.google.codelab.gourmetsearchapp.Signal
 import com.google.codelab.gourmetsearchapp.model.businessmodel.StoresBusinessModel
@@ -34,9 +30,7 @@ class MapsViewModel @Inject constructor(
     fun setup() {
         usecase.getNearStores()
             .subscribeBy {
-                if (it.store.isNotEmpty()) {
-                    showViewPager.set(true)
-                }
+                showViewPager.set(it.store.isNotEmpty())
                 storeList.onNext(it)
             }.addTo(disposables)
     }
@@ -60,7 +54,7 @@ class MapsViewModel @Inject constructor(
         usecase.fetchNearStores()
     }
 
-    fun saveLocation(latLng: LatLng) {
+    private fun saveLocation(latLng: LatLng) {
         usecase.saveLocation(latLng)
     }
 

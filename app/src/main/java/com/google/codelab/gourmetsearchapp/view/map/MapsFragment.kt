@@ -172,6 +172,12 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
             requestPermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
         }
 
+        map.setOnMyLocationButtonClickListener {
+            viewModel.resetStores()
+            viewModel.fetchNearStores()
+            true
+        }
+
         map.setOnMarkerClickListener {
             binding.storePager.setCurrentItem(it.tag as Int, true)
             true
