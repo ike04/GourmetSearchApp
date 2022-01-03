@@ -19,7 +19,7 @@ import org.mockito.kotlin.given
 class HomeViewModelTest {
     private lateinit var sut: HomeViewModel
 
-    private lateinit var anErrorSubject: PublishSubject<Failure>
+    private lateinit var anErrorSubject: PublishSubject<Pair<Throwable, () -> Unit>>
 
     @Mock
     private lateinit var usecase: HomeUsecase
@@ -57,6 +57,7 @@ class HomeViewModelTest {
 
         anErrorSubject = PublishSubject.create()
         given(usecase.errorSignal()).willReturn(anErrorSubject)
+        given(usecase.loadingSignal()).willReturn(Observable.just(false))
         sut = HomeViewModel(usecase)
     }
 

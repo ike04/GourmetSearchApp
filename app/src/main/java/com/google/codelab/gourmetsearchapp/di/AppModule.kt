@@ -7,7 +7,6 @@ import com.google.codelab.gourmetsearchapp.repository.SearchDataManagerImpl
 import com.google.codelab.gourmetsearchapp.usecase.*
 import dagger.Binds
 import dagger.Module
-import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton

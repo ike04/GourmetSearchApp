@@ -33,17 +33,15 @@ class MapsViewModel @Inject constructor(
                 showViewPager.set(it.store.isNotEmpty())
                 storeList.onNext(it)
             }.addTo(disposables)
-    }
-
-    fun getLocation(
-        fusedLocationProviderClient: FusedLocationProviderClient
-    ) {
-        usecase.getLocation(fusedLocationProviderClient)
 
         usecase.getLocationStream()
             .doOnNext { saveLocation(it) }
             .subscribeBy { latLng.onNext(it) }
             .addTo(disposables)
+    }
+
+    fun getLocation(fusedLocationProviderClient: FusedLocationProviderClient) {
+        usecase.getLocation(fusedLocationProviderClient)
     }
 
     fun stopLocationUpdates(fusedLocationProviderClient: FusedLocationProviderClient) {

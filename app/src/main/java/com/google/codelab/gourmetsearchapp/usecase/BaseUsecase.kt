@@ -1,58 +1,39 @@
 package com.google.codelab.gourmetsearchapp.usecase
 
-import com.google.codelab.gourmetsearchapp.R
-import com.google.codelab.gourmetsearchapp.model.Failure
-import com.google.codelab.gourmetsearchapp.model.NoLocationPermissionException
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Scheduler
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.kotlin.addTo
 import io.reactivex.rxjava3.kotlin.subscribeBy
-import io.reactivex.rxjava3.schedulers.Schedulers
 import io.reactivex.rxjava3.subjects.PublishSubject
-import retrofit2.HttpException
-import java.net.UnknownHostException
 import javax.inject.Named
 
 abstract class BaseUsecase constructor(
     @Named("subscribeOnScheduler") private val subscribeOnScheduler: Scheduler,
     @Named("observeOnScheduler") private val observeOnScheduler: Scheduler
 ): Usecase {
-    val error: PublishSubject<Failure> = PublishSubject.create()
+    val error: PublishSubject<Pair<Throwable, () -> Unit>> = PublishSubject.create()
+    val loadingTrigger: PublishSubject<Boolean> = PublishSubject.create()
     protected val disposables = CompositeDisposable()
 
     protected fun <T : Any> Single<T>.execute(onSuccess: (T) -> Unit, retry: () -> Unit) {
         this
             .subscribeOn(subscribeOnScheduler)
             .observeOn(observeOnScheduler)
+            .doOnSubscribe { loadingTrigger.onNext(true) }
+            .doFinally { loadingTrigger.onNext(false) }
             .subscribeBy(
                 onSuccess = onSuccess,
                 onError = {
-                    error.onNext(Failure(it, it.toMessage(), retry))
+                    error.onNext(Pair(it, retry))
                 }
             ).addTo(disposables)
     }
 
-    override fun errorSignal(): Observable<Failure> = error.hide()
+    override fun loadingSignal(): Observable<Boolean> = loadingTrigger.hide()
 
-    protected fun Throwable.toMessage(): Int {
-        return when (this) {
-            is HttpException -> toMessage()
-            is UnknownHostException -> R.string.error_offline
-            is NoLocationPermissionException -> R.string.no_location_authorization
-            else -> R.string.error_unexpected
-        }
-    }
-
-    private fun HttpException.toMessage(): Int {
-        return when (code()) {
-            404 -> R.string.error_message_404
-            500 -> R.string.error_message_500
-            else -> R.string.error_message_default
-        }
-    }
+    override fun errorSignal(): Observable<Pair<Throwable, () -> Unit>> = error.hide()
 
     override fun dispose() {
         disposables.clear()

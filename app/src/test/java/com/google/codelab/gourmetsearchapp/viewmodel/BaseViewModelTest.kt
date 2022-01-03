@@ -1,6 +1,5 @@
 package com.google.codelab.gourmetsearchapp.viewmodel
 
-import com.google.codelab.gourmetsearchapp.model.Failure
 import com.google.codelab.gourmetsearchapp.usecase.BaseUsecase
 import com.google.codelab.gourmetsearchapp.usecase.Usecase
 import io.reactivex.rxjava3.schedulers.Schedulers
@@ -20,7 +19,7 @@ class BaseViewModelTest {
     private lateinit var sut: BaseViewModelImpl
     private lateinit var usecase: BaseUsecase
 
-    private lateinit var anErrorSubject: PublishSubject<Failure>
+    private lateinit var anErrorSubject: PublishSubject<Pair<Throwable, () -> Unit>>
 
     @Before
     fun setUp() {

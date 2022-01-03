@@ -3,17 +3,14 @@ package com.google.codelab.gourmetsearchapp.view.map
 import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.*
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -23,6 +20,8 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.codelab.gourmetsearchapp.R
 import com.google.codelab.gourmetsearchapp.databinding.FragmentMapsBinding
 import com.google.codelab.gourmetsearchapp.ext.showSnackBarWithAction
+import com.google.codelab.gourmetsearchapp.ext.showSnackBarWithActionInfinity
+import com.google.codelab.gourmetsearchapp.model.NoLocationPermissionException
 import com.google.codelab.gourmetsearchapp.model.businessmodel.Store
 import com.google.codelab.gourmetsearchapp.util.MapUtils
 import com.google.codelab.gourmetsearchapp.view.webview.WebViewActivity
@@ -53,11 +52,9 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
         if (granted) {
             viewModel.getLocation(fusedLocationProviderClient)
         } else {
-            Toast.makeText(
-                requireContext(),
-                R.string.no_location_authorization,
-                Toast.LENGTH_LONG
-            ).show()
+            showSnackBarWithActionInfinity(R.string.no_locations_message) {
+                checkLocationPermission()
+            }
         }
     }
 
@@ -147,7 +144,10 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
 
         viewModel.error
             .subscribeBy { failure ->
-                showSnackBarWithAction(failure)
+                when (failure.error) {
+                    is NoLocationPermissionException -> checkLocationPermission()
+                    else -> showSnackBarWithAction(failure)
+                }
             }.addTo(disposable)
 
         parentViewModel.reselectItem
@@ -166,11 +166,8 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
 
     override fun onMapReady(googleMap: GoogleMap) {
         map = googleMap
-        if (MapUtils.hasLocationPermission(requireContext())) {
-            viewModel.getLocation(fusedLocationProviderClient)
-        } else {
-            requestPermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
-        }
+
+        viewModel.getLocation(fusedLocationProviderClient)
 
         map.setOnMyLocationButtonClickListener {
             viewModel.resetStores()
@@ -193,6 +190,10 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
                 }
             }
         })
+    }
+
+    private fun checkLocationPermission() {
+        requestPermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

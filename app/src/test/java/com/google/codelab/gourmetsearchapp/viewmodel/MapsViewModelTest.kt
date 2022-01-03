@@ -11,8 +11,7 @@ import com.google.codelab.gourmetsearchapp.model.businessmodel.StoresBusinessMod
 import com.google.codelab.gourmetsearchapp.usecase.MapsUsecase
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.subjects.PublishSubject
-import org.junit.Assert.assertEquals
-import org.junit.Assert.assertTrue
+import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mock
@@ -22,7 +21,7 @@ import org.mockito.kotlin.given
 class MapsViewModelTest {
     private lateinit var sut: MapsViewModel
 
-    private lateinit var anErrorSubject: PublishSubject<Failure>
+    private lateinit var anErrorSubject: PublishSubject<Pair<Throwable, () -> Unit>>
 
     @Mock
     private lateinit var usecase: MapsUsecase
@@ -36,7 +35,6 @@ class MapsViewModelTest {
         private val aStoresBusinessModel = StoresBusinessModel(totalPages = 1, getPages = 1, store = listOf(Store(id = "J999999999", name = "レストラン", lat = 10.0, lng = 10.0, budget = "2000円", genre = "イタリアン", photo = "", urls = "", isFavorite = false)))
         private val aNoStoresBusinessModel = StoresBusinessModel(totalPages = 0, getPages = 0, store = emptyList())
         private val aFilterDataModel = FilterDataModel(searchRange = 1, genre = "イタリアン", coupon = 0, drink = 0, privateRoom = 0, wifi = 0, lunch = 0, keyword = "")
-
     }
 
     @Before
@@ -45,6 +43,7 @@ class MapsViewModelTest {
 
         anErrorSubject = PublishSubject.create()
         given(usecase.errorSignal()).willReturn(anErrorSubject)
+        given(usecase.loadingSignal()).willReturn(Observable.just(false))
         sut = MapsViewModel(usecase)
     }
 
@@ -65,6 +64,7 @@ class MapsViewModelTest {
     @Test
     fun testFetchNearStores() {
         given(usecase.getNearStores()).willReturn(Observable.just(aStoresBusinessModel))
+        given(usecase.getLocationStream()).willReturn(Observable.just(aLatLng))
         val testObserver = sut.storeList.test()
         val showViewPagerObserver = sut.showViewPager
 
@@ -78,6 +78,7 @@ class MapsViewModelTest {
     @Test
     fun testFetchNearStores_NoStores() {
         given(usecase.getNearStores()).willReturn(Observable.just(aNoStoresBusinessModel))
+        given(usecase.getLocationStream()).willReturn(Observable.just(aLatLng))
         val testObserver = sut.storeList.test()
         val showViewPagerObserver = sut.showViewPager
 
@@ -85,7 +86,7 @@ class MapsViewModelTest {
         sut.fetchNearStores()
 
         testObserver.assertValue(aNoStoresBusinessModel).assertValueCount(1).assertNoErrors()
-        assertEquals(showViewPagerObserver.get(), false)
+        assertFalse(showViewPagerObserver.get())
     }
 
     @Test

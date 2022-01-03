@@ -4,15 +4,14 @@ import androidx.databinding.ObservableBoolean
 import androidx.lifecycle.ViewModel
 import com.google.codelab.gourmetsearchapp.R
 import com.google.codelab.gourmetsearchapp.model.Failure
+import com.google.codelab.gourmetsearchapp.model.NoLocationPermissionException
 import com.google.codelab.gourmetsearchapp.usecase.Usecase
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Scheduler
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.kotlin.addTo
 import io.reactivex.rxjava3.kotlin.subscribeBy
-import io.reactivex.rxjava3.schedulers.Schedulers
 import io.reactivex.rxjava3.subjects.PublishSubject
 import retrofit2.HttpException
 import java.net.UnknownHostException
@@ -29,7 +28,11 @@ abstract class BaseViewModel constructor(
 
     init {
         usecase.errorSignal()
-            .subscribeBy { error.onNext(it) }
+            .subscribeBy { error.onNext(Failure(it.first, it.first.toMessage(), it.second)) }
+            .addTo(disposables)
+
+        usecase.loadingSignal()
+            .subscribeBy { loadingSignal.set(it) }
             .addTo(disposables)
     }
 
@@ -65,6 +68,7 @@ abstract class BaseViewModel constructor(
         return when (this) {
             is HttpException -> toMessage()
             is UnknownHostException -> R.string.error_offline
+            is NoLocationPermissionException -> R.string.no_location_authorization
             else -> R.string.error_unexpected
         }
     }

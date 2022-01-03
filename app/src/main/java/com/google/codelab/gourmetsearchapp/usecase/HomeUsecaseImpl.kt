@@ -1,13 +1,10 @@
 package com.google.codelab.gourmetsearchapp.usecase
 
-import com.google.codelab.gourmetsearchapp.model.Failure
 import com.google.codelab.gourmetsearchapp.model.businessmodel.StoresBusinessModel
 import com.google.codelab.gourmetsearchapp.repository.FavoriteDataManager
 import com.google.codelab.gourmetsearchapp.repository.SearchDataManager
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
-import io.reactivex.rxjava3.kotlin.addTo
-import io.reactivex.rxjava3.kotlin.subscribeBy
 import io.reactivex.rxjava3.schedulers.Schedulers
 import io.reactivex.rxjava3.subjects.PublishSubject
 import javax.inject.Inject
@@ -35,13 +32,13 @@ class HomeUsecaseImpl @Inject constructor(
         }
         if (favoriteIds.isEmpty()) {
             favoriteRepository.fetchStoreIds()
-                .subscribeBy { storeIds ->
-                    if (storeIds.isEmpty()) {
-                        // TODO
-                    }
-                    favoriteIds.addAll(storeIds)
-                    fetchStores(createStoreIdQuery(storeIds))
-                }.addTo(disposables)
+                .execute(
+                    onSuccess = { storeIds ->
+                        favoriteIds.addAll(storeIds)
+                        fetchStores(createStoreIdQuery(storeIds))
+                    },
+                    retry = { fetchFavoriteStores(forceUpdate) }
+                )
         } else {
             fetchStores(createStoreIdQuery(favoriteIds))
         }
@@ -79,5 +76,4 @@ class HomeUsecaseImpl @Inject constructor(
 
     override fun getStoreIdsStream(): Observable<List<String>> =
         favoriteRepository.getStoreIdsStream()
-
 }

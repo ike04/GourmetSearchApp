@@ -16,7 +16,7 @@ import org.mockito.kotlin.given
 class StoreWebViewViewModelTest {
     private lateinit var sut: StoreWebViewViewModel
 
-    private lateinit var anErrorSubject: PublishSubject<Failure>
+    private lateinit var anErrorSubject: PublishSubject<Pair<Throwable, () -> Unit>>
 
     @Mock
     private lateinit var usecase: StoreWebViewUsecase
@@ -30,6 +30,7 @@ class StoreWebViewViewModelTest {
         MockitoAnnotations.openMocks(this)
         anErrorSubject = PublishSubject.create()
         given(usecase.errorSignal()).willReturn(anErrorSubject)
+        given(usecase.loadingSignal()).willReturn(Observable.just(false))
 
         sut = StoreWebViewViewModel(usecase)
     }

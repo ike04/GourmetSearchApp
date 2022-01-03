@@ -18,7 +18,7 @@ import org.mockito.kotlin.given
 class SearchFilterDialogViewModelTest {
     private lateinit var sut: SearchFilterDialogViewModel
 
-    private lateinit var anErrorSubject: PublishSubject<Failure>
+    private lateinit var anErrorSubject: PublishSubject<Pair<Throwable, () -> Unit>>
 
     @Mock
     private lateinit var usecase: SearchFilterDialogUsecase
@@ -32,6 +32,7 @@ class SearchFilterDialogViewModelTest {
         MockitoAnnotations.openMocks(this)
         anErrorSubject = PublishSubject.create()
         given(usecase.errorSignal()).willReturn(anErrorSubject)
+        given(usecase.loadingSignal()).willReturn(Observable.just(false))
 
         sut = SearchFilterDialogViewModel(usecase)
     }

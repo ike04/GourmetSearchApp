@@ -2,7 +2,6 @@ package com.google.codelab.gourmetsearchapp.usecase
 
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.maps.model.LatLng
-import com.google.codelab.gourmetsearchapp.model.Failure
 import com.google.codelab.gourmetsearchapp.model.FilterDataModel
 import com.google.codelab.gourmetsearchapp.model.businessmodel.StoresBusinessModel
 import com.google.codelab.gourmetsearchapp.repository.FavoriteDataManager
@@ -27,21 +26,17 @@ class MapsUsecaseImpl @Inject constructor(
         Singles.zip(
             repository.fetchNearStores(startPage),
             favoriteRepository.fetchStoreIds()
-        )
-            .subscribeBy(
-                onSuccess = { (remote, local) ->
-                    val store = remote.store.map { store ->
-                        val hasFavorite = local.contains(store.id)
-                        store.copy(isFavorite = hasFavorite)
-                    }
-                    val latestStores = remote.copy(store = store)
-                    stores.onNext(latestStores)
-                },
-                onError = {
-                    error.onNext(Failure(it, it.toMessage()) { fetchNearStores(startPage) })
+        ).execute(
+            onSuccess = { (remote, local) ->
+                val store = remote.store.map { store ->
+                    val hasFavorite = local.contains(store.id)
+                    store.copy(isFavorite = hasFavorite)
                 }
-            )
-            .addTo(disposables)
+                val latestStores = remote.copy(store = store)
+                stores.onNext(latestStores)
+            },
+            retry = { fetchNearStores(startPage) }
+        )
     }
 
     override fun getNearStores(): Observable<StoresBusinessModel> = stores.hide()
@@ -56,9 +51,9 @@ class MapsUsecaseImpl @Inject constructor(
         locationDataManager.fetchLocation(fusedLocationProviderClient)
             .subscribeBy(
                 onError = {
-                    error.onNext(
-                        Failure(it, it.toMessage()) { getLocation(fusedLocationProviderClient) })
-                })
+                    error.onNext(Pair(it) { getLocation(fusedLocationProviderClient) })
+                }
+            )
             .addTo(disposables)
     }
 
