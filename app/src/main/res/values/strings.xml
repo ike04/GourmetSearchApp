@@ -66,6 +66,7 @@
     <string name="text_dialog_ok">OK</string>
     <string name="text_dialog_cancel">Cancel</string>
     <string name="text_open_app_settings">アプリの設定を開く</string>
+    <string name="text_location_permission">設定</string>
 
     <!--    error message    -->
     <string name="error_message_default"></string>

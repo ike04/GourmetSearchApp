@@ -27,3 +27,9 @@ fun Fragment.showSnackBarWithAction(failure: Failure) {
         .setAction(R.string.retry) { failure.resolve() }
         .show()
 }
+
+fun Fragment.showSnackBarWithActionInfinity(message: Int, action :() -> Unit) {
+    Snackbar.make(this.requireView(), message, Snackbar.LENGTH_INDEFINITE)
+        .setAction(R.string.text_location_permission) { action.invoke() }
+        .show()
+}

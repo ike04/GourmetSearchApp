@@ -28,7 +28,7 @@ abstract class BaseViewModel constructor(
 
     init {
         usecase.errorSignal()
-            .subscribeBy { error.onNext(Failure(it.first, it.first.toMessage()) { it.second }) }
+            .subscribeBy { error.onNext(Failure(it.first, it.first.toMessage(), it.second)) }
             .addTo(disposables)
 
         usecase.loadingSignal()

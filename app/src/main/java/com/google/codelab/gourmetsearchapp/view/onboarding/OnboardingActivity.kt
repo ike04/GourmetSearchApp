@@ -33,7 +33,6 @@ class OnboardingActivity : AppCompatActivity() {
         val isFromSplash = intent.getBooleanExtra(SplashActivity.FROM_SPLASH, false)
 
         supportActionBar?.hide()
-        MapUtils.requestLocationPermission(this, this)
         setContentView(binding.root)
         setOnboarding()
         setupViews()
