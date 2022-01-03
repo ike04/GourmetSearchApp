@@ -27,7 +27,7 @@ HotpepperグルメのAPI(https://webservice.recruit.co.jp/doc/hotpepper/referenc
    
 |onboarding|  list  | 
 | ---- | ---- | 
-|  <img src="https://user-images.githubusercontent.com/48178913/136657217-48525c2b-f5b3-4822-b24f-4658df061739.gif" >  | <img src="https://user-images.githubusercontent.com/48178913/136657308-bb54e688-44e6-4f32-ae1d-130099b1cb23.gif">  | 
+|  <img src="https://user-images.githubusercontent.com/48178913/136657217-48525c2b-f5b3-4822-b24f-4658df061739.gif" >  | <img src="https://user-images.githubusercontent.com/48178913/147894907-31c7db5c-372a-4a8b-8bf8-a27b0685d3d2.gif">  | 
 |  map  |  search filter  |
 | ---- | ---- |
 |  <img src="https://user-images.githubusercontent.com/48178913/133267236-a7ff233c-390d-4fc0-99ec-a3369c07d760.mp4" >  | <img src="https://user-images.githubusercontent.com/48178913/133266962-3040a686-6cfa-4181-ad64-acd4378b90c5.mp4">  |
@@ -38,7 +38,9 @@ HotpepperグルメのAPI(https://webservice.recruit.co.jp/doc/hotpepper/referenc
 
 エラーハンドリング
 
-<img src="https://user-images.githubusercontent.com/48178913/133268269-8a326fcb-1a8f-444a-b025-b68055667ab8.jpg" width= 50%>
+|  Permission  |  offline  |
+| ---- | ---- |
+|  <img src="https://user-images.githubusercontent.com/48178913/147894958-edafcbb8-f869-4c9c-9e45-660280df1c6e.gif" >  | <img src="https://user-images.githubusercontent.com/48178913/147895077-745f6d29-b50b-4e75-9c40-a9a13efc30e0.gif">  |
 
 # 設計
 このアプリはRx、DataBinding、Daggerを利用したClean Architectureを使用しています。
