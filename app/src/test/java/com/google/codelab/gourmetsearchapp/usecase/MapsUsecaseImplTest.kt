@@ -3,11 +3,13 @@ package com.google.codelab.gourmetsearchapp.usecase
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.maps.model.LatLng
 import com.google.codelab.gourmetsearchapp.model.FilterDataModel
+import com.google.codelab.gourmetsearchapp.model.NoLocationPermissionException
 import com.google.codelab.gourmetsearchapp.model.businessmodel.Store
 import com.google.codelab.gourmetsearchapp.model.businessmodel.StoresBusinessModel
 import com.google.codelab.gourmetsearchapp.repository.FavoriteDataManager
 import com.google.codelab.gourmetsearchapp.repository.LocationDataManager
 import com.google.codelab.gourmetsearchapp.repository.SearchDataManager
+import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
 import org.junit.Before
@@ -39,6 +41,7 @@ class MapsUsecaseImplTest {
         private val aStoreIds = listOf("J999999998")
         private val aStoreIdsWithinFavorite = listOf("J999999999")
         private val aLatLng = LatLng(10.0, 20.0)
+        private val aThrowable = NoLocationPermissionException()
     }
 
     @Before
