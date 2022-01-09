@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import autoCleared
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.codelab.gourmetsearchapp.R
 import com.google.codelab.gourmetsearchapp.databinding.FragmentHomeBinding
@@ -32,7 +33,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers
 class HomeFragment : Fragment() {
     private val parentViewModel: MainViewModel by activityViewModels()
     private val viewModel: HomeViewModel by activityViewModels()
-    private lateinit var binding: FragmentHomeBinding
+    private var binding: FragmentHomeBinding by autoCleared()
     private val groupAdapter = GroupAdapter<GroupieViewHolder>()
     private val storeList: MutableList<Store> = ArrayList()
     private var hasNoStores = true

@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
+import autoCleared
 import com.google.codelab.gourmetsearchapp.databinding.FragmentSettingsBinding
 import com.google.codelab.gourmetsearchapp.view.onboarding.OnboardingActivity
 import com.google.codelab.gourmetsearchapp.view.settings.SettingsList.*
@@ -22,7 +23,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class SettingsFragment : Fragment() {
     private val viewModel: SettingsViewModel by viewModels()
-    private lateinit var binding: FragmentSettingsBinding
+    private var binding: FragmentSettingsBinding by autoCleared()
     private val groupAdapter = GroupAdapter<GroupieViewHolder>()
 
     private val onItemClickListener = OnItemClickListener { item, _ ->
