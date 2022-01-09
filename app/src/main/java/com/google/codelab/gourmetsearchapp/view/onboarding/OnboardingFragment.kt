@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import autoCleared
 import com.google.codelab.gourmetsearchapp.R
 import com.google.codelab.gourmetsearchapp.databinding.FragmentOnboardingBinding
 
@@ -19,7 +20,7 @@ class OnboardingFragment : Fragment() {
             }
         }
     }
-    private lateinit var binding: FragmentOnboardingBinding
+    private var binding: FragmentOnboardingBinding by autoCleared()
     private val onboarding: Onboarding
         get() = checkNotNull(arguments?.getSerializable(KEY_ONBOARDING) as Onboarding)
     private var resumeAnimationAfterStart = false

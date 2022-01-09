@@ -10,6 +10,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.viewpager2.widget.ViewPager2
+import autoCleared
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -36,7 +37,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers
 
 @AndroidEntryPoint
 class MapsFragment : Fragment(), OnMapReadyCallback {
-    private lateinit var binding: FragmentMapsBinding
+    private var binding: FragmentMapsBinding by autoCleared()
     private lateinit var map: GoogleMap
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
 
