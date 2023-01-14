@@ -9,37 +9,9 @@ on:
 jobs:
   qodana:
     runs-on: ubuntu-latest
-
     steps:
-      - uses: actions/checkout@v2
-      - name: Qodana - Code Inspection
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: 'Qodana Scan'
         uses: JetBrains/qodana-action@v2022.3.0
-        with:
-          report-dir: docs
-      - run: ls -l
-      - run: ls -l
-        working-directory: qodana
-      - run: ls -l
-        working-directory: docs
-      - name: Count changes
-        id: changes
-        run: |
-          git add -N docs
-          echo "::set-output name=count::$(git diff --name-only docs | wc -l)"
-      - run: echo ${{ steps.changes.outputs.count }}
-      - name: Deploy to GitHub Pages
-        run: |
-          git config user.name github-actions
-          git config user.email github-actions@github.com
-          git add docs
-          git commit -m "Qodana report"
-          git push
-        if: steps.changes.outputs.count > 0
-      - uses: actions/upload-artifact@v2
-        with:
-          name: result
-          path: qodana
-      - uses: actions/upload-artifact@v2
-        with:
-          name: report
-          path: docs
