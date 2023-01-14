@@ -16,8 +16,8 @@ jobs:
       - name: 'Qodana Scan'
         uses: JetBrains/qodana-action@v2022.3.0
       - uses: github/codeql-action/upload-sarif@v2
-          with:
-            sarif_file: ${{ runner.temp }}/qodana/results/qodana.sarif.json
+        with:
+          sarif_file: ${{ runner.temp }}/qodana/results/qodana.sarif.json
       - name: Deploy to GitHub Pages
           uses: peaceiris/actions-gh-pages@v3
           with:
