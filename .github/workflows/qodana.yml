@@ -12,9 +12,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - run: composer install
       - name: Qodana - Code Inspection
-        uses: JetBrains/qodana-action@v1.0-eap
+        uses: JetBrains/qodana-action@v2022.3.0
         with:
           report-dir: docs
       - run: ls -l
