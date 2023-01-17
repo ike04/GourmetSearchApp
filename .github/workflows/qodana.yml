@@ -3,6 +3,10 @@ name: Qodana
 on:
   push:
     branches: [ qodana ]
+    paths-ignore: [ '**.md', '**.MD' ]
+  pull_request:
+    branches: [ qodana ]
+    paths-ignore: [ '**.md', '**.MD' ]
   workflow_dispatch:
 
 jobs:
