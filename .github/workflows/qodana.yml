@@ -3,7 +3,7 @@ name: Qodana
 on:
   push:
     branches: [ qodana ]
-    workflow_dispatch:
+  workflow_dispatch:
 
 jobs:
   build:
