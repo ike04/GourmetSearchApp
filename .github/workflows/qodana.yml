@@ -3,8 +3,7 @@ name: Qodana
 on:
   push:
     branches: [ qodana ]
-    paths:
-      - .github/workflows/qodana.yml
+    workflow_dispatch:
 
 jobs:
   build:
